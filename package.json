@@ -9,11 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@mui/material": "^7.3.4",
-    "@mui/material-nextjs": "^7.3.3",
+    "antd": "^5.27.6",
     "next": "16.0.0",
     "react": "19.2.0",
     "react-dom": "19.2.0"

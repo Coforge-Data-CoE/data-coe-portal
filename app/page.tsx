@@ -2,7 +2,7 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import Card from "@/components/ui/Card";
+import { Card } from "antd";
 
 const dummyData = [
   {
@@ -57,19 +57,23 @@ export default function Home() {
       <h1 className="text-3xl font-bold mb-4 text-center">Our Accelerators</h1>
       <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-8">
         {items.map(item => (
-          <Card key={item._id} className="flex flex-col overflow-hidden" sx={{ p: 0 }}>
-            <Image
-              src={item.banner}
-              alt={item.name}
-              width={400}
-              height={320}
-              className="object-cover w-full rounded-xl overflow-hidden"
-            />
-            <div className="p-4 flex-1 flex flex-col">
-              <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">{item.name}</h2>
-              <p className="text-gray-700 dark:text-gray-300 mb-4 flex-1">{item.description}</p>
-              <button className="mt-auto bg-[#f15840] text-white px-4 py-2 rounded hover:bg-[#d94c2f] transition">View Details</button>
-            </div>
+          <Card
+            key={item._id}
+            hoverable
+            style={{ width: 400, borderRadius: 16 }}
+            cover={
+              <Image
+                src={item.banner}
+                alt={item.name}
+                width={400}
+                height={320}
+                className="object-cover w-full rounded-xl overflow-hidden h-64"
+              />
+            }
+          >
+            <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">{item.name}</h2>
+            <p className="text-gray-700 dark:text-gray-300 mb-4 flex-1">{item.description}</p>
+            <button className="mt-auto bg-[#f15840] text-white px-4 py-2 rounded hover:bg-[#d94c2f] transition">View Details</button>
           </Card>
         ))}
       </div>

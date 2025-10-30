@@ -9,6 +9,8 @@
 # Node.js module folder
 /node_modules
 
+/.next
+
 # Yarn PnP files
 .pnp
 .pnp.js
