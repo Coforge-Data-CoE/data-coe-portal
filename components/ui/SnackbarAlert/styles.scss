@@ -1,0 +1,13 @@
+.MuiSnackbar-root {
+  top: 75px;
+  .MuiAlert-root {
+    padding: 0 16px;
+  }
+}
+.MuiAlert-icon {
+  font-size: 20px;
+}
+.MuiAlert-message {
+  display: flex;
+  align-items: center;
+}

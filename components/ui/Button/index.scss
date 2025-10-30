@@ -1,0 +1,103 @@
+@import "../../../assets/scss/mixins";
+
+.MuiButtonBase-root {
+  &.custom-button {
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 18px;
+    border: 1px solid rgb(219, 219, 219);
+    border-radius: 2px;
+    padding: 5px 15px;
+    border-radius: 3px;
+    color: #333333;
+    box-shadow: none;
+    &:hover {
+      background-color: #dbdbdb;
+      box-shadow: none;
+    }
+  }
+  &.primary-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $primary-btn-color;
+    color: #ffffff;
+    border: 1px solid $primary-btn-color;
+    border-radius: 5px;
+    font-size: 12px;
+    height: 35px;
+    text-transform: none;
+    font-weight: 500;
+    &:hover {
+      background: $primary-color-active;
+      border-color: $primary-color-active;
+    }
+  }
+  &.secondary-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    color: #313131;
+    border: 1px solid #d9d9d9;
+    border-radius: 5px;
+    font-size: 12px;
+    height: 35px;
+    text-transform: none;
+    font-weight: 500;
+    &:hover {
+      color: $secondary-color;
+      background-color: #ffffff;
+      border-color: $secondary-color;
+    }
+  }
+  &.new-item-button {
+    color: $new-item-color;
+    border: solid 1px $secondary-color;
+    padding: 3px 8px 3px 5px;
+    text-transform: none;
+    line-height: 13px;
+    font-weight: normal;
+    .MuiSvgIcon-root {
+      color: $new-item-color;
+    }
+    .MuiTypography-root {
+      line-height: 13px;
+      font-weight: normal;
+    }
+    &:hover {
+      color: $secondary-color;
+      border-color: $secondary-color;
+      .MuiSvgIcon-root,
+      .MuiTypography-root {
+        color: $secondary-color;
+      }
+    }
+  }
+  &.small-btn {
+    height: 30px;
+  }
+}
+
+@media (min-width: 1281px) {
+  .MuiButtonBase-root {
+    &.new-item-button {
+      .MuiSvgIcon-root {
+        font-size: 16px;
+      }
+      .MuiTypography-root {
+        font-size: 14px;
+        line-height: 14px;
+      }
+    }
+    &.small-btn {
+      height: 32px;
+      .MuiSvgIcon-root {
+        font-size: 16px;
+      }
+      .MuiTypography-root {
+        font-size: 14px;
+      }
+    }
+  }
+}

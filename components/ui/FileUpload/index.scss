@@ -1,0 +1,21 @@
+.file-upload-form {
+  width: 100%;
+  .upload-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: 5px 0;
+    .only-json {
+      color: #716d6d;
+      margin: 0;
+      font-size: 13px;
+    }
+    .drag-file {
+      color: #000;
+      margin: 0;
+      font-size: 14px;
+    }
+  }
+}

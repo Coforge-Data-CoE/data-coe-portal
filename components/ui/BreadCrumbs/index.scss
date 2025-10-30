@@ -1,0 +1,15 @@
+.breadcrumbs-title {
+  display: flex;
+  margin-bottom: 10px;
+
+  .active {
+    color: grey;
+  }
+}
+
+.breadcrumbs-link {
+  text-decoration: none;
+  font-size: 18px;
+  color: inherit;
+  padding: 5px;
+}

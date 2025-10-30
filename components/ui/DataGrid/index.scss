@@ -1,0 +1,22 @@
+.dq-data-grid {
+  .MuiDataGrid-row {
+    &:nth-child(odd) {
+      background-color: rgba(242, 242, 242, 0.4901960784);
+    }
+    &:hover {
+      background-color: #e6f7ff !important;
+    }
+  }
+  .MuiDataGrid-columnHeaderTitle {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .MuiDataGrid-iconButtonContainer {
+    visibility: visible;
+  }
+  .MuiDataGrid-cell {
+    &:focus {
+      outline: none !important;
+    }
+  }
+}

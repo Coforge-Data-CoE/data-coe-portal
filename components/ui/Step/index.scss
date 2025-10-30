@@ -1,0 +1,78 @@
+@import "../../../assets/scss/mixins";
+
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.rotating {
+  -webkit-animation: rotating 2s linear infinite;
+  -moz-animation: rotating 2s linear infinite;
+  -ms-animation: rotating 2s linear infinite;
+  -o-animation: rotating 2s linear infinite;
+  animation: rotating 2s linear infinite;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  padding: 5px 50px 5px 25px;
+  margin: 0 0 0 -30px;
+  font-size: 12px;
+  font-weight: 500;
+  clip-path: polygon(75% 0%, 85% 50%, 75% 100%, 0% 100%, 8% 50%, 0% 0%);
+  background-color: $step-bg;
+
+  &.active {
+    background-color: $primary-color-active;
+    color: $white;
+    .MuiTypography-root {
+      font-weight: 600;
+    }
+    .MuiSvgIcon-root {
+      color: $white;
+      // animation: rotating 3s linear infinite;
+    }
+  }
+
+  &.completed {
+    background-color: $step-completed;
+    color: $white;
+  }
+
+  &:first-child {
+    margin-left: 0;
+    padding-left: 15px;
+    clip-path: polygon(75% 0%, 85% 50%, 75% 100%, 0% 100%, 0% 50%, 0% 0%);
+  }
+}
+
+@media (max-width: 1280px) {
+  .step {
+    .MuiTypography-root {
+      font-size: 10px;
+    }
+    &:first-child {
+      padding-left: 10px;
+    }
+  }
+}
+
+@media (min-width: 1281px) {
+  .step {
+    .MuiTypography-root {
+      font-size: 14px;
+    }
+  }
+}

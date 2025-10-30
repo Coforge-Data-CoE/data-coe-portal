@@ -1,0 +1,19 @@
+.card {
+  min-width: 100px;
+  border: 1px solid rgb(219, 219, 219);
+}
+
+.card-title {
+  border-bottom: 1px solid rgb(219, 219, 219);
+  padding: 0px 20px;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.button {
+  text-align: center;
+}

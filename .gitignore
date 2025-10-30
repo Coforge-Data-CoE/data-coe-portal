@@ -1,0 +1,70 @@
+# 🚀 Build/Output Files & Directories
+/dist
+/build
+/out
+/release
+/tmp
+
+# 📦 Dependencies
+# Node.js module folder
+/node_modules
+
+# Yarn PnP files
+.pnp
+.pnp.js
+
+# Dependency cache files
+.npm
+.yarn-cache
+
+# 🔑 Credentials & Environment
+# Local environment variables and secrets (NEVER commit these)
+.env
+.env.*
+!.env.example # Allow an example file to be committed, if you have one
+# Or you can be more specific:
+# *.key
+# *.pem
+# *.crt
+
+# 🐛 Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# 🛠️ Development & IDE Artifacts
+# Editor/IDE specific files (e.g., VS Code, Sublime Text, JetBrains)
+.vscode/
+.idea/
+.history
+.sublime-project
+.sublime-workspace
+
+# OS Files
+# macOS
+.DS_Store
+# Windows
+Thumbs.db
+
+# 🧪 Testing/Coverage
+/coverage
+/.nyc_output
+/test-results
+
+# 📦 Package Management
+# lock files created by package managers that should be ignored if a monorepo
+# strategy is being used, or if you prefer a slim repository.
+# NOTE: package-lock.json and yarn.lock are generally RECOMMENDED to be
+# committed for deterministic builds, so they are commented out below.
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Output of 'npm pack'
+*.tgz
+
+# TypeScript cache
+*.tsbuildinfo
