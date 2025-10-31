@@ -27,8 +27,40 @@ function assertVideo(file: File) {
 export async function GET(req: Request) {
   try {
     await connectToDB();
-    const items = await Accelerator.find({}).sort({ createdAt: -1 });
-    return NextResponse.json({ items, total: items.length }, { status: 200 });
+    const { searchParams } = new URL(req.url);
+    const dataOffering = searchParams.get("dataOffering")?.trim() || "";
+    const q = searchParams.get("q")?.trim() || "";
+    const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10));
+    const pageSize = Math.min(100, Math.max(1, parseInt(searchParams.get("pageSize") || "20", 10)));
+
+    const filter: any = {};
+    if (dataOffering) filter.dataOffering = dataOffering;
+    if (q) {
+      filter.$or = [
+        { name: { $regex: q, $options: "i" } },
+        { summary: { $regex: q, $options: "i" } },
+      ];
+    }
+
+    const skip = (page - 1) * pageSize;
+
+    const [items, total] = await Promise.all([
+      Accelerator.find(filter).sort({ createdAt: -1 }).skip(skip).limit(pageSize),
+      Accelerator.countDocuments(filter),
+    ]);
+
+    return NextResponse.json(
+      {
+        items,
+        total,
+        page,
+        pageSize,
+        hasMore: skip + items.length < total,
+        dataOffering: dataOffering || null,
+        q: q || null,
+      },
+      { status: 200 }
+    );
   } catch (err: any) {
     console.error(err);
     return NextResponse.json(
@@ -53,6 +85,7 @@ export async function POST(req: Request) {
     const bannerFile = form.get("image") as File | null;
     const iconFile = form.get("icon") as File | null;
     const videoFile = form.get("video") as File | null;
+    const dataOffering = (form.get("dataOffering") as string) || "";
 
     let iconUrl = "";
     let imageUrl = "";
@@ -121,6 +154,7 @@ export async function POST(req: Request) {
       iconUrl,
       imageUrl,
       videoUrl,
+      dataOffering,
     });
     return NextResponse.json(doc, { status: 201 });
   } catch (err: any) {

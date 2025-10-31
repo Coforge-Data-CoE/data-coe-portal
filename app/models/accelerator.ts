@@ -8,6 +8,8 @@ const AcceleratorSchema = new Schema(
     iconUrl: { type: String, required: true, default: "" },
     imageUrl: { type: String, required: true, default: "" },
     videoUrl: { type: String, required: true, default: "" },
+    // Store selected data offering name directly (was ObjectId ref previously)
+    dataOffering: { type: String, required: false, trim: true, default: "" },
   },
   { timestamps: true }
 );
