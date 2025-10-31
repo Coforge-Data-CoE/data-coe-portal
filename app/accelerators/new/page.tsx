@@ -15,7 +15,6 @@ import {
   Progress,
 } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
-import { set } from "mongoose";
 
 const { Title, Text } = Typography;
 const { Dragger } = Upload;
