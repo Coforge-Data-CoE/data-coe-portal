@@ -9,7 +9,7 @@ export default function Header() {
         <Link href="/">
           <Image src="/coforge-logo-coral-white.png" alt="Coforge Logo" width={120} height={40} />
         </Link>
-        <span className="text-xl font-bold text-gray-900 dark:text-white">| Data Cosmos</span>
+        {/* <span className="text-xl font-bold text-gray-900 dark:text-white">| Data Cosmos</span> */}
       </div>
       <nav className="flex gap-6">
         <Link href="/home" className="text-white dark:text-white hover:text-[#f15840] font-medium">Home</Link>

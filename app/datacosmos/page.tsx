@@ -87,12 +87,25 @@ export default function DataCosmosPage() {
     {
       title: "What is Data Cosmos?",
       content: (
-        <>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Coforge Data Cosmos</h1>
-          <p className="text-lg text-gray-200 max-w-2xl mx-auto mb-6 text-center">
-            Coforge Data Cosmos is an enterprise data platform designed to accelerate data modernization, cloud migration, and analytics transformation. It unifies data, AI, and automation for banking, insurance, retail, healthcare, and public sector industries.
-          </p>
-        </>
+        <div className="relative w-screen h-[85vh] flex flex-col items-center justify-center overflow-hidden">
+          {/* Background image */}
+          <Image
+            src="/data-cosmos.jpg"
+            alt="Data Cosmos Background"
+            fill
+            className="object-cover w-full h-full absolute inset-0 z-0"
+            priority
+          />
+          {/* Blue overlay with less blur */}
+          <div className="absolute inset-0 bg-[#0c1b48]/70 z-10" />
+          {/* Content above background */}
+          <div className="relative z-20 flex flex-col items-center justify-center w-full">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Coforge Data Cosmos</h1>
+            <p className="text-lg text-gray-200 max-w-2xl mx-auto mb-6 text-center">
+              Coforge Data Cosmos is an enterprise data platform designed to accelerate data modernization, cloud migration, and analytics transformation. It unifies data, AI, and automation for banking, insurance, retail, healthcare, and public sector industries.
+            </p>
+          </div>
+        </div>
       )
     },
     {
@@ -135,7 +148,7 @@ export default function DataCosmosPage() {
         {/* You can add animated dots here if needed */}
       </div>
       {/* Full screen carousel */}
-      <div className="relative z-20 w-full h-[60vh] flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900">
+      <div className="relative z-20 w-full h-[80vh] flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900">
         <div className="w-full max-w-3xl mx-auto px-4 py-12 flex flex-col items-center justify-center text-center">
           {carouselPanels[activePanel].content}
           <div className="flex gap-4 mt-6 justify-center">
@@ -150,8 +163,9 @@ export default function DataCosmosPage() {
           </div>
         </div>
       </div>
-      <div className="relative z-10 p-6">
-        <div className=" mx-auto">
+      <div className="relative z-10 p-6 mt-16">
+        <h1 className="text-4xl font-bold text-center text-white mb-8">Our Offerings</h1>
+        <div className=" mx-auto mt-12">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             {/* Left menu ...existing code... */}
             <div className="lg:col-span-1">
