@@ -39,6 +39,7 @@ export async function PUT(req: Request, context: { params: Promise<{ id: string 
     const name = (form.get("name") as string)?.trim() || existing.name;
     const summary = (form.get("summary") as string)?.trim() || existing.summary;
     const dataOffering = (form.get("dataOffering") as string)?.trim() || existing.dataOffering;
+    const userId = req.headers.get("user_id") || existing.updatedBy || "";
 
     const bannerFile = form.get("image") as File | null;
     const iconFile = form.get("icon") as File | null;
@@ -73,6 +74,7 @@ export async function PUT(req: Request, context: { params: Promise<{ id: string 
     existing.iconUrl = iconUrl;
     existing.imageUrl = imageUrl;
     existing.videoUrl = videoUrl;
+    existing.updatedBy = userId;
     await existing.save();
 
     return NextResponse.json(existing, { status: 200 });
