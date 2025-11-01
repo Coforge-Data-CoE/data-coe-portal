@@ -77,6 +77,7 @@ export async function POST(req: Request) {
     const form = await req.formData();
     const name = (form.get("name") as string)?.trim();
     const summary = (form.get("summary") as string)?.trim() || "";
+    const createdBy = req.headers.get("user_id") || "";
 
     if (!name) {
       return NextResponse.json({ error: "Name is required" }, { status: 400 });
@@ -155,6 +156,8 @@ export async function POST(req: Request) {
       imageUrl,
       videoUrl,
       dataOffering,
+      createdBy,
+      updatedBy: createdBy,
     });
     return NextResponse.json(doc, { status: 201 });
   } catch (err: any) {

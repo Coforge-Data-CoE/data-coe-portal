@@ -3,13 +3,15 @@ import mongoose, { Schema, models } from "mongoose";
 
 const AcceleratorSchema = new Schema(
   {
-    name: { type: String, required: true, trim: true },
-    summary: { type: String, required: true, default: "" },
-    iconUrl: { type: String, required: true, default: "" },
-    imageUrl: { type: String, required: true, default: "" },
-    videoUrl: { type: String, required: true, default: "" },
+    name: { type: String, required: true, trim: false, default: "" },
+    summary: { type: String, required: true, trim: false, default: "" },
+    iconUrl: { type: String, required: true, trim: false, default: "" },
+    imageUrl: { type: String, required: true, trim: false, default: "" },
+    videoUrl: { type: String, required: true, trim: false, default: "" },
     // Store selected data offering name directly (was ObjectId ref previously)
-    dataOffering: { type: String, required: false, trim: true, default: "" },
+    dataOffering: { type: String, required: true, trim: false, default: "" },
+    createdBy: { type: String, required: true, trim: false, default: "admin" },
+    updatedBy: { type: String, required: true, trim: false, default: "admin" },
   },
   { timestamps: true }
 );

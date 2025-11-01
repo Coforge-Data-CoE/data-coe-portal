@@ -16,6 +16,7 @@ import {
   Select,
 } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
+import { useSearchParams } from "next/navigation";
 
 const { Title, Text } = Typography;
 const { Dragger } = Upload;
@@ -48,6 +49,9 @@ export default function NewItemPage() {
   const [imagePreviewOpen, setImagePreviewOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [progress, setProgress] = useState<number>(0);
+  const [loadingItem, setLoadingItem] = useState<boolean>(true);
+  const searchParams = useSearchParams();
+  const accelId = searchParams.get("id");
 
   const [iconFileList, setIconFileList] = useState<any[]>([]);
   const [bannerFileList, setBannerFileList] = useState<any[]>([]);
@@ -67,13 +71,36 @@ export default function NewItemPage() {
         } else if (Array.isArray(json?.offerings)) {
           offeringsArr = json.offerings;
         }
-        setDataOfferings(offeringsArr.map((o: any) => ({ label: o.name, value: o._id })));
+        // Use offering name as value (schema stores name string)
+        setDataOfferings(offeringsArr.map((o: any) => ({ label: o.name, value: o.name })));
       } catch (e: any) {
         console.error(e);
         message.error(e.message || "Could not load data offerings");
       }
+
+      if (accelId) {
+        try {
+          const r = await fetch(apiUrl(`/api/accelerator/${accelId}`));
+          if (!r.ok) throw new Error("Failed to load accelerator");
+          const item = await r.json();
+          form.setFieldsValue({
+            name: item.name,
+            summary: item.summary,
+            dataOffering: item.dataOffering || undefined,
+          });
+          if (item.iconUrl) setIconFileList([{ uid: "icon-1", name: "icon", status: "done", url: item.iconUrl }]);
+          if (item.imageUrl) setBannerFileList([{ uid: "banner-1", name: "banner", status: "done", url: item.imageUrl }]);
+            if (item.videoUrl) setVideoFileList([{ uid: "video-1", name: "video", status: "done", url: item.videoUrl }]);
+        } catch (e:any) {
+          message.error(e.message || "Could not load accelerator");
+        } finally {
+          setLoadingItem(false);
+        }
+      } else {
+        setLoadingItem(false);
+      }
     })();
-  }, []);
+  }, [accelId]);
 
   // Optional handler if you want to react immediately to selection changes
   const handleDataOfferingChange = (val: string) => {
@@ -131,28 +158,20 @@ export default function NewItemPage() {
       const formData = new FormData();
       formData.append("name", values.name);
       formData.append("summary", values.summary || "");
+      formData.append("dataOffering", values.dataOffering || "");
 
       const icon_image = iconFileList[0]?.originFileObj;
       const banner_image = bannerFileList[0]?.originFileObj;
       const vid = videoFileList[0]?.originFileObj;
-      const selectedOffering = values.dataOffering || "";
 
-      // Append file objects if present (AntD Upload stores them on originFileObj when beforeUpload returns false)
       if (icon_image) formData.append("icon", icon_image as File, (icon_image as File).name);
       if (banner_image) formData.append("image", banner_image as File, (banner_image as File).name);
       if (vid) formData.append("video", vid as File, (vid as File).name);
-      if (selectedOffering) formData.append("dataOffering", selectedOffering);
 
       setProgress(40);
-      // Debug entries
-      for (const [key, value] of formData.entries()) {
-        console.log("FormData entry:", key, value);
-      }
-
-      const res = await fetch(apiUrl("/api/accelerator"), {
-        method: "POST",
-        body: formData,
-      });
+      const method = accelId ? "PUT" : "POST";
+      const url = accelId ? apiUrl(`/api/accelerator/${accelId}`) : apiUrl("/api/accelerator");
+      const res = await fetch(url, { method, body: formData });
 
       setProgress(70);
 
@@ -190,7 +209,7 @@ export default function NewItemPage() {
     <div style={{ maxWidth: 900, margin: "24px auto", padding: "0 16px" }}>
       <Card>
         <Title level={3} style={{ marginBottom: 0 }}>
-          Create Accelerator
+          {accelId ? "Edit Accelerator" : "Create Accelerator"}
         </Title>
         {/* <Text type="secondary">Upload image & video, then click Save.</Text> */}
 
@@ -202,7 +221,7 @@ export default function NewItemPage() {
           // requiredMark="optional"
         >
           <Form.Item label="Name" name="name" rules={rules.name}>
-            <Input placeholder="Enter item name" />
+            <Input placeholder={accelId ? "Edit accelerator name" : "Enter item name"} disabled={loadingItem} />
           </Form.Item>
 
           <Form.Item
@@ -225,6 +244,7 @@ export default function NewItemPage() {
               showSearch
               optionFilterProp="label"
               onChange={handleDataOfferingChange}
+              disabled={loadingItem}
             />
           </Form.Item>
 
@@ -274,6 +294,8 @@ export default function NewItemPage() {
               />
             </div>
           )}
+
+          {loadingItem && <p>Loading accelerator...</p>}
 
           <Form.Item>
             <Space>
