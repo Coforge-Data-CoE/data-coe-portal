@@ -1,4 +1,18 @@
+/* Fix react-slick carousel width issue with Tailwind */
+/* .slick-slider {
+  width: 100% !important;
+  margin-left: auto;
+  margin-right: auto;
+} */
+/* Offerings section background */
+.offerings-bg {
+  background-image: url('/bg-space.jpg');
+  background-size: cover;
+  background-position: center;
+  /* border-radius: 1rem; */
+}
 @import "tailwindcss";
+
 
 * {
   font-family: 'Anek Devanagari', sans-serif;
@@ -23,8 +37,53 @@
   }
 }
 
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Custom cursor for offering cards */
+.comet-cursor {
+  cursor: url('/cursor-yellow-glitter.png') 2 2, pointer;
+}
+
+.cursor-pointer {
+  cursor: url('/cursor-yellow-glitter-pointer.png') 2 2, pointer;
+}
+
+/* body {
+  margin: 0;
+  height: 100vh;
+  background-color: #121212;
+  cursor: none;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.title {
+  color: white;
+  font-size: 1rem;
+  text-align: center;
+}
+.cursor {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+.cursor-trail {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+} */
+.cosmos-card {
+  /* cursor: none !important; */
 }
