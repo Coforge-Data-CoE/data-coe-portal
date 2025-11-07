@@ -44,9 +44,9 @@ const GALAXIES: Galaxy[] = [
             {
                 name: "Hypernova",
                 keyUseCases: [
-                    "Agentic support L1.5 &  L2 for data pipelines retail and corporate banking",
-                    "Incident , CR  & SR ticket analysis",
-                    "Incident resolution of ETL/reporting issues"
+                    "Risk & Compliance Domain Mesh",
+                    "Customer 360 & Personalization Mesh",
+                    "Payments & Transaction Analytics Mesh"
                 ],
                 customerLogos: ["/logos/lpl-financial.png", "/logos/santander.png", "/logos/goldman-sachs.png"],
             },
@@ -389,7 +389,7 @@ export default function GalaxyDetailPage() {
                         {/* Key Use Cases section */}
                         <div className="bg-slate-700 rounded-lg p-3 mb-2 flex-1 flex flex-col justify-between" style={{ minHeight: '120px' }}>
                             <div className="mb-2 flex-1 flex flex-col">
-                                <strong className="text-white mb-1">Key Use Cases:</strong>
+                                <strong className="text-white mb-1">Our Offerings:</strong>
                                 <ul className="list-disc list-inside text-gray-200 flex-1">
                                     {offering.keyUseCases.map((uc, i) => <li key={i}>{uc}</li>)}
                                 </ul>

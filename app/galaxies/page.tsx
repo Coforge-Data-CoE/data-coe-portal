@@ -52,7 +52,7 @@ export default function GalaxiesPage() {
                 <div className="bg-slate-700 rounded-lg p-3 mb-2">
                   <h3 className="text-lg font-semibold text-[#f15840] mb-2">{offering.name}</h3>
                   <div className="mb-2">
-                    <strong className="text-white">Key Use Cases:</strong>
+                    <strong className="text-white">Our Offerings:</strong>
                     <ul className="list-disc list-inside text-gray-200">
                       {offering.keyUseCases.map((uc, i) => <li key={i}>{uc}</li>)}
                     </ul>
