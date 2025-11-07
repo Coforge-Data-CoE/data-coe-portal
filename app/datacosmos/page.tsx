@@ -93,7 +93,7 @@ export default function DataCosmosPage() {
         <div className="relative w-screen h-[85vh] flex flex-col items-center justify-center overflow-hidden">
           {/* Background image */}
           <Image
-            src="/data-cosmos.jpg"
+            src="/bg-7.jpg"
             alt="Data Cosmos Background"
             fill
             className="object-cover w-full h-full absolute inset-0 z-0"
@@ -103,9 +103,13 @@ export default function DataCosmosPage() {
           <div className="absolute inset-0 bg-[#0c1b48]/70 z-10" />
           {/* Content above background */}
           <div className="relative z-20 flex flex-col items-center justify-center w-full px-4">
+            <div className="mb-8 flex justify-center">
+              <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Data Cosmos Logo" width={320} height={64} />
+            </div>
             <h1 className="text-6xl md:text-7xl font-bold text-white mb-10 text-center drop-shadow-lg">A Unified Constellation of Data Excellence</h1>
-            <p className="text-3xl text-gray-200 max-w-3xl mx-auto mb-10 text-center drop-shadow-md">
-              The Coforge Data Cosmos integrates technology and business to modernize data, migrate to the cloud, and infuse AI-driven intelligence—accelerating digital transformation across enterprises.
+            <p className="text-2xl text-gray-200 max-w-3xl mx-auto mb-10 text-center drop-shadow-md">
+              {/* The Coforge Data Cosmos integrates technology and business to modernize data, migrate to the cloud, and infuse AI-driven intelligence—accelerating digital transformation across enterprises. */}
+              Coforge Data Cosmos is AI enabled, foundational innovation platform; that we use internally to develop cloud native, domain specific solutions that leverage reusable, standard, technology based Solutions consisting of our own IP, Accelerators, Agents, Utilities, Frameworks, Workflows, Capabilities and optional partner products. 
             </p>
           </div>
         </div>
@@ -125,6 +129,9 @@ export default function DataCosmosPage() {
           />
           <div className="absolute inset-0 bg-[#0c1b48]/70 z-10" />
           <div className="relative z-20 flex flex-col items-center justify-center w-full px-4">
+             <div className="mb-8 flex justify-center">
+              <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Data Cosmos Logo" width={320} height={64} />
+            </div>
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-8 text-center">Powering Transformation with Five Technology Towers</h1>
             <div className="text-2xl text-gray-200 max-w-2xl mx-auto mb-8 text-center">
               Our technology-driven offerings
@@ -159,6 +166,9 @@ export default function DataCosmosPage() {
           />
           <div className="absolute inset-0 bg-[#0c1b48]/70 z-10" />
           <div className="relative z-20 flex flex-col items-center justify-center w-full px-4">
+             <div className="mb-8 flex justify-center">
+              <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Data Cosmos Logo" width={320} height={64} />
+            </div>
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-8 text-center">Galaxy Solutions for Every Industry</h1>
             <p className="text-2xl text-gray-200 max-w-2xl mx-auto mb-8 text-center">
               From BFS to Insurance, our domain-led Galaxy offerings build on Data Cosmos technologies to bring agility, innovation, and measurable business impact.
@@ -180,7 +190,7 @@ export default function DataCosmosPage() {
         {/* Full screen carousel using Ant Design */}
         {/* Full screen carousel using react-slick */}
         <div className="relative z-20 w-full h-[80vh] flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900">
-          <div className="w-full mx-auto px-4 py-12 flex flex-col items-center justify-center text-center">
+          <div className="w-full mx-auto py-12 flex flex-col items-center justify-center text-center">
             <div className="w-full mx-auto">
               <Slider
               dots={true}
@@ -255,19 +265,20 @@ export default function DataCosmosPage() {
                     <a
                       key={card.key}
                       href={`/offerings/${card.key}`}
-                      className="cosmos-card bg-slate-800/40 backdrop-blur-sm border border-slate-500 rounded-lg p-4 hover:border-[#29B5E8] transition-all duration-200 hover:shadow-lg hover:shadow-[#29B5E8]/20 block cursor-pointer"
+                      className="cosmos-card bg-[#181C2A] backdrop-blur-sm border border-slate-700 rounded-lg p-4 transition-all duration-200 hover:shadow-lg hover:shadow-[#29B5E8]/20 block cursor-pointer group"
                     >
                       <div className="text-center mb-4">
                         <div className="mb-2 flex justify-center">
                           <Image src={card.image} alt={card.alt} width={160} height={40} />
                         </div>
                         {/* <h4 className="text-white font-semibold  mb-1">{card.title}</h4> */}
-                        <p className="text-blue-300 pt-4">{card.subtitle}</p>
+                        <p className="text-blue-300 pt-4 group-hover:text-white transition-colors duration-200">{card.subtitle}</p>
                       </div>
                       <ul className="space-y-1">
                         {card.items.map((item, idx) => (
-                          <li key={idx} className="text-gray-200  flex items-start">
-                            <span className="text-cyan-400 mr-1">•</span>{item}
+                          <li key={idx} className="flex items-start">
+                            <span className="text-cyan-400 mr-1 transition-colors duration-200 group-hover:text-[#29B5E8]">•</span>
+                            <span className="text-gray-200 transition-colors duration-200 group-hover:text-[#29B5E8]">{item}</span>
                           </li>
                         ))}
                       </ul>
@@ -318,7 +329,7 @@ export default function DataCosmosPage() {
                         const [first, ...rest] = label.split(' ');
                         const htmlLabel = `<span style='color: #F15B40;'>${first}</span>${rest.length ? ' <span style=\'color: white;\'>' + rest.join(' ') + '</span>' : ''}`;
                         return (
-                          <div key={file} className="flex flex-col items-center bg-slate-800/80 border border-slate-700 rounded-lg p-4 shadow-md">
+                          <div key={file} className="flex flex-col items-center bg-[#131B3A] border border-slate-700 rounded-lg p-4 shadow-md transition-all duration-200 hover:border-[#F15B40]">
                             <Image src={`/logos/toolkit/${file}`} alt={label} width={36} height={36} />
                             <span className="text-sm font-bold mt-2 text-center w-full break-words" dangerouslySetInnerHTML={{ __html: htmlLabel }} />
                           </div>
@@ -345,7 +356,7 @@ export default function DataCosmosPage() {
                       </h3>
                       <div className="grid grid-cols-4 md:grid-cols-7 gap-4">
                         {dataPartners.map(partner => (
-                          <div key={partner.name} className="bg-slate-700/50 rounded-lg p-3 hover:bg-slate-600/50 border border-slate-500 transition-all duration-200 flex flex-col items-center justify-between h-24">
+                          <div key={partner.name} className="bg-slate-700/50 rounded-lg p-3 hover:bg-blue-500/50 border border-slate-500 transition-all duration-200 flex flex-col items-center justify-between h-24">
                             <div className="flex-1 flex items-center justify-center">
                               <Image src={partner.logo} alt={partner.name} width={100} height={32} />
                             </div>
@@ -362,19 +373,19 @@ export default function DataCosmosPage() {
                     <i className="ri-cloud-line mr-2"></i>Cloud Infra
                   </h3>
                   <div className="grid grid-cols-3 gap-4">
-                    <div className="bg-slate-700/50 rounded-lg p-4 text-center hover:bg-slate-600/50 border border-slate-500 transition-all duration-200 flex flex-col items-center justify-between h-24">
+                    <div className="bg-slate-700/50 rounded-lg p-4 text-center hover:bg-indigo-600/50 border border-slate-500 transition-all duration-200 flex flex-col items-center justify-between h-24">
                       <div className="flex-1 flex items-center justify-center">
                         <Image src="/logos/azure.png" alt="Microsoft Azure" width={100} height={32} />
                       </div>
                       {/* <p className=" text-gray-400 mt-2 text-center w-full">Microsoft Azure</p> */}
                     </div>
-                    <div className="bg-slate-700/50 rounded-lg p-4 text-center hover:bg-slate-600/50 border border-slate-500 transition-all duration-200  flex flex-col items-center justify-between h-24">
+                    <div className="bg-slate-700/50 rounded-lg p-4 text-center hover:bg-indigo-600/50 border border-slate-500 transition-all duration-200  flex flex-col items-center justify-between h-24">
                       <div className="flex-1 flex items-center justify-center">
                         <Image src="/logos/aws.png" alt="AWS" width={60} height={32} />
                       </div>
                       {/* <p className=" text-gray-400 mt-2 text-center w-full">AWS</p> */}
                     </div>
-                    <div className="bg-slate-700/50 rounded-lg p-4 text-center hover:bg-slate-600/50 border border-slate-500 transition-all duration-200 flex flex-col items-center justify-between h-24">
+                    <div className="bg-slate-700/50 rounded-lg p-4 text-center hover:bg-indigo-600/50 border border-slate-500 transition-all duration-200 flex flex-col items-center justify-between h-24">
                       <div className="flex-1 flex items-center justify-center">
                         <Image src="/logos/google-cloud.png" alt="Google Cloud" width={150} height={32} />
                       </div>
