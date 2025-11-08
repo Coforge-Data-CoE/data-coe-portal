@@ -1,7 +1,5 @@
-// app/accelerators/new/page.tsx
 "use client";
-
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import {
   Form,
   Input,
@@ -16,7 +14,7 @@ import {
   Select,
 } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 
 const { Title, Text } = Typography;
 const { Dragger } = Upload;
@@ -34,7 +32,7 @@ function getBase64(file: FileType): Promise<string> {
   });
 }
 
-export default function NewItemPage() {
+export default function NewItemPage({ searchParams }: { searchParams: Promise<Record<string, string>> }) {
   // Helper to always produce absolute URLs (Node fetch requires absolute)
   const apiUrl = (path: string) => {
     if (typeof window !== "undefined") {
@@ -50,8 +48,9 @@ export default function NewItemPage() {
   const [submitting, setSubmitting] = useState(false);
   const [progress, setProgress] = useState<number>(0);
   const [loadingItem, setLoadingItem] = useState<boolean>(true);
-  const searchParams = useSearchParams();
-  const accelId = searchParams.get("id");
+  const params = use(searchParams);
+  // const searchParams = useSearchParams();
+  const accelId = params?.id; //.get("id");
 
   const [iconFileList, setIconFileList] = useState<any[]>([]);
   const [bannerFileList, setBannerFileList] = useState<any[]>([]);
