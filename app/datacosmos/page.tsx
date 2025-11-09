@@ -132,7 +132,7 @@ export default function DataCosmosPage() {
           <div className="absolute inset-0 bg-[#0c1b48]/70 z-10" />
           <div className="relative z-20 flex flex-col items-center justify-center w-full px-4">
             <div className="mb-8 flex justify-center">
-              <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] md:h-[64px] w-[180px] h-[36px]" />
+              <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] w-[180px]" />
             </div>
             <h1 className="text-xl md:text-5xl md:text-6xl font-bold text-white mb-8 text-center">Powering Transformation with Five Technology Towers</h1>
             <div className="text-base md:text-2xl text-gray-200 max-w-2xl mx-auto mb-8 text-center">
@@ -179,7 +179,7 @@ export default function DataCosmosPage() {
           <div className="absolute inset-0 bg-[#0c1b48]/70 z-10" />
           <div className="relative z-20 flex flex-col items-center justify-center w-full px-4">
             <div className="mb-8 flex justify-center">
-              <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] md:h-[64px] w-[180px] h-[36px]" />
+              <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] w-[180px]" />
             </div>
             <h1 className="text-xl md:text-5xl md:text-6xl font-bold text-white mb-8 text-center">Galaxy Solutions for Every Industry</h1>
             <p className="text-base md:text-2xl text-gray-200 max-w-2xl mx-auto mb-8 text-center">
