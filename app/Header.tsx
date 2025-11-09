@@ -1,4 +1,143 @@
 "use client";
+// Menu data structure
+const menuData = [
+  {
+    label: "Home",
+    href: "/datacosmos",
+    icon: "ri-home-2-line",
+  },
+  {
+    label: "Technology Offerings",
+    icon: "ri-menu-2-line",
+    submenu: [
+      { label: "SUPERNOVA", href: "/offerings/supernova", icon: "ri-star-line" },
+      { label: "NEBULA", href: "/offerings/nebula", icon: "ri-cloud-line" },
+      { label: "HYPERNOVA", href: "/offerings/hypernova", icon: "ri-fire-line" },
+      { label: "PULSAR", href: "/offerings/pulsar", icon: "ri-flashlight-line" },
+      { label: "QUASAR", href: "/offerings/quasar", icon: "ri-lightbulb-line" },
+    ],
+  },
+  {
+    label: "Industries",
+    icon: "ri-building-line",
+    submenu: [
+      { label: "BFSI Galaxy", href: "/galaxies/bfsi", icon: "ri-bank-line" },
+      { label: "Insurance Galaxy", href: "/galaxies/ins", icon: "ri-shield-line" },
+      { label: "TTH Galaxy", href: "/galaxies/tth", icon: "ri-plane-line" },
+      { label: "Retail Galaxy", href: "/galaxies/retail", icon: "ri-shopping-cart-line" },
+      { label: "Healthcare Galaxy", href: "/galaxies/healthcare", icon: "ri-heart-pulse-line" },
+      { label: "Energy Galaxy", href: "/galaxies/energy", icon: "ri-government-line" },
+    ],
+  },
+];
+
+// Reusable MenuList component
+type MenuListProps = {
+  menu: typeof menuData;
+  isMobile?: boolean;
+  onClose?: () => void;
+};
+function MenuList({ menu, isMobile = false, onClose }: MenuListProps) {
+  const [openIdx, setOpenIdx] = React.useState<number | null>(null);
+
+  // Outside click/escape close for desktop dropdowns
+  React.useEffect(() => {
+    if (isMobile || openIdx === null) return;
+    function handleClick(e: MouseEvent) {
+      // Only close if click is outside any dropdown
+      if (!(e.target as HTMLElement).closest('.offerings-dropdown') && !(e.target as HTMLElement).closest('.galaxies-dropdown')) {
+        setOpenIdx(null);
+      }
+    }
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        setOpenIdx(null);
+      }
+    }
+    document.addEventListener('mousedown', handleClick);
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isMobile, openIdx]);
+  return (
+    <>
+      {menu.map((item, idx) => {
+        if (!item.submenu) {
+          return (
+            <Link
+              key={item.label}
+              href={item.href}
+              className={`menu-link flex items-center gap-2${isMobile ? ' text-2xl w-full justify-start' : ' text-lg'}`}
+              onClick={onClose}
+            >
+              <i className={`${item.icon} ${isMobile ? 'text-2xl' : 'text-lg'}`}></i>{item.label}
+            </Link>
+          );
+        }
+        // Submenu
+        if (isMobile) {
+          return (
+            <React.Fragment key={item.label}>
+              <button
+                className={`menu-link flex items-center gap-2 w-full justify-start text-left${isMobile ? ' text-2xl' : ''}`}
+                onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
+                aria-expanded={openIdx === idx}
+              >
+                <i className={`${item.icon} text-2xl`}></i>{item.label}
+                <span className="ml-auto">{openIdx === idx ? '▴' : '▾'}</span>
+              </button>
+              {openIdx === idx && (
+                <div className="flex flex-col gap-4 pl-8 w-full">
+                  {item.submenu.map((sub) => (
+                    <Link
+                      key={sub.label}
+                      href={sub.href}
+                      className="menu-link flex items-center gap-2"
+                      onClick={onClose}
+                    >
+                      <i className={`${sub.icon} text-2xl`}></i>{sub.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </React.Fragment>
+          );
+        }
+        // Desktop: dropdowns
+        // For the last menu (Industries), shift dropdown left
+        const isLastMenu = idx === menu.length - 1;
+        return (
+          <div key={item.label} className={`relative ${item.label === 'Technology Offerings' ? 'offerings-dropdown' : 'galaxies-dropdown'}`}>
+            <button
+              className="menu-link flex items-center gap-2 focus:outline-none"
+              onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
+              aria-haspopup="true"
+              aria-expanded={openIdx === idx}
+            >
+              <i className={`${item.icon} text-lg`}></i>{item.label} ▾
+            </button>
+            {openIdx === idx && (
+              <div className={`absolute mt-2 min-w-[220px] bg-[#131B3ACF] rounded shadow-lg transition-opacity z-50 ${isLastMenu ? 'left-[-100px]' : 'left-0'}`}>
+                <ul className="py-2" style={{ border: '1px solid #add8e66e', borderRadius: '0 0 10px 10px' }}>
+                  {item.submenu.map((sub) => (
+                    <li key={sub.label}>
+                      <Link href={sub.href} className="menu-link block px-6 py-2 flex items-center gap-2">
+                        <i className={`${sub.icon} text-lg`}></i>{sub.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </>
+  );
+}
+
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -33,71 +172,52 @@ export default function Header() {
     };
   }, [dropdownOpen, galaxyDropdownOpen]);
 
+  // Mobile menu state
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-  <header className="w-full bg-[#0A0F2C] shadow-md py-4 px-8 flex items-center justify-between">
-      <div className="flex items-center gap-3">
+    <>
+      {/* Desktop Header (hidden on mobile) */}
+  <header className="sticky top-0 z-50 w-full bg-[#0A0F2C] shadow-md py-4 px-8 items-center justify-between hidden md:flex">
+        <div className="flex items-center gap-3">
+          <Link href="/datacosmos">
+            <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Logo" width={200} height={36} />
+          </Link>
+        </div>
+        <nav className="flex gap-6 items-center">
+          <MenuList menu={menuData} />
+        </nav>
+      </header>
+
+      {/* Mobile Header (hidden on desktop) */}
+  <header className="sticky top-0 z-50 w-full bg-[#0A0F2C] shadow-md py-4 px-4 flex items-center justify-between md:hidden">
         <Link href="/datacosmos">
-          <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Logo" width={200} height={36} />
+          <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Logo" width={160} height={32} />
         </Link>
-        {/* <span className="text-xl font-bold text-gray-900 dark:text-white">| Data Cosmos</span> */}
-      </div>
-      <nav className="flex gap-6 items-center">
-        <Link href="/datacosmos" className="menu-link flex items-center gap-2">
-          <i className="ri-home-2-line text-lg"></i>Home
-        </Link>
-        {/* <Link href="/accelerator" className="text-white dark:text-white hover:text-[#f15840] font-medium flex items-center gap-2">
-          <i className="ri-rocket-2-line text-lg"></i>Accelerators
-        </Link> */}
-        <div className="relative offerings-dropdown">
+        <button
+          className="text-white text-2xl focus:outline-none"
+          aria-label="Open menu"
+          onClick={() => setMenuOpen(true)}
+        >
+          <i className="ri-menu-3-line"></i>
+        </button>
+      </header>
+
+      {/* Mobile full-screen menu panel with expandable menus */}
+      {menuOpen && (
+        <div className="fixed inset-0 z-50 bg-[#0A0F2C]/70 backdrop-blur-sm flex flex-col items-center justify-center">
           <button
-            className="menu-link flex items-center gap-2 focus:outline-none"
-            onClick={() => setDropdownOpen((open) => !open)}
-            aria-haspopup="true"
-            aria-expanded={dropdownOpen}
+            className="absolute top-6 right-6 text-white text-3xl focus:outline-none"
+            aria-label="Close menu"
+            onClick={() => setMenuOpen(false)}
           >
-            <i className="ri-menu-2-line text-lg"></i>Technology Offerings ▾
+            <i className="ri-close-line"></i>
           </button>
-          {dropdownOpen && (
-            <div className="absolute left-0 mt-2 min-w-[220px] bg-[#131B3ACF] rounded shadow-lg transition-opacity z-50">
-              <ul className="py-2" style={{ border: '1px solid #add8e66e', borderRadius: '0 0 10px 10px' }}>
-                <li><Link href="/offerings/supernova" className="menu-link block px-6 py-2 flex items-center gap-2"><i className="ri-star-line text-lg"></i>Coforge SUPERNOVA</Link></li>
-                <li><Link href="/offerings/nebula" className="menu-link block px-6 py-2 flex items-center gap-2"><i className="ri-cloud-line text-lg"></i>Coforge NEBULA</Link></li>
-                <li><Link href="/offerings/hypernova" className="menu-link block px-6 py-2 flex items-center gap-2"><i className="ri-fire-line text-lg"></i>Coforge HYPERNOVA</Link></li>
-                <li><Link href="/offerings/pulsar" className="menu-link block px-6 py-2 flex items-center gap-2"><i className="ri-flashlight-line text-lg"></i>Coforge PULSAR</Link></li>
-                <li><Link href="/offerings/quasar" className="menu-link block px-6 py-2 flex items-center gap-2"><i className="ri-lightbulb-line text-lg"></i>Coforge QUASAR</Link></li>
-              </ul>
-            </div>
-          )}
+          <nav className="flex flex-col gap-6 items-center text-white text-xl w-full max-w-xs">
+            <MenuList menu={menuData} isMobile={true} onClose={() => setMenuOpen(false)} />
+          </nav>
         </div>
-        <div className="relative galaxies-dropdown">
-          <button
-            className="menu-link flex items-center gap-2 focus:outline-none"
-            onClick={() => setGalaxyDropdownOpen((open) => !open)}
-            aria-haspopup="true"
-            aria-expanded={galaxyDropdownOpen}
-          >
-            <i className="ri-building-line text-lg"></i>Industries ▾
-          </button>
-          {galaxyDropdownOpen && (
-            <div className="absolute left-0 mt-2 min-w-[220px] bg-[#131B3ACF] rounded shadow-lg transition-opacity z-50">
-              <ul className="py-2"  style={{ border: '1px solid #add8e66e', borderRadius: '0 0 10px 10px' }}>
-                <li><Link href="/galaxies/bfsi" className="menu-link block px-6 py-2 flex items-center gap-2"><i className="ri-bank-line text-lg"></i>BFSI Galaxy</Link></li>
-                <li><Link href="/galaxies/ins" className="menu-link block px-6 py-2 flex items-center gap-2"><i className="ri-shield-line text-lg"></i>Insurance Galaxy</Link></li>
-                <li><Link href="/galaxies/tth" className="menu-link block px-6 py-2 flex items-center gap-2"><i className="ri-plane-line text-lg"></i>TTH Galaxy</Link></li>
-                <li><Link href="/galaxies/retail" className="menu-link block px-6 py-2 flex items-center gap-2"><i className="ri-shopping-cart-line text-lg"></i>Retail Galaxy</Link></li>
-                <li><Link href="/galaxies/healthcare" className="menu-link block px-6 py-2 flex items-center gap-2"><i className="ri-heart-pulse-line text-lg"></i>Healthcare Galaxy</Link></li>
-                <li><Link href="/galaxies/energy" className="menu-link block px-6 py-2 flex items-center gap-2"><i className="ri-government-line text-lg"></i>Energy Galaxy</Link></li>
-              </ul>
-            </div>
-          )}
-        </div>
-  {/* <Link href="/authentication/signin" className="menu-link flex items-center gap-2">
-          <i className="ri-login-box-line text-lg"></i>Sign In
-        </Link>
-  <Link href="/authentication/register" className="menu-link flex items-center gap-2">
-          <i className="ri-user-add-line text-lg"></i>Register
-        </Link> */}
-      </nav>
-    </header>
+      )}
+    </>
   );
 }
