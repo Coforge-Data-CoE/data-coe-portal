@@ -19,7 +19,7 @@ export interface Galaxy {
 // Sample data structure (replace with your content)
 const GALAXIES: Galaxy[] = [
   {
-    name: "BFSI Galaxy",
+    name: "BFS Galaxy",
     logo: "/galaxy-bfsi.png",
     offerings: [
       {

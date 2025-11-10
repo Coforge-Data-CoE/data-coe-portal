@@ -253,7 +253,7 @@ export default function DataCosmosPage() {
                     <i className="ri-building-line mr-2"></i>Industry Galaxies
                   </h3>
                   <div className="space-y-2">
-                    <a href="/galaxies/bfsi" className="w-full text-left p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
+                    <a href="/galaxies/bfs" className="w-full text-left p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
                       <i className="ri-bank-line mr-3 text-lg"></i><span className="">Banking & Financial Services</span>
                     </a>
                     <a href="/galaxies/insurance" className="w-full text-left p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">

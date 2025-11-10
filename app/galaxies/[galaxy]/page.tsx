@@ -19,8 +19,8 @@ export interface Galaxy {
 // Sample data for all five galaxies
 const GALAXIES: Galaxy[] = [
     {
-        id: "bfsi",
-        name: "BFSI Galaxy",
+        id: "bfs",
+        name: "BFS Galaxy",
         logo: "/galaxy-bfsi.png",
         offerings: [
             {
