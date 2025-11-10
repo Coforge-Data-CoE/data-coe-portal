@@ -45,8 +45,8 @@ export default function GalaxiesPage() {
       <div className="grid grid-cols-5 gap-6">
         {GALAXIES.map((galaxy) => (
           <div key={galaxy.name} className="bg-slate-800/60 rounded-xl shadow-lg p-4 flex flex-col items-center">
-            <Image src={galaxy.logo} alt={galaxy.name} width={64} height={64} className="mb-2" />
-            <h2 className="text-xl font-bold text-white mb-4">{galaxy.name}</h2>
+            <Image src={galaxy.logo} alt={galaxy.name} width={100} height={24} className="mb-2" />
+            <h2 className="text-xl font-bold text-white">{galaxy.name}</h2>
             {galaxy.offerings.map((offering, idx) => (
               <div key={offering.name + idx} className="mb-6 w-full">
                 <div className="bg-slate-700 rounded-lg p-3 mb-2">

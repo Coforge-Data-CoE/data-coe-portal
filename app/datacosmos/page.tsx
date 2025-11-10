@@ -242,7 +242,7 @@ export default function DataCosmosPage() {
           <Suspense fallback={<div className="w-full h-full bg-[#081433]" />}>
             <GalaxyBackground />
           </Suspense>
-          <h1 className="text-xl md:text-4xl font-bold text-center text-white mb-8">Our Offerings</h1>
+          <h1 className="text-xl lg:text-2xl xl:text-4xl font-bold text-center text-white mb-8">Our Offerings</h1>
           <div className=" mx-auto mt-12">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
               {/* Left menu ...existing code... */}
