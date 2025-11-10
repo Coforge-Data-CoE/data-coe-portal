@@ -81,7 +81,6 @@ const cosmosCards = [
 import Script from "next/script";
 import React, { Suspense } from "react";
 const GalaxyBackground = React.lazy(() => import("../components/GalaxyBackground"));
-import { Carousel } from 'antd';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -108,8 +107,8 @@ export default function DataCosmosPage() {
             <div className="mb-8 flex justify-center">
               <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px]  w-[180px]" />
             </div>
-            <h1 className="text-3xl md:text-6xl md:text-7xl font-bold text-white mb-10 text-center drop-shadow-lg">A Unified Constellation of Data Excellence</h1>
-            <p className="text-base md:text-2xl text-gray-200 max-w-3xl mx-auto mb-10 text-center drop-shadow-md">
+            <h1 className="text-xl md:text-3xl xl:text-6xl font-bold text-white mb-10 text-center drop-shadow-lg">A Unified Constellation of Data Excellence</h1>
+            <p className="text-sm md:text-lg xl:text-2xl text-gray-200 max-w-3xl mx-auto mb-10 text-center drop-shadow-md">
               {/* The Coforge Data Cosmos integrates technology and business to modernize data, migrate to the cloud, and infuse AI-driven intelligence—accelerating digital transformation across enterprises. */}
               Coforge Data Cosmos is AI enabled, foundational innovation platform; that we use internally to develop cloud native, domain specific solutions that leverage reusable, standard, technology based Solutions consisting of our own IP, Accelerators, Agents, Utilities, Frameworks, Workflows, Capabilities and optional partner products. 
             </p>
@@ -132,10 +131,10 @@ export default function DataCosmosPage() {
           <div className="absolute inset-0 bg-[#0c1b48]/70 z-10" />
           <div className="relative z-20 flex flex-col items-center justify-center w-full px-4">
             <div className="mb-8 flex justify-center">
-              <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] md:h-[64px] w-[180px] h-[36px]" />
+              <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] w-[180px]" />
             </div>
-            <h1 className="text-xl md:text-5xl md:text-6xl font-bold text-white mb-8 text-center">Powering Transformation with Five Technology Towers</h1>
-            <div className="text-base md:text-2xl text-gray-200 max-w-2xl mx-auto mb-8 text-center">
+            <h1 className="text-xl md:text-3xl lg:text-4xl xl:text-6xl font-bold text-white mb-8 text-center">Powering Transformation with Five Technology Towers</h1>
+            <div className="text-sm md:text-lg xl:text-2xl text-gray-200 max-w-2xl mx-auto mb-8 text-center">
               Our technology-driven offerings
               <div className="flex flex-wrap md:flex-nowrap items-center justify-center gap-2 md:gap-4 my-4">
                 <div className="flex flex-col items-center md:flex-row md:items-center md:gap-4 w-full">
@@ -179,10 +178,10 @@ export default function DataCosmosPage() {
           <div className="absolute inset-0 bg-[#0c1b48]/70 z-10" />
           <div className="relative z-20 flex flex-col items-center justify-center w-full px-4">
             <div className="mb-8 flex justify-center">
-              <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] md:h-[64px] w-[180px] h-[36px]" />
+              <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] w-[180px]" />
             </div>
-            <h1 className="text-xl md:text-5xl md:text-6xl font-bold text-white mb-8 text-center">Galaxy Solutions for Every Industry</h1>
-            <p className="text-base md:text-2xl text-gray-200 max-w-2xl mx-auto mb-8 text-center">
+            <h1 className="text-xl md:text-3xl xl:text-6xl  font-bold text-white mb-8 text-center">Galaxy Solutions for Every Industry</h1>
+            <p className="text-sm md:text-lg xl:text-2xl text-gray-200 max-w-2xl mx-auto mb-8 text-center">
               From BFS to Insurance, our domain-led Galaxy offerings build on Data Cosmos technologies to bring agility, innovation, and measurable business impact.
             </p>
           </div>
@@ -211,7 +210,7 @@ export default function DataCosmosPage() {
               slidesToShow={1}
               slidesToScroll={1}
               autoplay={true}
-              autoplaySpeed={4000}
+              autoplaySpeed={2000}
               arrows={false}
               appendDots={(dots: any) => (
                 <div style={{ position: 'absolute', bottom: 24, width: '100%' }}>
@@ -253,30 +252,30 @@ export default function DataCosmosPage() {
                     <i className="ri-building-line mr-2"></i>Industry Galaxies
                   </h3>
                   <div className="space-y-2">
-                    <a href="/galaxies/bfsi" className="w-full text-left p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
-                      <i className="ri-bank-line mr-3 text-lg"></i><span className="">Banking & Financial Services</span>
+                    <a href="/galaxies/bfs" className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
+                      <i className="ri-bank-line mr-3 text-xs md:text-sm lg:text-sm xl:text-lg"></i><span className="text-xs md:text-sm lg:text-xs xl:text-lg">Banking & Financial Services</span>
                     </a>
-                    <a href="/galaxies/insurance" className="w-full text-left p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
-                      <i className="ri-shield-line mr-3 text-lg"></i><span className="">Insurance</span>
+                    <a href="/galaxies/insurance" className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
+                      <i className="ri-shield-line mr-3 text-xs md:text-sm lg:text-sm xl:text-lg"></i><span className="text-xs md:text-sm lg:text-xs xl:text-lg">Insurance</span>
                     </a>
-                    <a href="/galaxies/tth" className="w-full text-left p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
-                      <i className="ri-plane-line mr-3 text-lg"></i><span className="">Travel, Transport & Hospitality</span>
+                    <a href="/galaxies/tth" className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
+                      <i className="ri-plane-line mr-3 text-xs md:text-sm lg:text-sm xl:text-lg"></i><span className="text-xs md:text-sm lg:text-xs xl:text-lg">Travel, Transport & Hospitality</span>
                     </a>
-                    <a href="/galaxies/retail" className="w-full text-left p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
-                      <i className="ri-shopping-cart-line mr-3 text-lg"></i><span className="">Retail, Manufacturing & Consumer Goods</span>
+                    <a href="/galaxies/retail" className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
+                      <i className="ri-shopping-cart-line mr-3 text-xs md:text-sm lg:text-sm xl:text-lg"></i><span className="text-xs md:text-sm lg:text-xs xl:text-lg">Retail, Manufacturing & Consumer Goods</span>
                     </a>
-                    <a href="/galaxies/healthcare" className="w-full text-left p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
-                      <i className="ri-heart-pulse-line mr-3 text-lg"></i><span className="">Healthcare & Life Sciences</span>
+                    <a href="/galaxies/healthcare" className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
+                      <i className="ri-heart-pulse-line mr-3 text-xs md:text-sm lg:text-sm xl:text-lg"></i><span className="text-xs md:text-sm lg:text-xs xl:text-lg">Healthcare & Life Sciences</span>
                     </a>
-                    <a href="/galaxies/energy" className="w-full text-left p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
-                      <i className="ri-government-line mr-3 text-lg"></i><span className="">Public Sector, Energy & Utilities</span>
+                    <a href="/galaxies/energy" className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
+                      <i className="ri-government-line mr-3 text-xs md:text-sm lg:text-sm xl:text-lg"></i><span className="text-xs md:text-sm lg:text-xs xl:text-lg">Public Sector, Energy & Utilities</span>
                     </a>
                   </div>
                 </div>
               </div>
               {/* Main cards grid */}
               <div className="lg:col-span-3 max-w-7xl w-full mx-auto px-2 sm:px-4 md:px-6 mt-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 mb-6">
+                <div className="grid grid-cols-1 md:grid-cols-5 xl:grid-cols-5 gap-4 mb-6">
                   {cosmosCards.map(card => (
                     <a
                       key={card.key}
@@ -288,13 +287,13 @@ export default function DataCosmosPage() {
                           <Image src={card.image} alt={card.alt} width={90} height={22} className="md:w-[160px] w-[120px] " />
                         </div>
                         {/* <h4 className="text-white font-semibold  mb-1">{card.title}</h4> */}
-                        <p className="text-xs md:text-base text-blue-300 pt-4 group-hover:text-white transition-colors duration-200">{card.subtitle}</p>
+                        <p className="text-xs md:text-sm lg:text-xs xl:text-lg text-blue-300 pt-4 group-hover:text-white transition-colors duration-200">{card.subtitle}</p>
                       </div>
                       <ul className="space-y-1">
                         {card.items.map((item, idx) => (
                           <li key={idx} className="flex items-start">
-                            <span className="text-xs md:text-base text-cyan-400 mr-1 transition-colors duration-200 group-hover:text-[#86c1ff]">•</span>
-                            <span className="text-xs md:text-base text-gray-200 transition-colors duration-200 group-hover:text-[#86c1ff]">{item}</span>
+                            <span className="text-xs md:text-sm lg:text-xs xl:text-lg text-cyan-400 mr-1 transition-colors duration-200 group-hover:text-[#86c1ff]">•</span>
+                            <span className="text-xs md:text-sm lg:text-xs xl:text-lg text-gray-200 transition-colors duration-200 group-hover:text-[#86c1ff]">{item}</span>
                           </li>
                         ))}
                       </ul>
@@ -347,7 +346,7 @@ export default function DataCosmosPage() {
                         return (
                           <div key={file} className="flex flex-col items-center bg-[#0d1436] border border-slate-700 rounded-lg p-4 shadow-md transition-all duration-200 hover:border-[#F15B40]">
                             <Image src={`/logos/toolkit/${file}`} alt={label} width={36} height={36} />
-                            <span className="text-xs md:text-sm font-bold mt-2 text-center w-full break-words" dangerouslySetInnerHTML={{ __html: htmlLabel }} />
+                            <span className="text-xs xl:text-base font-bold mt-2 text-center w-full break-words" dangerouslySetInnerHTML={{ __html: htmlLabel }} />
                           </div>
                         );
                       });

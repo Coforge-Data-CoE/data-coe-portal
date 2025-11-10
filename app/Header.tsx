@@ -21,7 +21,7 @@ const menuData = [
     label: "Industries",
     icon: "ri-building-line",
     submenu: [
-      { label: "BFSI Galaxy", href: "/galaxies/bfsi", icon: "ri-bank-line" },
+      { label: "BFS Galaxy", href: "/galaxies/bfs", icon: "ri-bank-line" },
       { label: "Insurance Galaxy", href: "/galaxies/ins", icon: "ri-shield-line" },
       { label: "TTH Galaxy", href: "/galaxies/tth", icon: "ri-plane-line" },
       { label: "Retail Galaxy", href: "/galaxies/retail", icon: "ri-shopping-cart-line" },
