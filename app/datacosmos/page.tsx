@@ -84,6 +84,7 @@ const GalaxyBackground = React.lazy(() => import("../components/GalaxyBackground
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { calc } from "antd/es/theme/internal";
 
 export default function DataCosmosPage() {
 
@@ -91,7 +92,7 @@ export default function DataCosmosPage() {
     {
       title: "A Unified Constellation of Data Excellence",
       content: (
-        <div className="relative w-screen h-[85vh] flex flex-col items-center justify-center overflow-hidden">
+        <div className="relative w-screen  flex flex-col items-center justify-center overflow-hidden"  style={{height: "calc(100vh - 64px)"}}>
           {/* Background image */}
           <Image
             src="/bg-7.jpg"
@@ -119,7 +120,7 @@ export default function DataCosmosPage() {
     {
       title: "Powering Transformation with Five Technology Towers",
       content: (
-        <div className="relative w-screen h-[85vh] flex flex-col items-center justify-center overflow-hidden">
+        <div className="relative w-screen  flex flex-col items-center justify-center overflow-hidden"  style={{height: "calc(100vh - 64px)"}}>
           {/* Background image for panel 2 */}
           <Image
             src="/bg-2.jpg" //"/bg-6.jpg"
@@ -166,7 +167,7 @@ export default function DataCosmosPage() {
     {
       title: "Galaxy Solutions for Every Industry",
       content: (
-        <div className="relative w-screen h-[85vh] flex flex-col items-center justify-center overflow-hidden">
+        <div className="relative w-screen  flex flex-col items-center justify-center overflow-hidden"  style={{height: "calc(100vh - 64px)"}}>
           {/* Background image for panel 3 */}
           <Image
             src= "/bg-space.jpg"//"/bg-3.jpg"
@@ -200,9 +201,9 @@ export default function DataCosmosPage() {
         </div>
         {/* Full screen carousel using Ant Design */}
         {/* Full screen carousel using react-slick */}
-        <div className="relative z-20 w-full h-[80vh] flex items-center justify-center">
+        <div className="relative z-20 w-full  flex items-center justify-center" style={{height: "calc(100vh - 64px)"}}>
           <div className="w-full mx-auto py-12 flex flex-col items-center justify-center text-center">
-            <div className="w-full mx-auto">
+            <div className="w-full h-full mx-auto">
               <Slider
               dots={true}
               infinite={true}
@@ -242,7 +243,11 @@ export default function DataCosmosPage() {
           <Suspense fallback={<div className="w-full h-full bg-[#081433]" />}>
             <GalaxyBackground />
           </Suspense>
-          <h1 className="text-xl lg:text-2xl xl:text-4xl font-bold text-center text-white mb-8">Our Offerings</h1>
+          <div className="my-8 flex justify-center">
+              <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] w-[180px]" />
+            </div>
+
+          <h1 className="text-xl lg:text-2xl xl:text-4xl font-bold text-center text-white my-8">Coforge Data Cosmos in one glance</h1>
           <div className=" mx-auto mt-12">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
               {/* Left menu ...existing code... */}
@@ -356,13 +361,13 @@ export default function DataCosmosPage() {
                 {/* Data Partners */}
                 {(() => {
                   const dataPartners = [
-                    { name: "Snowflake", logo: "/logos/snowflake.png" },
-                    { name: "Databricks", logo: "/logos/databricks.png" },
-                    { name: "Snaplogic", logo: "/logos/snaplogic_white.png" },
-                    { name: "dbt", logo: "/logos/dbt.png" },
-                    { name: "Qlik", logo: "/logos/qlik.png" },
-                    { name: "Matillion", logo: "/logos/matillion.png" },
-                    { name: "Coalesce", logo: "/logos/coalesce.png" }
+                    { name: "Snowflake", logo: "/logos/snowflake.png", width: 110, height: 32 },
+                    { name: "Databricks", logo: "/logos/data-bricks_white.png", width: 120, height: 32 },
+                    { name: "Snaplogic", logo: "/logos/snaplogic_white.png", width: 120, height: 32 },
+                    { name: "dbt", logo: "/logos/dbt_white.svg", width: 60, height: 32 },
+                    { name: "Qlik", logo: "/logos/qlik.png", width: 60, height: 32 },
+                    { name: "Matillion", logo: "/logos/matillion.png", width: 100, height: 32 },
+                    { name: "Coalesce", logo: "/logos/coalesce.png", width: 120, height: 32 }
                   ];
                   return (
                     <div className="bg-slate-800/40 backdrop-blur-sm border border-slate-500 rounded-lg p-4 mb-6">
@@ -373,7 +378,7 @@ export default function DataCosmosPage() {
                         {dataPartners.map(partner => (
                           <div key={partner.name} className="bg-[#12182073] rounded-lg p-3 hover:bg-blue-500/50 border border-slate-500 transition-all duration-200 flex flex-col items-center justify-between h-24">
                             <div className="flex-1 flex items-center justify-center">
-                              <Image src={partner.logo} alt={partner.name} width={100} height={32} />
+                              <Image src={partner.logo} alt={partner.name} width={partner.width} height={partner.height} />
                             </div>
                             {/* <p className=" text-gray-400 mt-2 text-center w-full">{partner.name}</p> */}
                           </div>
