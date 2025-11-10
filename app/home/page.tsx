@@ -85,7 +85,7 @@ export default function Home() {
         <h1 className="text-3xl font-bold mb-8 text-white text-center">Data Offerings</h1>
         {/* Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8">
-        {items.map(item => (
+        {React.useMemo(() => items.map(item => (
           <div
             key={item._id}
             className="rounded-lg shadow-lg overflow-hidden flex flex-col items-center"
@@ -103,6 +103,7 @@ export default function Home() {
                 width={64}
                 height={64}
                 className="object-contain rounded-full bg-gray-100 dark:bg-gray-800"
+                loading="lazy"
               />
             </div>
             <div className="p-4 flex-1 flex flex-col">
@@ -111,7 +112,7 @@ export default function Home() {
               {/* <button className="mt-auto bg-[#f15840] text-white px-4 py-2 rounded hover:bg-[#d94c2f] transition">View Details</button> */}
             </div>
           </div>
-        ))}
+        )), [items])}
         </div>
       </div>
     </div>
