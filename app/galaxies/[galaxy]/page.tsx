@@ -364,7 +364,7 @@ export default function GalaxyDetailPage() {
 
     if (!galaxy) {
         return (
-            <main className="min-h-screen flex items-center justify-center" style={{backgroundImage: "linear-gradient(88deg, #111d56, #141946, #090c3a)"}}>
+            <main className="min-h-screen flex items-center justify-center" style={{ backgroundImage: "linear-gradient(88deg, #111d56, #141946, #090c3a)" }}>
                 <div className="bg-slate-800/60 rounded-xl shadow-lg p-8 text-center">
                     <h1 className="text-3xl font-bold text-white mb-4">Galaxy Not Found</h1>
                     <p className="text-lg text-gray-200">The selected galaxy does not exist. Please choose a valid galaxy.</p>
@@ -374,37 +374,43 @@ export default function GalaxyDetailPage() {
     }
 
     return (
-        <main className="min-h-screen px-8 py-12" style={{backgroundImage: "linear-gradient(88deg, #111d56, #141946, #090c3a)"}}>
+        <main className="min-h-screen px-8 py-12" style={{ backgroundImage: "linear-gradient(88deg, #111d56, #141946, #090c3a)" }}>
             <div className="flex items-center mb-8">
-                <Image src={galaxy.logo} alt={galaxy.name} width={48} height={48} />
+                <Image src={galaxy.logo} alt={galaxy.name} width={32} height={32} className="xl:w-[48px] xl:h-[48px] w-[32px] h-[32px]" />
                 <span className="ml-4 text-2xl font-bold text-white">{galaxy.name}</span>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 text-sm xl:text-base">
                 {galaxy.offerings.map((offering, idx) => (
                     <div key={offering.name + idx} className="bg-[#0D1436] rounded-xl shadow-lg p-4 flex flex-col items-stretch justify-between h-full min-h-[420px] border border-slate-500">
                         {/* Logo section */}
-                        <div className="flex justify-center items-center mb-4" style={{ minHeight: '90px' }}>
-                            <Image src={OFFERING_LOGOS[offering.name] || '/coforge-cosmos.png'} alt={offering.name} width={180} height={40} style={{ objectFit: 'contain', display: 'block', margin: '0 auto', maxHeight: '60px' }} />
+                        <div className="flex justify-center items-center mb-4 h-[50px] xl:h-[90px]">
+                            <Image
+                                src={OFFERING_LOGOS[offering.name] || '/coforge-cosmos.png'}
+                                alt={offering.name}
+                                width={90} height={22}
+                                className="md:w-[140px] xl:w-[180px] w-[90px]"
+                                style={{ objectFit: 'contain', display: 'block', margin: '0 auto', maxHeight: '60px' }}
+                            />
                         </div>
                         {/* Key Use Cases section */}
                         <div className="bg-[#232e62] rounded-lg p-3 mb-2 flex-1 flex flex-col justify-between" style={{ minHeight: '120px' }}>
                             <div className="mb-2 flex-1 flex flex-col">
-                                <strong className="text-white mb-1">Our Offerings:</strong>
-                                <ul className="list-disc list-inside text-gray-200 flex-1">
+                                <strong className="text-white mb-1 text-sm xl:text-xl">Our Offerings:</strong>
+                                <ul className="list-disc list-inside text-gray-200 flex-1 text-xs xl:text-lg">
                                     {offering.keyUseCases.map((uc, i) => <li key={i}>{uc}</li>)}
                                 </ul>
                             </div>
                             {/* Customers section */}
-                                                        {offering.customerLogos.filter(logo => logo && logo.trim() !== "").length > 0 && (
-                                                            <div className="mt-2 flex flex-col flex-1 justify-end" style={{ minHeight: '70px' }}>
-                                                                <strong className="text-white mb-1">Customers:</strong>
-                                                                <div className="bg-slate-100 rounded-lg p-3 mt-1 flex flex-row flex-wrap gap-2 border border-slate-200 items-center justify-center min-h-[40px]">
-                                                                    {offering.customerLogos.filter(logo => logo && logo.trim() !== "").map((logo, i) => (
-                                                                        <Image key={i} src={logo} alt="Customer Logo" width={80} height={32} style={{ objectFit: 'contain', maxHeight: '32px' }} />
-                                                                    ))}
-                                                                </div>
-                                                            </div>
-                                                        )}
+                            {offering.customerLogos.filter(logo => logo && logo.trim() !== "").length > 0 && (
+                                <div className="mt-2 flex flex-col flex-1 justify-end" style={{ minHeight: '70px' }}>
+                                    <strong className="text-white mb-1">Customers:</strong>
+                                    <div className="bg-slate-100 rounded-lg p-3 mt-1 flex flex-row flex-wrap gap-2 border border-slate-200 items-center justify-center min-h-[40px]  text-xs xl:text-base">
+                                        {offering.customerLogos.filter(logo => logo && logo.trim() !== "").map((logo, i) => (
+                                            <Image key={i} src={logo} alt="Customer Logo" width={80} height={24} style={{ objectFit: 'contain', maxHeight: '24px' }} />
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 ))}
@@ -469,8 +475,8 @@ export default function GalaxyDetailPage() {
                             const htmlLabel = `<span style='color: #F15B40;'>${first}</span>${rest.length ? ' <span style=\'color: #eeeeee;\'>' + rest.join(' ') + '</span>' : ''}`;
                             return (
                                 <div key={file} className="flex flex-col items-center bg-[#0D1436] border border-slate-600 rounded-lg p-4 shadow-md">
-                                    <Image src={`/logos/toolkit/${file}`} alt={label} width={48} height={48} />
-                                    <span className="text-xs md:text-sm font-bold mt-2 text-center w-full break-words" dangerouslySetInnerHTML={{ __html: htmlLabel }} />
+                                    <Image src={`/logos/toolkit/${file}`} alt={label} width={32} height={32} className="xl:w-[48px] w-[32px]" />
+                                    <span className="text-xs xl:text-base font-bold mt-2 text-center w-full break-words" dangerouslySetInnerHTML={{ __html: htmlLabel }} />
                                 </div>
                             );
                         });

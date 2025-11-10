@@ -69,10 +69,10 @@ function MenuList({ menu, isMobile = false, onClose }: MenuListProps) {
             <Link
               key={item.label}
               href={item.href}
-              className={`menu-link flex items-center gap-2${isMobile ? ' text-2xl w-full justify-start' : ' text-lg'}`}
+              className={`menu-link flex items-center gap-2${isMobile ? ' text-2xl w-full justify-start' : ' text-sm xl:text-lg'}`}
               onClick={onClose}
             >
-              <i className={`${item.icon} ${isMobile ? 'text-2xl' : 'text-lg'}`}></i>{item.label}
+              <i className={`${item.icon} ${isMobile ? 'text-2xl' : 'text-sm xl:text-lg'}`}></i>{item.label}
             </Link>
           );
         }
@@ -111,20 +111,20 @@ function MenuList({ menu, isMobile = false, onClose }: MenuListProps) {
         return (
           <div key={item.label} className={`relative ${item.label === 'Technology Offerings' ? 'offerings-dropdown' : 'galaxies-dropdown'}`}>
             <button
-              className="menu-link flex items-center gap-2 focus:outline-none"
+              className="menu-link flex items-center gap-2 focus:outline-none text-sm xl:text-lg"
               onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
               aria-haspopup="true"
               aria-expanded={openIdx === idx}
             >
-              <i className={`${item.icon} text-lg`}></i>{item.label} ▾
+              <i className={`${item.icon} text-sm xl:text-lg`}></i>{item.label} ▾
             </button>
             {openIdx === idx && (
               <div className={`absolute mt-2 min-w-[220px] bg-[#131B3ACF] rounded shadow-lg transition-opacity z-50 ${isLastMenu ? 'left-[-100px]' : 'left-0'}`}>
                 <ul className="py-2" style={{ border: '1px solid #add8e66e', borderRadius: '0 0 10px 10px' }}>
                   {item.submenu.map((sub) => (
                     <li key={sub.label}>
-                      <Link href={sub.href} className="menu-link block px-6 py-2 flex items-center gap-2">
-                        <i className={`${sub.icon} text-lg`}></i>{sub.label}
+                      <Link href={sub.href} className="menu-link block px-6 py-2 flex items-center gap-2 text-sm xl:text-lg">
+                        <i className={`${sub.icon} text-sm xl:text-lg`}></i>{sub.label}
                       </Link>
                     </li>
                   ))}
@@ -178,10 +178,10 @@ export default function Header() {
   return (
     <>
       {/* Desktop Header (hidden on mobile) */}
-  <header className="sticky top-0 z-50 w-full bg-[#0A0F2C] shadow-md py-4 px-8 items-center justify-between hidden md:flex">
+  <header className="sticky top-0 z-50 w-full bg-[#0A0F2C] shadow-md py-2 xl:py-4 px-8 items-center justify-between hidden md:flex">
         <div className="flex items-center gap-3">
           <Link href="/datacosmos">
-            <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Logo" width={200} height={36} />
+            <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Logo" width={200} height={36} className="w-[140px] xl:w-[200px]" />
           </Link>
         </div>
         <nav className="flex gap-6 items-center">
