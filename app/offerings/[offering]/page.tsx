@@ -14,19 +14,19 @@ const OFFERING_CONTENT: Record<string, OfferingContent> = {
         </p> */}
         <p className="mb-4 font-semibold">The five Supernovae DE solutions we offer are:</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <Card title={<div className="text-white"><strong>Data Appliance Decommissioning</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }} title={<div className="text-white text-sm xl:text-lg"><strong>Data Appliance Decommissioning</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             Retire costly and inefficient legacy data appliances (such as Teradata, Exadata, Greenplum, Netezza, etc) and migrate the data and workloads securely to hyperscaler environments (Azure, AWS, Google Cloud)
           </Card>
-          <Card title={<div className="text-white"><strong>ETL Modernization</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }} title={<div className="text-white text-sm xl:text-lg  text-sm xl:text-lg"><strong>ETL Modernization</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             Simplify, optimize, and re-platform legacy ETL (Informatica, DataStage, Ab Initio, etc.) workloads into modular, metadata-driven modern spark-based data pipelines running on cloud at the fraction of compute cost and no license fees.
           </Card>
-          <Card title={<div className="text-white"><strong>Report Modernization</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }} title={<div className="text-white text-sm xl:text-lg  text-sm xl:text-lg"><strong>Report Modernization</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             Streamline, rationalize and standardize legacy reporting systems (such as Business Objects, Cognos, Crystal Reports, etc.) to deliver modern, cloud native reporting platform on PowerBI. We even offer Tableau to PowerBI conversion as we see much demand in this due to exorbitant cost of Tableau. PowerBI is offered at fraction of the cost and many time such programs pay for themselves after license cost reduction over 3 to 5 years.
           </Card>
-          <Card title={<div className="text-white"><strong>DBMS Modernization</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }} title={<div className="text-white text-sm xl:text-lg  text-sm xl:text-lg"><strong>DBMS Modernization</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             Migrate, optimize, and refactor on-premise databases such as Sybase, Oracle, SQL Server into open-source PostgreSQL on cloud or cloud-native databases managed services.
           </Card>
-          <Card title={<div className="text-white"><strong>AI/ML Modernization</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }} title={<div className="text-white text-sm xl:text-lg  text-sm xl:text-lg"><strong>AI/ML Modernization</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             Reimagine data science and AI workflows through modularized, production-ready, cloud-native machine learning architectures. Under this offering, we modernize SAS, SPSS or R based models into latest Python / Scala models with PySpark or ScalaSpark data prep pipelines.
           </Card>
         </div>
@@ -42,19 +42,19 @@ const OFFERING_CONTENT: Record<string, OfferingContent> = {
         </p> */}
         <p className="mb-2 font-semibold">Under Nebula portfolio, we offer:</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <Card title={<div className="text-white"><strong>Defining Modern Data Strategy</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }}  title={<div className="text-white text-sm xl:text-lg"><strong>Defining Modern Data Strategy</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             It’s a fixed 8 weeks Design Thinking led engagement where we deploy a small team of consultants who work with client stakeholders to Define, Design and Operationalize enterprise-wide / BU wise data strategy aimed at business growth, operational efficiency, data monetization, NBO/NBA, compliance, and AI-readiness / Adoption.
           </Card>
-          <Card title={<div className="text-white"><strong>Agentic/AI enabled Data Management</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }}  title={<div className="text-white text-sm xl:text-lg"><strong>Agentic/AI enabled Data Management</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             Our proven AI4Data offering leverages the recent GenAI led innovations to enable autonomous, self-healing data ecosystems with AI-driven governance, automated quality monitoring, and unified metadata and catalog services.
           </Card>
-          <Card title={<div className="text-white"><strong>Insight & Decision Support</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }}  title={<div className="text-white text-sm xl:text-lg"><strong>Insight & Decision Support</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             Integrate semantic layers, knowledge graphs, and decision intelligence-based data solutions to enable dynamic BI dashboards, accelerate Self-service user to transform enterprise data into actionable insights.
           </Card>
-          <Card title={<div className="text-white"><strong>MLOps</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }}  title={<div className="text-white text-sm xl:text-lg"><strong>MLOps</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             Operationalize AI/ML workflows with governed pipelines, version control, and lifecycle automation. This also covers MRM programs that banks must deploy for their ML models in functions such as credit scoring, cross sell/up sell, risk modeling, liquidity assessment, etc.
           </Card>
-          <Card title={<div className="text-white"><strong>Data Governance, Quality & Catalog</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }}  title={<div className="text-white text-sm xl:text-lg"><strong>Data Governance, Quality & Catalog</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             Embed data governance, data access right (RBAC) data lineage, and data quality monitoring and self-correction (where possible) into every data modernization layer. This offering also allows automated metadata capture to build technical metadata dictionaries to deliver data catalogs and business glossaries.
           </Card>
         </div>
@@ -70,19 +70,19 @@ const OFFERING_CONTENT: Record<string, OfferingContent> = {
         </p> */}
         <p className="mb-2 font-semibold">Under Hypernova, some offerings we provide are as follows:</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <Card title={<div className="text-white"><strong>Data Mesh Buildout and Deployment</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }}  title={<div className="text-white text-sm xl:text-lg"><strong>Data Mesh Buildout and Deployment</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             Build and deploy a DataMesh that is opinionated but standardized for specific HyperScaler’s Cloud data products. Under this offering, we provide three specific DataMesh architectures for Azure, AWS, and GCP.
           </Card>
-          <Card title={<div className="text-white"><strong>Dynamic Data Ingestion Pipelines</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }}  title={<div className="text-white text-sm xl:text-lg"><strong>Dynamic Data Ingestion Pipelines</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             Build zero-code / zero ETL, dynamic data ingestion pipelines based on configurations and agentic-AI. The aim is to reduce ETL code and take care of most of data ingestion needs by deploying platform based dynamic data pipelines.
           </Card>
-          <Card title={<div className="text-white"><strong>Greenfield Data Lake / Cloud Warehouse development</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }}  title={<div className="text-white text-sm xl:text-lg"><strong>Greenfield Data Lake / Cloud Warehouse development</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             We offer greenfield development of cloud data warehouses and data lakes built on Snowflake, Databricks, AWS Redshift, GCP BQ, etc. to enable clients take advantage of these cloud native platforms to develop data solutions with faster time to market. Mostly these solutions are custom build business applications running on cloud based data platforms. We have host of accelerators within the Cosmos Data Toolkit that provide acceleration in such greenfield implementations.
           </Card>
-          <Card title={<div className="text-white"><strong>Development of Advanced Analytics</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }}  title={<div className="text-white text-sm xl:text-lg"><strong>Development of Advanced Analytics</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             Develop advanced analytics reports and dashboards for client’s needs. Also offer user sand-boxes to enable self-service and data wrangling for the power users.
           </Card>
-          <Card title={<div className="text-white"><strong>AI/ML model development, training and deployment</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }}  title={<div className="text-white text-sm xl:text-lg"><strong>AI/ML model development, training and deployment</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             Design, develop, train, validate and deploy new AI/ML models on cloud platforms such as AWS SageMaker, AzureML, GCP Vertex or Dataiku, Datakitchen, H2O, etc.
           </Card>
         </div>
@@ -98,19 +98,19 @@ const OFFERING_CONTENT: Record<string, OfferingContent> = {
         </p> */}
         <p className="mb-2 font-semibold">What We Offer:</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <Card title={<div className="text-white"><strong>Agentic L1, L1.5 & L2 Break-Fixes</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }}  title={<div className="text-white text-sm xl:text-lg"><strong>Agentic L1, L1.5 & L2 Break-Fixes</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             Automate triage and resolution across support tiers using AI-powered runbooks, contextual knowledge bases, and real-time remediation workflows.
           </Card>
-          <Card title={<div className="text-white"><strong>KT-as-a-Service</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }}  title={<div className="text-white text-sm xl:text-lg"><strong>KT-as-a-Service</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             Accelerate onboarding and knowledge continuity through on-demand, AI-curated knowledge transfer modules and guided diagnostics.
           </Card>
-          <Card title={<div className="text-white"><strong>System and DB Log Analysis</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }}  title={<div className="text-white text-sm xl:text-lg"><strong>System and DB Log Analysis</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             Identify patterns, anomalies, and failure points instantly using machine learning–driven log analysis for faster root cause isolation.
           </Card>
-          <Card title={<div className="text-white"><strong>Production Ticket Analysis</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }}  title={<div className="text-white text-sm xl:text-lg"><strong>Production Ticket Analysis</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             Optimize operations by using NLP-based insights to classify, prioritize, and resolve repetitive incidents automatically.
           </Card>
-          <Card title={<div className="text-white"><strong>Backlog Analysis</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
+          <Card bodyStyle={{ fontSize: '1.1rem' }}  title={<div className="text-white text-sm xl:text-lg"><strong>Backlog Analysis</strong></div>} className="text-left comet-cursor" style={{ background: '#131B3A', color: 'white' }}>
             Improve productivity and SLA adherence through predictive analytics that identify blockers, dependencies, and effort hotspots in real time.
           </Card>
         </div>
@@ -119,8 +119,19 @@ const OFFERING_CONTENT: Record<string, OfferingContent> = {
   },
   quasar: {
     title: "Coforge QUASAR",
-    description:
-      "QUASAR enables Gen AI Adoption in Data and Analytics, with Coforge AI Studio, OpenSource, LLM Router, Gen AI Central, Trust AI, Cockpit-Insights, and Document Analyzer."
+    description: (
+      <div className="text-2xl max-w-6xl mx-auto">
+        QUASAR enables Gen AI Adoption in Data and Analytics, with Coforge AI Studio, OpenSource, LLM Router, Gen AI Central, Trust AI, Cockpit-Insights, and Document Analyzer.<br />
+        <a
+          href="https://quasarmarket.coforge.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block mt-6 px-6 py-4 rounded bg-[#f15840] text-white font-semibold shadow hover:bg-[#d94c2f] transition"
+        >
+          Visit Quasar Marketplace
+        </a>
+      </div>
+    )
   }
 };
 
@@ -147,7 +158,7 @@ export default function OfferingPage() {
             <img src={OFFERING_LOGOS[offering]} alt={content.title} style={{ height: 48, maxWidth: 220, objectFit: 'contain' }} />
           </div>
         ) : (
-          <h1 className="text-4xl font-bold text-white mb-6 text-white">{content.title}</h1>
+          <h1 className="text-4xl font-bold text-white text-sm xl:text-lg mb-6 text-white text-sm xl:text-lg">{content.title}</h1>
         )}
         <div className="text-xl text-gray-200 mb-4">{content.description}</div>
       </div>
