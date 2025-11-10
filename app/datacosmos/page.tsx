@@ -247,7 +247,7 @@ export default function DataCosmosPage() {
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
               {/* Left menu ...existing code... */}
               <div className="lg:col-span-1">
-                <div className="bg-slate-800/40 backdrop-blur-sm border border-slate-700 rounded-lg p-4 md:w-[98vw] md:max-w-[98vw]">
+                <div className="bg-slate-800/40 backdrop-blur-sm border border-slate-700 rounded-lg p-4" style={{ width: 'calc(100vw - 3rem)' }}>
                   <h3 className="text-white font-semibold mb-4 flex items-center">
                     <i className="ri-building-line mr-2"></i>Industry Galaxies
                   </h3>
