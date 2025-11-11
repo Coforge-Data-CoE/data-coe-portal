@@ -35,6 +35,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
         <script src="/sparkle-cursor.js" defer></script>
+        <meta property="og:title" content="Coforge Data Cosmos" />
+        <meta property="og:description" content="Coforge Data Cosmos is AI enabled, foundational innovation platform." />
+        <meta property="og:image" content="https://coforge-data-cosmos.eastus2.cloudapp.azure.com/logos/galaxies/coforge-cosmos_white.svg" />
+        <meta property="og:url" content="https://coforge-data-cosmos.eastus2.cloudapp.azure.com/" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased comet-cursor`}

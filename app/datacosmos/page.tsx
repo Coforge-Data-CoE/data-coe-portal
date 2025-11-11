@@ -199,44 +199,47 @@ export default function DataCosmosPage() {
         <div className="absolute inset-0 pointer-events-none">
           {/* You can add animated dots here if needed */}
         </div>
-        {/* Full screen carousel using Ant Design */}
         {/* Full screen carousel using react-slick */}
         <div className="relative z-20 w-full  flex items-center justify-center" style={{height: "calc(100vh - 64px)"}}>
           <div className="w-full mx-auto py-12 flex flex-col items-center justify-center text-center">
             <div className="w-full h-full mx-auto">
               <Slider
-              dots={true}
-              infinite={true}
-              speed={500}
-              slidesToShow={1}
-              slidesToScroll={1}
-              autoplay={true}
-              autoplaySpeed={2000}
-              arrows={false}
-              appendDots={(dots: any) => (
-                <div style={{ position: 'absolute', bottom: 24, width: '100%' }}>
-                  <ul style={{ margin: 0, display: 'flex', justifyContent: 'center' }}>{dots}</ul>
-                </div>
-              )}
-              customPaging={(i: any) => (
-                <button style={{
-                  width: 16,
-                  height: 16,
-                  borderRadius: '50%',
-                  background: '#86c1ff',
-                  border: '2px solid #fff',
-                  opacity: 0.7,
-                  margin: '2px',
-                  cursor: 'pointer'
-                }} />
-              )}
-            >
-              {carouselPanels.map((panel, idx) => (
-                <div key={idx}>{panel.content}</div>
-              ))}
+                dots={true}
+                infinite={true}
+                speed={500}
+                slidesToShow={1}
+                slidesToScroll={1}
+                autoplay={true}
+                autoplaySpeed={2000}
+                arrows={false}
+                appendDots={(dots: any) => (
+                  <div style={{ position: 'absolute', bottom: 24, width: '100%' }}>
+                    <ul style={{ margin: 0, display: 'flex', justifyContent: 'center' }}>{dots}</ul>
+                  </div>
+                )}
+                customPaging={(i: any) => (
+                  <button style={{
+                    width: 16,
+                    height: 16,
+                    borderRadius: '50%',
+                    background: '#86c1ff',
+                    border: '2px solid #fff',
+                    opacity: 0.7,
+                    margin: '2px',
+                    cursor: 'pointer'
+                  }} />
+                )}
+              >
+                {carouselPanels.map((panel, idx) => (
+                  <div key={idx}>{panel.content}</div>
+                ))}
               </Slider>
             </div>
           </div>
+        </div>
+        {/* Add image below carousel */}
+        <div className="w-full flex justify-center items-center my-8">
+          <Image src="/data-cosmos-unified-trans.png" alt="Coforge Data Cosmos Unified" width={900} height={400} className="rounded-xl shadow-lg w-full h-auto" />
         </div>
         <div className="relative z-10 p-6 pt-16" style={{ backgroundImage: "linear-gradient(88deg, #05091a, #162065, #09113a)" }}>
           {/* Galaxy background effect */}
