@@ -139,10 +139,13 @@ function MenuList({ menu, isMobile = false, onClose }: MenuListProps) {
 }
 
 import React, { useState } from "react";
+import { Avatar } from "antd";
+import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Header() {
+  const { data: session, status } = useSession();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [galaxyDropdownOpen, setGalaxyDropdownOpen] = useState(false);
 
@@ -186,7 +189,29 @@ export default function Header() {
         </div>
         <nav className="flex gap-6 items-center">
           <MenuList menu={menuData} />
+          {/* User info and logout */}
+        {status === "loading" ? null : session && session.user ? (
+          <div className="flex items-center gap-3 ml-6">
+            <Avatar
+              src={typeof session.user.image === "string" && session.user.image ? session.user.image : undefined}
+              alt={session.user.name || session.user.email || "User"}
+              size={36}
+              style={{ border: "1px solid #f15840", background: "#140436ff" }}
+            >
+              {session.user.name ? session.user.name[0] : (session.user.email ? session.user.email[0] : "U")}
+            </Avatar>
+            <span className="text-white text-sm font-semibold">{session.user.name || session.user.email}</span>
+            <span className="ps-1 text-white">|</span>
+            <button
+              className="px-1 py-1 rounded text-[#f15840]  font-semibold shadow hover:bg-[#d94c2f] hover:text-white transition text-sm"
+              onClick={() => signOut({ callbackUrl: '/signin' })}
+            >
+              Signout
+            </button>
+          </div>
+        ) : null}
         </nav>
+        
       </header>
 
       {/* Mobile Header (hidden on desktop) */}
@@ -216,6 +241,18 @@ export default function Header() {
           <nav className="flex flex-col gap-6 items-center text-white text-xl w-full max-w-xs">
             <MenuList menu={menuData} isMobile={true} onClose={() => setMenuOpen(false)} />
           </nav>
+          {/* User info and logout at bottom for mobile */}
+          {status === "loading" ? null : session && session.user ? (
+            <div className="absolute bottom-0 left-0 w-full flex flex-col items-center justify-center bg-[#181C2A]/80 py-6 border-t border-[#f15840]">
+              <span className="text-white text-base font-semibold mb-2">{session.user.name || session.user.email}</span>
+              <button
+                className="px-6 py-2 rounded bg-[#f15840] text-white font-semibold shadow hover:bg-[#d94c2f] transition text-base"
+                onClick={() => signOut({ callbackUrl: '/signin' })}
+              >
+                Logout
+              </button>
+            </div>
+          ) : null}
         </div>
       )}
     </>
