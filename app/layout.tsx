@@ -2,8 +2,8 @@ import "@ant-design/v5-patch-for-react-19";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "./Header";
 import SessionProviderWrapper from "./SessionProviderWrapper";
+import AuthGuard from "./auth-guard";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,9 +41,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased comet-cursor`}
       >
         <div className="cursor"></div>
-        <Header />
         <SessionProviderWrapper>
-          {children}
+          <AuthGuard>
+            {children}
+          </AuthGuard>
         </SessionProviderWrapper>
       </body>
     </html>
