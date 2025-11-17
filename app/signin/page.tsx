@@ -37,7 +37,7 @@ export default function AuthPage() {
             className="cursor-pointer px-6 py-2 my-4 rounded bg-[#1C165D] text-white font-semibold shadow hover:bg-[#070d4f] transition"
             onClick={async () => {
               try {
-                await signIn("azure-ad", { callbackUrl: `${basePath}` }, { basePath: nextAuthBasePath });
+                await signIn("azure-ad", { callbackUrl: `${basePath}/datacosmos` }, { basePath: nextAuthBasePath });
               } catch (err) {
                 console.error("signIn error:", err);
               }
