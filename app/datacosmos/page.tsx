@@ -106,7 +106,7 @@ export default function DataCosmosPage() {
           {/* Content above background */}
           <div className="relative z-20 flex flex-col items-center justify-center w-full px-4">
             <div className="mb-8 flex justify-center">
-              <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px]  w-[180px]" />
+              <Image src={"/logos/galaxies/coforge-cosmos_white.svg"} alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px]  w-[180px]" />
             </div>
             <h1 className="text-xl md:text-3xl xl:text-4xl 2xl:text-6xl font-bold text-white mb-10 text-center drop-shadow-lg">A Unified Constellation of Data Excellence</h1>
             <p className="text-sm md:text-lg xl:text-2xl text-gray-200 max-w-3xl mx-auto mb-10 text-center drop-shadow-md">
@@ -132,7 +132,7 @@ export default function DataCosmosPage() {
           <div className="absolute inset-0 bg-[#0c1b48]/70 z-10" />
           <div className="relative z-20 flex flex-col items-center justify-center w-full px-4">
             <div className="mb-8 flex justify-center">
-              <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] w-[180px]" />
+              <Image src={"/logos/galaxies/coforge-cosmos_white.svg"} alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] w-[180px]" />
             </div>
             <h1 className="text-xl md:text-3xl xl:text-4xl 2xl:text-6xl font-bold text-white mb-8 text-center">Powering Transformation with Five Technology Towers</h1>
             <div className="text-sm md:text-lg xl:text-2xl text-gray-200 max-w-2xl mx-auto mb-8 text-center">
@@ -179,7 +179,7 @@ export default function DataCosmosPage() {
           <div className="absolute inset-0 bg-[#0c1b48]/70 z-10" />
           <div className="relative z-20 flex flex-col items-center justify-center w-full px-4">
             <div className="mb-8 flex justify-center">
-              <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] w-[180px]" />
+              <Image src={"/logos/galaxies/coforge-cosmos_white.svg"} alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] w-[180px]" />
             </div>
             <h1 className="text-xl md:text-3xl xl:text-4xl 2xl:text-6xl  font-bold text-white mb-8 text-center">Galaxy Solutions for Every Industry</h1>
             <p className="text-sm md:text-lg xl:text-2xl text-gray-200 max-w-2xl mx-auto mb-8 text-center">
@@ -244,7 +244,7 @@ export default function DataCosmosPage() {
             <GalaxyBackground />
           </Suspense>
           <div className="my-8 flex justify-center">
-              <Image src="/logos/galaxies/coforge-cosmos_white.svg" alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] w-[180px]" />
+              <Image src={"/logos/galaxies/coforge-cosmos_white.svg"} alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] w-[180px]" />
             </div>
 
           <h1 className="text-xl lg:text-2xl xl:text-4xl font-bold text-center text-white my-8">Coforge Data Cosmos in one glance</h1>
@@ -349,10 +349,14 @@ export default function DataCosmosPage() {
                         const [first, ...rest] = label.split(' ');
                         const htmlLabel = `<span style='color: #F15B40;'>${first}</span>${rest.length ? ' <span style=\'color: white;\'>' + rest.join(' ') + '</span>' : ''}`;
                         return (
-                          <div key={file} className="flex flex-col items-center bg-[#0d1436] border border-slate-700 rounded-lg p-4 shadow-md transition-all duration-200 hover:border-[#F15B40]">
+                          <a
+                            key={file}
+                            href={`/accelerator/${file.replace(/\.[^/.]+$/, "")}`}
+                            className="flex flex-col items-center bg-[#0d1436] border border-slate-700 rounded-lg p-4 shadow-md transition-all duration-200 hover:border-[#F15B40] cursor-pointer"
+                          >
                             <Image src={`/logos/toolkit/${file}`} alt={label} width={36} height={36} />
                             <span className="text-xs xl:text-base font-bold mt-2 text-center w-full break-words" dangerouslySetInnerHTML={{ __html: htmlLabel }} />
-                          </div>
+                          </a>
                         );
                       });
                     })()}
@@ -395,19 +399,19 @@ export default function DataCosmosPage() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="bg-[#12182073] rounded-lg p-4 text-center hover:bg-[#0b0b20] border border-slate-500 transition-all duration-200 flex flex-col items-center justify-between h-24">
                       <div className="flex-1 flex items-center justify-center">
-                        <Image src="/logos/azure.png" alt="Microsoft Azure" width={100} height={32} />
+                        <Image src={"/logos/azure.png"} alt="Microsoft Azure" width={100} height={32} />
                       </div>
                       {/* <p className=" text-gray-400 mt-2 text-center w-full">Microsoft Azure</p> */}
                     </div>
                     <div className="bg-[#12182073] rounded-lg p-4 text-center hover:bg-[#0b0b20] border border-slate-500 transition-all duration-200  flex flex-col items-center justify-between h-24">
                       <div className="flex-1 flex items-center justify-center">
-                        <Image src="/logos/aws.png" alt="AWS" width={60} height={32} />
+                        <Image src={"/logos/aws.png"} alt="AWS" width={60} height={32} />
                       </div>
                       {/* <p className=" text-gray-400 mt-2 text-center w-full">AWS</p> */}
                     </div>
                     <div className="bg-[#12182073] rounded-lg p-4 text-center hover:bg-[#0b0b20] border border-slate-500 transition-all duration-200 flex flex-col items-center justify-between h-24">
                       <div className="flex-1 flex items-center justify-center">
-                        <Image src="/logos/google-cloud.png" alt="Google Cloud" width={150} height={32} />
+                        <Image src={"/logos/google-cloud.png"} alt="Google Cloud" width={150} height={32} />
                       </div>
                       {/* <p className=" text-gray-400 mt-2 text-center w-full">Google Cloud</p> */}
                     </div>

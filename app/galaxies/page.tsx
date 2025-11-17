@@ -39,7 +39,7 @@ export default function GalaxiesPage() {
   return (
     <main className="min-h-screen px-8 py-12">
       <div className="flex items-center mb-8">
-        <Image src="/coforge-logo.svg" alt="Logo" width={48} height={48} />
+        <Image src={"/coforge-logo.svg"} alt="Logo" width={48} height={48} />
         <span className="ml-4 text-2xl font-bold text-white">Industry Galaxies</span>
       </div>
       <div className="grid grid-cols-5 gap-6">
