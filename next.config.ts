@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  basePath: '/datacosmos',
+  assetPrefix: '/datacosmos',
   experimental: {
     serverActions: {
       bodySizeLimit: '100mb',
