@@ -43,6 +43,14 @@ export const authOptions: AuthOptions = {
   session: { strategy: "jwt" },
   callbacks: {
     async jwt({ token, account, profile }) {
+      if (account && profile) {
+        console.log("[NextAuth] Login success:", {
+          email: (profile as any).email || (profile as any).preferred_username,
+          name: (profile as any).name,
+          oid: (profile as any).oid,
+          provider: account.provider,
+        });
+      }
       // On initial sign-in populate identity basics
       if (account && profile) {
         token.email = (profile as any).email || (profile as any).preferred_username;
@@ -92,6 +100,12 @@ export const authOptions: AuthOptions = {
       // session.user.employeeCode = typeof token.employeeCode === "string" ? token.employeeCode : undefined;
       // session.user.teamId = typeof token.teamId === "number" ? token.teamId : undefined;
       // session.user.teamName = typeof token.teamName === "string" ? token.teamName : undefined;
+      console.log("[NextAuth] Session callback:", {
+        email: token.email,
+        name: token.name,
+        oid: token.oid,
+        role: token.role,
+      });
       return session;
     },
   },

@@ -2,5 +2,6 @@
 import { SessionProvider } from "next-auth/react";
 
 export default function SessionProviderWrapper({ children }: { children: React.ReactNode }) {
-  return <SessionProvider>{children}</SessionProvider>;
+  const nextAuthBasePath = process.env.NEXT_PUBLIC_NEXTAUTH_BASE_PATH || "/datacosmos/api/auth";
+  return <SessionProvider basePath={nextAuthBasePath}>{children}</SessionProvider>;
 }
