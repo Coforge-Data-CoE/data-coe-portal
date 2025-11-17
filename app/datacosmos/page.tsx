@@ -95,7 +95,7 @@ export default function DataCosmosPage() {
         <div className="relative w-screen  flex flex-col items-center justify-center overflow-hidden"  style={{height: "calc(100vh - 64px)"}}>
           {/* Background image */}
           <Image
-            src="/bg-7.jpg"
+            src={`${basePath}/bg-7.jpg`}
             alt="Data Cosmos Background"
             fill
             className="object-cover w-full h-full absolute inset-0 z-0"
@@ -170,7 +170,7 @@ export default function DataCosmosPage() {
         <div className="relative w-screen  flex flex-col items-center justify-center overflow-hidden"  style={{height: "calc(100vh - 64px)"}}>
           {/* Background image for panel 3 */}
           <Image
-            src= "/bg-space.jpg"//"/bg-3.jpg"
+            src= {`${basePath}/bg-space.jpg`}//"/bg-3.jpg"
             alt="Panel 3 Background"
             fill
             className="object-cover w-full h-full absolute inset-0 z-0"
