@@ -35,7 +35,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&display=swap"
           rel="stylesheet"
         />
-        <script src="/sparkle-cursor.js" defer></script>
+        <script src="/datacosmos/sparkle-cursor.js" defer></script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased comet-cursor`}
