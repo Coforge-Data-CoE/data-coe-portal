@@ -206,7 +206,7 @@ export default function Header() {
             <span className="ps-1 text-white">|</span>
             <button
               className="px-1 py-1 rounded text-[#f15840]  font-semibold shadow hover:bg-[#d94c2f] hover:text-white transition text-sm"
-              onClick={() => signOut({ callbackUrl: '/datacosmos/signin' })}
+              onClick={() => signOut({ callbackUrl: `${basePath}/signin` })}
             >
               Signout
             </button>
@@ -249,7 +249,7 @@ export default function Header() {
               <span className="text-white text-base font-semibold mb-2">{session.user.name || session.user.email}</span>
               <button
                 className="px-6 py-2 rounded bg-[#f15840] text-white font-semibold shadow hover:bg-[#d94c2f] transition text-base"
-                onClick={() => signOut({ callbackUrl: '/datacosmos/signin' })}
+                onClick={() => signOut({ callbackUrl: `${basePath}/signin` })}
               >
                 Logout
               </button>
