@@ -334,27 +334,28 @@ const GALAXIES: Galaxy[] = [
         ],
     },
 ];
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "/datacosmos";
 
 // Tech stack model
 const TECH_STACK = [
-    { name: "Azure", logo: "/logos/azure.png", width: 100, height: 32 },
-    { name: "AWS", logo: "/logos/aws.png", width: 60, height: 32 },
-    { name: "Google Cloud Platform", logo: "/logos/gcp.png", width: 140, height: 32 },
-    { name: "Snowflake", logo: "/logos/snowflake.png", width: 120, height: 32 },
-    { name: "Databricks", logo: "/logos/data-bricks_white.png", width: 140, height: 32 },
-    { name: "dbt", logo: "/logos/dbt_white.svg", width: 60, height: 20 },
-    { name: "Qlik", logo: "/logos/qlik.png", width: 80, height: 32 },
-    { name: "Matillion", logo: "/logos/matillion.png", width: 100, height: 32 },
-    { name: "Snaplogic", logo: "/logos/snaplogic_white.png", width: 100, height: 32 },
+    { name: "Azure", logo: `${basePath}/logos/azure.png`, width: 100, height: 32 },
+    { name: "AWS", logo: `${basePath}/logos/aws.png`, width: 60, height: 32 },
+    { name: "Google Cloud Platform", logo: `${basePath}/logos/gcp.png`, width: 140, height: 32 },
+    { name: "Snowflake", logo: `${basePath}/logos/snowflake.png`, width: 120, height: 32 },
+    { name: "Databricks", logo: `${basePath}/logos/data-bricks_white.png`, width: 140, height: 32 },
+    { name: "dbt", logo: `${basePath}/logos/dbt_white.svg`, width: 60, height: 20 },
+    { name: "Qlik", logo: `${basePath}/logos/qlik.png`, width: 80, height: 32 },
+    { name: "Matillion", logo: `${basePath}/logos/matillion.png`, width: 100, height: 32 },
+    { name: "Snaplogic", logo: `${basePath}/logos/snaplogic_white.png`, width: 100, height: 32 },
 ];
 
 // Offering logo mapping
 const OFFERING_LOGOS: Record<string, string> = {
-    Supernova: '/logos/galaxies/coforge-supernova_white.svg',
-    Nebula: '/logos/galaxies/coforge-nebula_white.svg',
-    Hypernova: '/logos/galaxies/coforge-hypernova_white.svg',
-    Pulsar: '/logos/galaxies/coforge-pulsar_white.svg',
-    Quasar: '/logos/galaxies/coforge-quasar_white.svg',
+    Supernova: `${basePath}/logos/galaxies/coforge-supernova_white.svg`,
+    Nebula: `${basePath}/logos/galaxies/coforge-nebula_white.svg`,
+    Hypernova: `${basePath}/logos/galaxies/coforge-hypernova_white.svg`,
+    Pulsar: `${basePath}/logos/galaxies/coforge-pulsar_white.svg`,
+    Quasar: `${basePath}/logos/galaxies/coforge-quasar_white.svg`,
 };
 
 export default function GalaxyDetailPage() {

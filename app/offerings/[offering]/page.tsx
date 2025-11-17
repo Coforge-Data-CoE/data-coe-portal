@@ -134,16 +134,17 @@ const OFFERING_CONTENT: Record<string, OfferingContent> = {
     )
   }
 };
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "/datacosmos";
 
 export default function OfferingPage() {
   const params = useParams();
   const offering = (params.offering as string)?.toLowerCase();
   const OFFERING_LOGOS: Record<string, string> = {
-    supernova: '/logos/galaxies/coforge-supernova_white.svg',
-    nebula: '/logos/galaxies/coforge-nebula_white.svg',
-    hypernova: '/logos/galaxies/coforge-hypernova_white.svg',
-    pulsar: '/logos/galaxies/coforge-pulsar_white.svg',
-    quasar: '/logos/galaxies/coforge-quasar_white.svg',
+    supernova: `${basePath}/logos/galaxies/coforge-supernova_white.svg`,
+    nebula: `${basePath}/logos/galaxies/coforge-nebula_white.svg`,
+    hypernova: `${basePath}/logos/galaxies/coforge-hypernova_white.svg`,
+    pulsar: `${basePath}/logos/galaxies/coforge-pulsar_white.svg`,
+    quasar: `${basePath}/logos/galaxies/coforge-quasar_white.svg`,
   };
   const content = OFFERING_CONTENT[offering] || {
     title: "Offering Not Found",
