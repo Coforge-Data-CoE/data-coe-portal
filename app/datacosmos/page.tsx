@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "/datacosmos";
 const cosmosCards = [
   {
     key: "supernova",
-    image: "/logos/galaxies/coforge-supernova_white.svg",
+    image: `${basePath}/logos/galaxies/coforge-supernova_white.svg`,
     alt: "SUPERNOVA",
     title: "Coforge SUPERNOVA",
     subtitle: "Data Modernization & Cloud Migration",
@@ -20,7 +20,7 @@ const cosmosCards = [
   },
   {
     key: "nebula",
-    image: "/logos/galaxies/coforge-nebula_white.svg",
+    image: `${basePath}/logos/galaxies/coforge-nebula_white.svg`,
     alt: "NEBULA",
     title: "Coforge NEBULA",
     subtitle: "Core Offerings",
@@ -34,7 +34,7 @@ const cosmosCards = [
   },
   {
     key: "hypernova",
-    image: "/logos/galaxies/coforge-hypernova_white.svg",
+    image: `${basePath}/logos/galaxies/coforge-hypernova_white.svg`,
     alt: "HYPERNOVA",
     title: "Coforge HYPERNOVA",
     subtitle: "Industry Led Data Mesh Solutions",
@@ -48,7 +48,7 @@ const cosmosCards = [
   },
   {
     key: "pulsar",
-    image: "/logos/galaxies/coforge-pulsar_white.svg",
+    image: `${basePath}/logos/galaxies/coforge-pulsar_white.svg`,
     alt: "PULSAR",
     title: "Coforge PULSAR",
     subtitle: "Agentic DataOps Support Platform",
@@ -62,7 +62,7 @@ const cosmosCards = [
   },
   {
     key: "quasar",
-    image: "/logos/galaxies/coforge-quasar_white.svg",
+    image: `${basePath}/logos/galaxies/coforge-quasar_white.svg`,
     alt: "QUASAR",
     title: "Coforge QUASAR",
     subtitle: "Gen AI Adoption in Data and Analytics",
@@ -106,7 +106,7 @@ export default function DataCosmosPage() {
           {/* Content above background */}
           <div className="relative z-20 flex flex-col items-center justify-center w-full px-4">
             <div className="mb-8 flex justify-center">
-              <Image src={"/logos/galaxies/coforge-cosmos_white.svg"} alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px]  w-[180px]" />
+              <Image src={`${basePath}/logos/galaxies/coforge-cosmos_white.svg`} alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px]  w-[180px]" />
             </div>
             <h1 className="text-xl md:text-3xl xl:text-4xl 2xl:text-6xl font-bold text-white mb-10 text-center drop-shadow-lg">A Unified Constellation of Data Excellence</h1>
             <p className="text-sm md:text-lg xl:text-2xl text-gray-200 max-w-3xl mx-auto mb-10 text-center drop-shadow-md">
@@ -132,7 +132,7 @@ export default function DataCosmosPage() {
           <div className="absolute inset-0 bg-[#0c1b48]/70 z-10" />
           <div className="relative z-20 flex flex-col items-center justify-center w-full px-4">
             <div className="mb-8 flex justify-center">
-              <Image src={"/logos/galaxies/coforge-cosmos_white.svg"} alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] w-[180px]" />
+              <Image src={`${basePath}/logos/galaxies/coforge-cosmos_white.svg`} alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] w-[180px]" />
             </div>
             <h1 className="text-xl md:text-3xl xl:text-4xl 2xl:text-6xl font-bold text-white mb-8 text-center">Powering Transformation with Five Technology Towers</h1>
             <div className="text-sm md:text-lg xl:text-2xl text-gray-200 max-w-2xl mx-auto mb-8 text-center">
@@ -179,7 +179,7 @@ export default function DataCosmosPage() {
           <div className="absolute inset-0 bg-[#0c1b48]/70 z-10" />
           <div className="relative z-20 flex flex-col items-center justify-center w-full px-4">
             <div className="mb-8 flex justify-center">
-              <Image src={"/logos/galaxies/coforge-cosmos_white.svg"} alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] w-[180px]" />
+              <Image src={`${basePath}/logos/galaxies/coforge-cosmos_white.svg`} alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] w-[180px]" />
             </div>
             <h1 className="text-xl md:text-3xl xl:text-4xl 2xl:text-6xl  font-bold text-white mb-8 text-center">Galaxy Solutions for Every Industry</h1>
             <p className="text-sm md:text-lg xl:text-2xl text-gray-200 max-w-2xl mx-auto mb-8 text-center">
@@ -244,7 +244,7 @@ export default function DataCosmosPage() {
             <GalaxyBackground />
           </Suspense>
           <div className="my-8 flex justify-center">
-              <Image src={"/logos/galaxies/coforge-cosmos_white.svg"} alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] w-[180px]" />
+              <Image src={`${basePath}/logos/galaxies/coforge-cosmos_white.svg`} alt="Coforge Data Cosmos Logo" width={180} height={36} className="md:w-[320px] w-[180px]" />
             </div>
 
           <h1 className="text-xl lg:text-2xl xl:text-4xl font-bold text-center text-white my-8">Coforge Data Cosmos in one glance</h1>
@@ -365,13 +365,13 @@ export default function DataCosmosPage() {
                 {/* Data Partners */}
                 {(() => {
                   const dataPartners = [
-                    { name: "Snowflake", logo: "/logos/snowflake.png", width: 110, height: 32 },
-                    { name: "Databricks", logo: "/logos/data-bricks_white.png", width: 120, height: 32 },
-                    { name: "Snaplogic", logo: "/logos/snaplogic_white.png", width: 120, height: 32 },
-                    { name: "dbt", logo: "/logos/dbt_white.svg", width: 60, height: 32 },
-                    { name: "Qlik", logo: "/logos/qlik.png", width: 60, height: 32 },
-                    { name: "Matillion", logo: "/logos/matillion.png", width: 100, height: 32 },
-                    { name: "Coalesce", logo: "/logos/coalesce.png", width: 120, height: 32 }
+                    { name: "Snowflake", logo: `${basePath}/logos/snowflake.png`, width: 110, height: 32 },
+                    { name: "Databricks", logo: `${basePath}/logos/data-bricks_white.png`, width: 120, height: 32 },
+                    { name: "Snaplogic", logo: `${basePath}/logos/snaplogic_white.png`, width: 120, height: 32 },
+                    { name: "dbt", logo: `${basePath}/logos/dbt_white.svg`, width: 60, height: 32 },
+                    { name: "Qlik", logo: `${basePath}/logos/qlik.png`, width: 60, height: 32 },
+                    { name: "Matillion", logo: `${basePath}/logos/matillion.png`, width: 100, height: 32 },
+                    { name: "Coalesce", logo: `${basePath}/logos/coalesce.png`, width: 120, height: 32 }
                   ];
                   return (
                     <div className="bg-slate-800/40 backdrop-blur-sm border border-slate-500 rounded-lg p-4 mb-6">

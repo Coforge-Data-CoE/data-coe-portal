@@ -142,6 +142,8 @@ import React, { useState } from "react";
 import { Avatar } from "antd";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
+
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "/datacosmos";
 import Link from "next/link";
 
 export default function Header() {
@@ -184,7 +186,7 @@ export default function Header() {
   <header className="sticky top-0 z-50 w-full bg-[#0A0F2C] shadow-md py-2 xl:py-4 px-8 items-center justify-between hidden md:flex">
         <div className="flex items-center gap-3">
           <Link href="/datacosmos">
-            <Image src={`/logos/galaxies/coforge-cosmos_white.svg`} loading="eager" alt="Coforge Logo" width={200} height={36} className="w-[140px] xl:w-[200px]" style={{height: 'auto'}} />
+            <Image src={`${basePath}/logos/galaxies/coforge-cosmos_white.svg`} loading="eager" alt="Coforge Logo" width={200} height={36} className="w-[140px] xl:w-[200px]" style={{height: 'auto'}} />
           </Link>
         </div>
         <nav className="flex gap-6 items-center">
@@ -217,7 +219,7 @@ export default function Header() {
       {/* Mobile Header (hidden on desktop) */}
   <header className="sticky top-0 z-50 w-full bg-[#0A0F2C] shadow-md py-4 px-4 flex items-center justify-between md:hidden">
         <Link href="/datacosmos">
-          <Image src={"/logos/galaxies/coforge-cosmos_white.svg"} loading="eager" alt="Coforge Logo" width={160} height={32} style={{height:'auto'}}/>
+          <Image src={`${basePath}/logos/galaxies/coforge-cosmos_white.svg`} loading="eager" alt="Coforge Logo" width={160} height={32} style={{height:'auto'}}/>
         </Link>
         <button
           className="text-white text-2xl focus:outline-none"
