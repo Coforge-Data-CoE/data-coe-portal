@@ -257,22 +257,22 @@ export default function DataCosmosPage() {
                     <i className="ri-building-line mr-2"></i>Industry Galaxies
                   </h3>
                   <div className="space-y-2">
-                    <a href="/galaxies/bfs" className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
+                    <a href={`${basePath}/galaxies/bfs`} className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
                       <i className="ri-bank-line mr-3 text-xs md:text-sm lg:text-sm xl:text-lg"></i><span className="text-xs md:text-sm lg:text-xs xl:text-sm 2xl:text-lg">Banking & Financial Services</span>
                     </a>
-                    <a href="/galaxies/insurance" className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
+                    <a href={`${basePath}/galaxies/insurance`} className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
                       <i className="ri-shield-line mr-3 text-xs md:text-sm lg:text-sm xl:text-lg"></i><span className="text-xs md:text-sm lg:text-xs xl:text-sm 2xl:text-lg">Insurance</span>
                     </a>
-                    <a href="/galaxies/tth" className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
+                    <a href={`${basePath}/galaxies/tth`} className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
                       <i className="ri-plane-line mr-3 text-xs md:text-sm lg:text-sm xl:text-lg"></i><span className="text-xs md:text-sm lg:text-xs xl:text-sm 2xl:text-lg">Travel, Transport & Hospitality</span>
                     </a>
-                    <a href="/galaxies/retail" className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
+                    <a href={`${basePath}/galaxies/retail`} className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
                       <i className="ri-shopping-cart-line mr-3 text-xs md:text-sm lg:text-sm xl:text-lg"></i><span className="text-xs md:text-sm lg:text-xs xl:text-sm 2xl:text-lg">Retail, Manufacturing & Consumer Goods</span>
                     </a>
-                    <a href="/galaxies/healthcare" className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
+                    <a href={`${basePath}/galaxies/healthcare`} className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
                       <i className="ri-heart-pulse-line mr-3 text-xs md:text-sm lg:text-sm xl:text-lg"></i><span className="text-xs md:text-sm lg:text-xs xl:text-sm 2xl:text-lg">Healthcare & Life Sciences</span>
                     </a>
-                    <a href="/galaxies/energy" className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
+                    <a href={`${basePath}/galaxies/energy`} className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
                       <i className="ri-government-line mr-3 text-xs md:text-sm lg:text-sm xl:text-lg"></i><span className="text-xs md:text-sm lg:text-xs xl:text-sm 2xl:text-lg">Public Sector, Energy & Utilities</span>
                     </a>
                   </div>
