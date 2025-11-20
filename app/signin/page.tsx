@@ -1,5 +1,6 @@
 "use client";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 const nextAuthBasePath = process.env.NEXT_PUBLIC_NEXTAUTH_BASE_PATH || "/datacosmos/api/auth";
 
@@ -7,6 +8,12 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "/datacosmos";
 
 export default function AuthPage() {
   const { data: session, status } = useSession();
+  // Redirect if already signed in
+  useEffect(() => {
+    if (session && status === "authenticated") {
+      window.location.href = `${basePath}`;
+    }
+  }, [session, status, basePath]);
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative">
       {/* Background image */}

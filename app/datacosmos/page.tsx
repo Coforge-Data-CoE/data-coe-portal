@@ -260,7 +260,7 @@ export default function DataCosmosPage() {
                     <a href={`${basePath}/galaxies/bfs`} className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
                       <i className="ri-bank-line mr-3 text-xs md:text-sm lg:text-sm xl:text-lg"></i><span className="text-xs md:text-sm lg:text-xs xl:text-sm 2xl:text-lg">Banking & Financial Services</span>
                     </a>
-                    <a href={`${basePath}/galaxies/insurance`} className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
+                    <a href={`${basePath}/galaxies/ins`} className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
                       <i className="ri-shield-line mr-3 text-xs md:text-sm lg:text-sm xl:text-lg"></i><span className="text-xs md:text-sm lg:text-xs xl:text-sm 2xl:text-lg">Insurance</span>
                     </a>
                     <a href={`${basePath}/galaxies/tth`} className="w-full text-left p-2 xl:p-3 rounded-lg transition-all duration-200 flex items-center whitespace-normal text-gray-200 hover:bg-[#12182073] hover:text-white border border-slate-500 hover:border-[#86c1ff]">
@@ -284,7 +284,7 @@ export default function DataCosmosPage() {
                   {cosmosCards.map(card => (
                     <a
                       key={card.key}
-                      href={`/offerings/${card.key}`}
+                      href={`${basePath}/offerings/${card.key}`}
                       className="cosmos-card bg-[#181C2A] backdrop-blur-sm border border-slate-700 rounded-lg p-4 transition-all duration-200 hover:shadow-lg hover:shadow-[#86c1ff]/20 block cursor-pointer group"
                     >
                       <div className="text-center mb-4">
