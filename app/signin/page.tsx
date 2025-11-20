@@ -11,7 +11,7 @@ export default function AuthPage() {
   // Redirect if already signed in
   useEffect(() => {
     if (session && status === "authenticated") {
-      window.location.href = `${basePath}`;
+      window.location.href = `${basePath}/datacosmos`;
     }
   }, [session, status, basePath]);
   return (

@@ -351,8 +351,8 @@ export default function DataCosmosPage() {
                         return (
                           <a
                             key={file}
-                            href={`/accelerator/${file.replace(/\.[^/.]+$/, "")}`}
-                            className="flex flex-col items-center bg-[#0d1436] border border-slate-700 rounded-lg p-4 shadow-md transition-all duration-200 hover:border-[#F15B40] cursor-pointer"
+                            // href={`/accelerator/${file.replace(/\.[^/.]+$/, "")}`}
+                            className="flex flex-col items-center bg-[#0d1436] border border-slate-700 rounded-lg p-4 shadow-md transition-all duration-200 hover:border-[#F15B40]"
                           >
                             <Image src={`/logos/toolkit/${file}`} alt={label} width={36} height={36} />
                             <span className="text-xs xl:text-base font-bold mt-2 text-center w-full break-words" dangerouslySetInnerHTML={{ __html: htmlLabel }} />
