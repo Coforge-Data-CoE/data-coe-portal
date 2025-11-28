@@ -1,18 +1,21 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { Table } from "antd";
+import { Button, Table } from "antd";
+import { useRouter } from "next/navigation";
 
 export default function AcceleratorsView({ items }: { items: any[] }) {
   const [view, setView] = useState("cards");
+  const router = useRouter();
   return (
     <div style={{ margin: "24px auto", padding: "0 16px" }}>
-      <h2>Accelerators</h2>
-      <Link href="/">/items/newCreate new</Link>
+      <h2 className="page-title">Data Cosmos Toolkit</h2>
       <div style={{ display: "flex", gap: 12, margin: "24px 0" }}>
         <button onClick={() => setView("table")} style={{ padding: "8px 16px", borderRadius: 6, background: view === "table" ? "#f15840" : "#222", color: "#fff", border: "none" }}>Table view</button>
         <button onClick={() => setView("cards")} style={{ padding: "8px 16px", borderRadius: 6, background: view === "cards" ? "#f15840" : "#222", color: "#fff", border: "none" }}>Cards view</button>
         <button onClick={() => setView("list")} style={{ padding: "8px 16px", borderRadius: 6, background: view === "list" ? "#f15840" : "#222", color: "#fff", border: "none" }}>List view</button>
+        <Button type="primary" onClick={() => router.push("/accelerators/new")}>Add new Accelerator</Button>
+        
       </div>
       {view === "table" && (
         <Table
@@ -31,7 +34,7 @@ export default function AcceleratorsView({ items }: { items: any[] }) {
           }))}
           columns={[
             { title: "Title", dataIndex: "name", key: "name" },
-            { title: "Description", dataIndex: "description", key: "description" },
+            { title: "Description", dataIndex: "description", key: "description " },
             { title: "Image", dataIndex: "image", key: "image" },
             { title: "Video", dataIndex: "video", key: "video" },
             { title: "Actions", dataIndex: "actions", key: "actions" },

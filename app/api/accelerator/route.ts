@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import { connectToDB } from "@/app/lib/mongodb";
 import Accelerator from "@/app/models/accelerator";
 import { uploadBufferToBlob } from "@/app/lib/azure";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export const runtime = "nodejs";
 
@@ -74,10 +76,12 @@ export async function POST(req: Request) {
   try {
     await connectToDB();
 
+    const session = await getServerSession(authOptions);
+    const userEmail = session?.user?.email || "";
+
     const form = await req.formData();
     const name = (form.get("name") as string)?.trim();
     const summary = (form.get("summary") as string)?.trim() || "";
-    const createdBy = req.headers.get("user_id") || "";
 
     if (!name) {
       return NextResponse.json({ error: "Name is required" }, { status: 400 });
@@ -156,8 +160,8 @@ export async function POST(req: Request) {
       imageUrl,
       videoUrl,
       dataOffering,
-      createdBy,
-      updatedBy: createdBy,
+      createdBy: userEmail,
+      updatedBy: userEmail,
     });
     return NextResponse.json(doc, { status: 201 });
   } catch (err: any) {

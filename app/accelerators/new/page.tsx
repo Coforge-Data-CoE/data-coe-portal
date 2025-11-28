@@ -35,10 +35,10 @@ function getBase64(file: FileType): Promise<string> {
 export default function NewItemPage({ searchParams }: { searchParams: Promise<Record<string, string>> }) {
   // Helper to always produce absolute URLs (Node fetch requires absolute)
   const apiUrl = (path: string) => {
-    if (typeof window !== "undefined") {
-      return new URL(path, window.location.origin).toString();
-    }
-    const base = process.env.NEXT_PUBLIC_SITE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+    // if (typeof window !== "undefined") {
+    //   return new URL(path, window.location.origin).toString();
+    // }
+    const base = process.env.NEXT_PUBLIC_BASE_URL ||  "http://localhost:3000/datacosmos";
     return base + path;
   };
 

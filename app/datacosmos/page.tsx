@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "/datacosmos";
 const cosmosCards = [
@@ -87,6 +88,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { calc } from "antd/es/theme/internal";
 
 export default function DataCosmosPage() {
+  const router = useRouter();
 
   const carouselPanels = [
     {
@@ -248,6 +250,15 @@ export default function DataCosmosPage() {
             </div>
 
           <h1 className="text-xl lg:text-2xl xl:text-4xl font-bold text-center text-white my-8">Coforge Data Cosmos in one glance</h1>
+          <div className="flex justify-center mb-8">
+            <button
+              className="bg-[#f15840] hover:bg-[#d94c2f] text-white font-semibold py-3 px-6 rounded-lg shadow transition-all duration-200 text-lg"
+              type="button"
+              onClick={() => router.push("/toolkit")}
+            >
+              Try out Coforge Data Cosmos
+            </button>
+          </div>
           <div className=" mx-auto mt-12">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
               {/* Left menu ...existing code... */}
@@ -354,7 +365,7 @@ export default function DataCosmosPage() {
                             // href={`/accelerator/${file.replace(/\.[^/.]+$/, "")}`}
                             className="flex flex-col items-center bg-[#0d1436] border border-slate-700 rounded-lg p-4 shadow-md transition-all duration-200 hover:border-[#F15B40]"
                           >
-                            <Image src={`/logos/toolkit/${file}`} alt={label} width={36} height={36} />
+                            <Image src={`${basePath}/logos/toolkit/${file}`} alt={label} width={36} height={36} />
                             <span className="text-xs xl:text-base font-bold mt-2 text-center w-full break-words" dangerouslySetInnerHTML={{ __html: htmlLabel }} />
                           </a>
                         );

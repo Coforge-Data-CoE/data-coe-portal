@@ -129,7 +129,7 @@ const GALAXIES: Galaxy[] = [
     {
         id: "tth",
         name: "TTH Galaxy",
-        logo: "/galaxy-tth.svg",
+        logo: "/logos/galaxy-tth.svg",
         offerings: [
             {
                 name: "Supernova",
@@ -476,7 +476,7 @@ export default function GalaxyDetailPage() {
                             const htmlLabel = `<span style='color: #F15B40;'>${first}</span>${rest.length ? ' <span style=\'color: #eeeeee;\'>' + rest.join(' ') + '</span>' : ''}`;
                             return (
                                 <div key={file} className="flex flex-col items-center bg-[#0D1436] border border-slate-600 rounded-lg p-4 shadow-md">
-                                    <Image src={`/logos/toolkit/${file}`} alt={label} width={32} height={32} className="xl:w-[48px] w-[32px]" />
+                                    <Image src={`${basePath}/logos/toolkit/${file}`} alt={label} width={32} height={32} className="xl:w-[48px] w-[32px]" />
                                     <span className="text-xs xl:text-base font-bold mt-2 text-center w-full break-words" dangerouslySetInnerHTML={{ __html: htmlLabel }} />
                                 </div>
                             );

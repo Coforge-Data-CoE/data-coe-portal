@@ -22,9 +22,11 @@
 
 // import { getDb } from "@/app/config/mysql_db_config";
 import NextAuth, { AuthOptions } from "next-auth";
+import User from "@/app/models/user";
+import { connectToDB } from "@/app/lib/mongodb";
 import AzureADProvider from "next-auth/providers/azure-ad";
 // import { getDb } from ";
- 
+
 export const authOptions: AuthOptions = {
   providers: [
     AzureADProvider({
@@ -48,12 +50,12 @@ export const authOptions: AuthOptions = {
           email: (profile as any).email || (profile as any).preferred_username,
           name: (profile as any).name
         });
-      }
-      // On initial sign-in populate identity basics
-      if (account && profile) {
-        token.email = (profile as any).email || (profile as any).preferred_username;
-        token.name = (profile as any).name;
-        token.oid = (profile as any).oid;
+        // Save user to MongoDB
+        await connectToDB();
+        const email = (profile as any).email || (profile as any).preferred_username;
+        const name = (profile as any).name;
+        const oid = (profile as any).oid;
+        let image = undefined;
         if ((account as any)?.access_token) {
           try {
             const photoRes = await fetch("https://graph.microsoft.com/v1.0/me/photo/$value", {
@@ -62,10 +64,20 @@ export const authOptions: AuthOptions = {
             if (photoRes.ok) {
               const arrayBuf = await photoRes.arrayBuffer();
               const base64 = Buffer.from(arrayBuf).toString("base64");
-              token.image = `data:image/jpeg;base64,${base64}`;
+              image = `data:image/jpeg;base64,${base64}`;
             }
-          } catch {}
+          } catch { }
         }
+        // Upsert user
+        await User.findOneAndUpdate(
+          { email },
+          { $set: { email, name, oid, image } },
+          { upsert: true, new: true }
+        );
+        token.email = email;
+        token.name = name;
+        token.oid = oid;
+        if (image) token.image = image;
       }
       // Always refresh role/team info from DB if we have an email
       if (token.email) {
@@ -87,7 +99,7 @@ export const authOptions: AuthOptions = {
           //       await db.execute("UPDATE employees SET azure_oid=? WHERE id=?", [token.oid, existing.id]);
           //     }
           //   }
-        } catch {}
+        } catch { }
       }
       return token;
     },
@@ -108,6 +120,6 @@ export const authOptions: AuthOptions = {
     },
   },
 };
- 
+
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
