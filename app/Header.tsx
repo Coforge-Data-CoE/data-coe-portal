@@ -258,32 +258,9 @@ export default function Header() {
   // Mobile menu state
   const [menuOpen, setMenuOpen] = useState(false);
 
-  async function loadActivities() {
-    if (!session?.user?.email) return;
-    setActivityLoading(true);
-    setActivityError(null);
-    try {
-      const res = await fetch(
-        `${basePath}/api/activities?email=${encodeURIComponent(
-          session.user.email
-        )}`
-      );
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
-      }
-      const data = await res.json();
-      setActivities((data.activities || []).slice(0, 15));
-    } catch (e: any) {
-      setActivityError(e.message || "Failed to load");
-    } finally {
-      setActivityLoading(false);
-    }
-  }
-
   function toggleActivity() {
     const next = !activityOpen;
     setActivityOpen(next);
-    if (next) loadActivities();
   }
 
   // Close activity panel on outside click / escape
