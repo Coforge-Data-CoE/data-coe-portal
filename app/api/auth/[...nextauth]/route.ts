@@ -25,6 +25,7 @@ import NextAuth, { AuthOptions } from "next-auth";
 import User from "@/app/models/user";
 import { connectToDB } from "@/app/lib/mongodb";
 import AzureADProvider from "next-auth/providers/azure-ad";
+import Activity from "@/app/models/activity";
 // import { getDb } from ";
 
 export const authOptions: AuthOptions = {
@@ -48,58 +49,58 @@ export const authOptions: AuthOptions = {
       if (account && profile) {
         console.log("[NextAuth] Login success:", {
           email: (profile as any).email || (profile as any).preferred_username,
-          name: (profile as any).name
+          name: (profile as any).name,
         });
         // Save user to MongoDB
         await connectToDB();
-        const email = (profile as any).email || (profile as any).preferred_username;
+        const email =
+          (profile as any).email || (profile as any).preferred_username;
         const name = (profile as any).name;
         const oid = (profile as any).oid;
         let image = undefined;
         if ((account as any)?.access_token) {
           try {
-            const photoRes = await fetch("https://graph.microsoft.com/v1.0/me/photo/$value", {
-              headers: { Authorization: `Bearer ${(account as any).access_token}` },
-            });
+            const photoRes = await fetch(
+              "https://graph.microsoft.com/v1.0/me/photo/$value",
+              {
+                headers: {
+                  Authorization: `Bearer ${(account as any).access_token}`,
+                },
+              }
+            );
             if (photoRes.ok) {
               const arrayBuf = await photoRes.arrayBuffer();
               const base64 = Buffer.from(arrayBuf).toString("base64");
               image = `data:image/jpeg;base64,${base64}`;
             }
-          } catch { }
+          } catch {}
         }
         // Upsert user
-        await User.findOneAndUpdate(
+        // Upsert user and get Mongo _id
+        const user = await User.findOneAndUpdate(
           { email },
           { $set: { email, name, oid, image } },
-          { upsert: true, new: true }
+          {
+            upsert: true,
+            new: true,
+            setDefaultsOnInsert: true,
+            runValidators: true,
+          }
         );
+
         token.email = email;
         token.name = name;
         token.oid = oid;
         if (image) token.image = image;
-      }
-      // Always refresh role/team info from DB if we have an email
-      if (token.email) {
-        try {
-          // const db = getDb();
-          //   const [rows] = await db.execute(
-          //     "SELECT id, employee_code, team_name, role, supervisor_code, supervisor_name FROM employees WHERE email=? LIMIT 1",
-          //     [token.email]
-          //   );
-          //   const existing = (rows as any[])[0];
-          //   if (existing) {
-          //     token.employeeId = existing.id;
-          //     token.employeeCode = existing.employee_code;
-          //     token.teamName = existing.team_name;
-          //     token.role = existing.role;
-          //     token.supervisor_code = existing.supervisor_code;
-          //     token.supervisor_name = existing.supervisor_name;
-          //     if (!existing.azure_oid && token.oid) {
-          //       await db.execute("UPDATE employees SET azure_oid=? WHERE id=?", [token.oid, existing.id]);
-          //     }
-          //   }
-        } catch { }
+
+        // Log activity with user._id (not Azure oid)
+        await Activity.create({
+          userId: user._id,
+          email: email,
+          type: "login",
+          meta: { provider: account.provider, oid },
+          createdAt: new Date(),
+        });
       }
       return token;
     },
