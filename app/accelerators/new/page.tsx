@@ -1,4 +1,6 @@
 "use client";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import React, { useState, useEffect, use } from "react";
 import {
   Form,
@@ -12,9 +14,15 @@ import {
   Modal,
   Progress,
   Select,
+  notification,
 } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
-// import { useSearchParams } from "next/navigation";
+
+import "react-quill-new/dist/quill.snow.css";
+
+import "../accelerators.scss";
+
+const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
 const { Title, Text } = Typography;
 const { Dragger } = Upload;
@@ -32,15 +40,23 @@ function getBase64(file: FileType): Promise<string> {
   });
 }
 
-export default function NewItemPage({ searchParams }: { searchParams: Promise<Record<string, string>> }) {
-  // Helper to always produce absolute URLs (Node fetch requires absolute)
-  const apiUrl = (path: string) => {
-    // if (typeof window !== "undefined") {
-    //   return new URL(path, window.location.origin).toString();
-    // }
-    const base = process.env.NEXT_PUBLIC_BASE_URL ||  "http://localhost:3000/datacosmos";
-    return base + path;
-  };
+const apiUrl = (path: string) => {
+  // if (typeof window !== "undefined") {
+  //   return new URL(path, window.location.origin).toString();
+  // }
+  const base =
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000/datacosmos";
+  return base + path;
+};
+
+export default function NewAccelerator({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string>>;
+}) {
+  const router = useRouter();
+
+  const [api_notification, notificationHolder] = notification.useNotification(); // add this
 
   const [form] = Form.useForm();
   const [imagePreview, setImagePreview] = useState<string>("");
@@ -56,6 +72,7 @@ export default function NewItemPage({ searchParams }: { searchParams: Promise<Re
   const [bannerFileList, setBannerFileList] = useState<any[]>([]);
   const [videoFileList, setVideoFileList] = useState<any[]>([]);
   const [dataOfferings, setDataOfferings] = useState<any[]>([]);
+  const [detailedDiscussion, setDetailedDiscussion] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -66,12 +83,16 @@ export default function NewItemPage({ searchParams }: { searchParams: Promise<Re
         console.log("Fetched data offerings:", json);
         let offeringsArr: any[] = [];
         if (Array.isArray(json)) {
-          offeringsArr = json.flatMap((item: any) => Array.isArray(item.offerings) ? item.offerings : []);
+          offeringsArr = json.flatMap((item: any) =>
+            Array.isArray(item.offerings) ? item.offerings : []
+          );
         } else if (Array.isArray(json?.offerings)) {
           offeringsArr = json.offerings;
         }
         // Use offering name as value (schema stores name string)
-        setDataOfferings(offeringsArr.map((o: any) => ({ label: o.name, value: o.name })));
+        setDataOfferings(
+          offeringsArr.map((o: any) => ({ label: o.name, value: o.name }))
+        );
       } catch (e: any) {
         console.error(e);
         message.error(e.message || "Could not load data offerings");
@@ -87,10 +108,37 @@ export default function NewItemPage({ searchParams }: { searchParams: Promise<Re
             summary: item.summary,
             dataOffering: item.dataOffering || undefined,
           });
-          if (item.iconUrl) setIconFileList([{ uid: "icon-1", name: "icon", status: "done", url: item.iconUrl }]);
-          if (item.imageUrl) setBannerFileList([{ uid: "banner-1", name: "banner", status: "done", url: item.imageUrl }]);
-            if (item.videoUrl) setVideoFileList([{ uid: "video-1", name: "video", status: "done", url: item.videoUrl }]);
-        } catch (e:any) {
+          if (item.iconUrl)
+            setIconFileList([
+              {
+                uid: "icon-1",
+                name: "icon",
+                status: "done",
+                url: item.iconUrl,
+              },
+            ]);
+          if (item.imageUrl)
+            setBannerFileList([
+              {
+                uid: "banner-1",
+                name: "banner",
+                status: "done",
+                url: item.imageUrl,
+              },
+            ]);
+          if (item.videoUrl)
+            setVideoFileList([
+              {
+                uid: "video-1",
+                name: "video",
+                status: "done",
+                url: item.videoUrl,
+              },
+            ]);
+
+          // Set the ReactQuill controlled value
+          setDetailedDiscussion(item?.summary || "");
+        } catch (e: any) {
           message.error(e.message || "Could not load accelerator");
         } finally {
           setLoadingItem(false);
@@ -156,20 +204,28 @@ export default function NewItemPage({ searchParams }: { searchParams: Promise<Re
 
       const formData = new FormData();
       formData.append("name", values.name);
-      formData.append("summary", values.summary || "");
+      formData.append("summary", detailedDiscussion || "");
       formData.append("dataOffering", values.dataOffering || "");
 
       const icon_image = iconFileList[0]?.originFileObj;
       const banner_image = bannerFileList[0]?.originFileObj;
       const vid = videoFileList[0]?.originFileObj;
 
-      if (icon_image) formData.append("icon", icon_image as File, (icon_image as File).name);
-      if (banner_image) formData.append("image", banner_image as File, (banner_image as File).name);
+      if (icon_image)
+        formData.append("icon", icon_image as File, (icon_image as File).name);
+      if (banner_image)
+        formData.append(
+          "image",
+          banner_image as File,
+          (banner_image as File).name
+        );
       if (vid) formData.append("video", vid as File, (vid as File).name);
 
       setProgress(40);
       const method = accelId ? "PUT" : "POST";
-      const url = accelId ? apiUrl(`/api/accelerator/${accelId}`) : apiUrl("/api/accelerator");
+      const url = accelId
+        ? apiUrl(`/api/accelerator/${accelId}`)
+        : apiUrl("/api/accelerator");
       const res = await fetch(url, { method, body: formData });
 
       setProgress(70);
@@ -187,9 +243,20 @@ export default function NewItemPage({ searchParams }: { searchParams: Promise<Re
       setIconFileList([]);
       setBannerFileList([]);
       setVideoFileList([]);
+      setDetailedDiscussion("");
       console.log("Saved accelerator:", data);
+      // Show top-right snackbar notification on success
+      api_notification.success({
+        message: accelId ? "Accelerator updated" : "Accelerator created",
+        description: "Your changes have been saved successfully.",
+        placement: "topRight",
+        duration: 3,
+      });
+
       // Optional: redirect or show link
-      // router.push('/items')
+      setTimeout(() => {
+        router.push("/accelerators");
+      }, 3000);
     } catch (e: any) {
       console.error(e);
       message.error(e.message || "Failed to save item");
@@ -206,9 +273,10 @@ export default function NewItemPage({ searchParams }: { searchParams: Promise<Re
 
   return (
     <div style={{ maxWidth: 900, margin: "24px auto", padding: "0 16px" }}>
+      {notificationHolder} {/* required for notifications to render */}
       <Card>
         <Title level={3} style={{ marginBottom: 0 }}>
-          {accelId ? "Edit Accelerator" : "Create Accelerator"}
+          {accelId ? `Edit Accelerator` : "Create Accelerator"}
         </Title>
         {/* <Text type="secondary">Upload image & video, then click Save.</Text> */}
 
@@ -220,18 +288,26 @@ export default function NewItemPage({ searchParams }: { searchParams: Promise<Re
           // requiredMark="optional"
         >
           <Form.Item label="Name" name="name" rules={rules.name}>
-            <Input placeholder={accelId ? "Edit accelerator name" : "Enter item name"} disabled={loadingItem} />
+            <Input
+              placeholder={
+                accelId ? "Edit accelerator name" : "Enter item name"
+              }
+              disabled={loadingItem}
+            />
           </Form.Item>
 
-          <Form.Item
-            label="Summary"
-            name="summary"
-            rules={rules.summary}
-          >
-            <Input.TextArea
+          <Form.Item label="Summary" name="summary" rules={rules.summary}>
+            {/* <Input.TextArea
               placeholder="Add a short summary or description"
               autoSize={{ minRows: 3 }}
-            />
+            /> */}
+            <div className="editor-flex">
+              <ReactQuill
+                theme="snow"
+                value={detailedDiscussion}
+                onChange={setDetailedDiscussion}
+              />
+            </div>
           </Form.Item>
 
           <Form.Item label="Data Offering" name="dataOffering">
@@ -315,7 +391,6 @@ export default function NewItemPage({ searchParams }: { searchParams: Promise<Re
           </Form.Item>
         </Form>
       </Card>
-
       <Modal
         open={imagePreviewOpen}
         title="Image preview"
