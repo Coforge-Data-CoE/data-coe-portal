@@ -7,6 +7,15 @@ const menuData = [
     icon: "ri-home-2-line",
   },
   {
+    label: "Admin",
+    icon: "ri-shield-user-line",
+    submenu: [
+      { label: "Dashboard", href: "/dashboard", icon: "ri-dashboard-line" },
+      { label: "Users", href: "/users", icon: "ri-user-settings-line" },
+      { label: "Accelerators", href: "/accelerators/list", icon: "ri-rocket-2-line" },
+    ],
+  },
+  {
     label: "Technology Offerings",
     icon: "ri-menu-2-line",
     submenu: [

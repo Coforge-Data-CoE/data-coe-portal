@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Card, Spin } from "antd";
 import Link from "next/link";
 
+import TryOutButton from "./TryOutButton";
+
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "/datacosmos";
 
 export default function ToolkitsPage() {
@@ -46,8 +48,8 @@ export default function ToolkitsPage() {
               <strong className="block text-lg font-semibold mb-2 text-gray-900">{it.name}</strong>
               <div className="text-gray-700 mb-2">{it.description}</div>
               <div className="flex gap-2 mt-2">
-                <Link href={`/accelerators/list/${it._id}`} className="px-3 py-1 rounded bg-blue-500 text-white text-xs font-semibold hover:bg-blue-600 transition">View</Link>
-                <Link href={`/accelerators/list/${it._id}/try`} className="px-3 py-1 rounded bg-green-600 text-white text-xs font-semibold hover:bg-green-700 transition">Try Out</Link>
+                <Link href={`/accelerator/${it._id}`} className="px-3 py-1 rounded bg-blue-500 text-white text-xs font-semibold hover:bg-blue-600 transition">View</Link>
+                <TryOutButton toolkitId={it._id} toolkitName={it.name} />
               </div>
             </div>
           </Card>
