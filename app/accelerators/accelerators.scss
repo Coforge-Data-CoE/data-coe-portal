@@ -1,0 +1,46 @@
+.editor-flex {
+  display: flex;
+  flex-direction: column;
+  min-height: 150px;
+}
+
+.quill {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+/* Toolbar stays at natural height */
+.editor-flex .ql-toolbar {
+  flex: 0 0 auto;
+  border-radius: 3px 3px 0 0;
+}
+
+.quill-readonly {
+  .ql-toolbar {
+    display: none;
+  }
+  .ql-container {
+    border-top: #ccc solid 1px !important;
+    border-radius: 3px !important;
+  }
+}
+
+/* Editor container fills remaining space */
+.editor-flex .ql-container {
+  flex: 1 1 auto;
+  display: flex; /* ensure children can stretch */
+  flex-direction: column;
+  border-radius: 0 0 3px 3px;
+}
+
+/* Editable area scrolls */
+.editor-flex .ql-editor {
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+
+.view-details {
+  color: #ffffff;
+  background-color: #f15840;
+}
