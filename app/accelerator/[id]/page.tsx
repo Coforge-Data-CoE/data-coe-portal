@@ -163,21 +163,24 @@ export default function AcceleratorPage({
           fill
           className="object-cover rounded-xl shadow-lg"
         />
-        {accelerator?.iconUrl && (
-          <Image
-            src={accelerator?.iconUrl}
-            alt="Icon"
-            height={75}
-            width={300}
-            className="absolute top-10 left-8 z-2"
-          />
-        )}
+
         <div className="absolute inset-0 bg-[#020925] rounded-xl" />
-        <div className="absolute left-8 bottom-20 text-white text-2xl md:text-4xl font-bold drop-shadow-lg">
-          {accelerator?.name ?? ""}
-        </div>
-        <div className="absolute left-8 bottom-10 text-white text-medium md:text-large font-semibold drop-shadow-lg">
-          {accelerator?.description ?? "This is Description"}
+        <div className="absolute flex flex-col pl-5 left-10">
+          {accelerator?.iconUrl && (
+            <Image
+              src={accelerator?.iconUrl}
+              alt="Icon"
+              height={75}
+              width={300}
+              className="mt-2"
+            />
+          )}
+          <div className="text-white text-2xl md:text-4xl font-bold drop-shadow-lg mt-2">
+            {accelerator?.name ?? ""}
+          </div>
+          <div className="text-white text-medium md:text-large font-semibold drop-shadow-lg mt-2 mb-2">
+            {accelerator?.description ?? "This is Description"}
+          </div>
         </div>
       </div>
       {/* Tabs */}
@@ -203,7 +206,9 @@ export default function AcceleratorPage({
                     <iframe
                       width="100%"
                       height="315"
-                      src={acceleratorData.overview.video}
+                      src={
+                        accelerator?.videoUrl || acceleratorData.overview.video
+                      }
                       title="Accelerator Overview Video"
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
