@@ -157,7 +157,7 @@ export async function DELETE(
 
     // Find the user document
     const user = await User.findOne({ email: userEmail });
-    // Log activity for accelerator update
+    // Log activity for accelerator delete
     await Activity.create({
       userId: user?._id,
       email: userEmail,

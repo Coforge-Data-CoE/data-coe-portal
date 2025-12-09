@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     // Get accelerator name from DB
     const existing = await Accelerator.findById(accelerator);
 
-    // Log activity for accelerator update
+    // Log activity for comment add
     await Activity.create({
       userId: user?._id,
       email: userEmail,
@@ -86,11 +86,11 @@ export async function PUT(req: NextRequest) {
     // Get accelerator name from DB
     const existing = await Accelerator.findById(accelerator);
 
-    // Log activity for accelerator update
+    // Log activity for Comment update
     await Activity.create({
       userId: user?._id,
       email: userEmail,
-      type: "add-comment",
+      type: "update-comment",
       meta: { acceleratorId: accelerator, acceleratorName: existing?.name },
       createdAt: new Date(),
     });
@@ -129,11 +129,11 @@ export async function DELETE(req: NextRequest) {
 
     await Comment.findByIdAndDelete(_id);
 
-    // Log activity for accelerator update
+    // Log activity for Comment delete
     await Activity.create({
       userId: user?._id,
       email: userEmail,
-      type: "add-comment",
+      type: "delete-comment",
       meta: { acceleratorId: accelerator, acceleratorName: existing?.name },
       createdAt: new Date(),
     });
