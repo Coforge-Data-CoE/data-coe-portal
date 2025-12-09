@@ -40,12 +40,15 @@ export default function ToolkitsPage() {
         }}
       >
         <h1 className="text-3xl font-bold mb-4">
-          Welcome to Data Accelerators
+          Try Out Our Data Accelerator Offerings
         </h1>
-        <p className="text-lg max-w-2xl mx-auto">
+        {/* <p className="text-lg max-w-2xl mx-auto">
           Accelerate your data-driven initiatives with our suite of powerful
           tools and solutions. Explore accelerators designed to streamline data
           integration, analytics, and automation for your enterprise.
+        </p> */}
+        <p className="text-lg max-w-2xl mx-auto">
+        Explore our powerful suite of cutting-edge accelerators designed to streamline your enterprise data journey. Featuring advanced capabilities like Agentic Data Quality, AI Orchestration, automated Migration, and robust Data Governance, we help you unleash the full potential of your data.
         </p>
       </div>
       {/* Cards Grid */}

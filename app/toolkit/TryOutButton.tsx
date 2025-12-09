@@ -29,7 +29,7 @@ export default function TryOutButton({ toolkitDockerProjectId, toolkitName }: { 
         let portMatch = data.ports && data.ports.match(/:(\d+)->/);
         let port = portMatch ? portMatch[1] : "8080";
         // Use default external host
-        const host = "coforge-data-governance.eastus2.cloudapp.azure.com";
+        const host = process.env.NEXT_PUBLIC_TOOLKIT_HOST || "coforge-data-cosmos-apps.eastus2.cloudapp.azure.com";
         setExploreUrl(`http://${host}:${port}`);
         setSessionMinutes(DEFAULT_SESSION_MINUTES);
         setRemainingSeconds(DEFAULT_SESSION_MINUTES * 60);
@@ -71,7 +71,7 @@ export default function TryOutButton({ toolkitDockerProjectId, toolkitName }: { 
             if (data.running) {
               let portMatch = data.ports && data.ports.match(/:(\d+)->/);
               let port = portMatch ? portMatch[1] : "8080";
-              const host = "coforge-data-governance.eastus2.cloudapp.azure.com";
+              const host = process.env.NEXT_PUBLIC_TOOLKIT_HOST || "coforge-data-cosmos-apps.eastus2.cloudapp.azure.com";
               setExploreUrl(`http://${host}:${port}`);
             } else {
               setExploreUrl(null);
@@ -142,7 +142,7 @@ export default function TryOutButton({ toolkitDockerProjectId, toolkitName }: { 
 
   return (
     <>
-      <Button type="primary" className="bg-green-600 hover:bg-green-700" onClick={handleOpen}>Try Out</Button>
+      <button className="px-3 py-1 rounded bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold transition flex items-center" onClick={handleOpen}>Try Out</button>
       <Modal
         open={open}
         onCancel={handleClose}
