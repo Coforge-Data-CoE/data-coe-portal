@@ -1,121 +1,338 @@
 "use client";
-import { useState } from "react";
-import { Tabs } from "antd";
+import { use, useState, useEffect } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+import { Tabs, Modal, message } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import { useSession } from "next-auth/react";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { apiUrl } from "@/app/lib/constants";
+
+import "react-quill-new/dist/quill.snow.css";
+
+import "../../accelerators/accelerators.scss";
+
+const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
 const acceleratorData = {
   banner: "/banner-01.png", // Example banner
   overview: {
     text: "This accelerator helps you modernize your data workflows and leverage AI-driven automation for rapid transformation.",
-    video: "https://www.youtube.com/embed/dQw4w9WgXcQ" // Example video
+    video: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Example video
   },
-  technicalInfo: "Technical details and documentation about the accelerator will be shown here.",
+  technicalInfo:
+    "Technical details and documentation about the accelerator will be shown here.",
 };
 
-// Dummy comments data
-const initialComments = [
-  { name: "Alice", comment: "This accelerator saved us weeks of work!" },
-  { name: "Bob", comment: "Great integration with our cloud stack." },
-];
+message.config({
+  top: 80, // distance from top in px
+  duration: 3, // seconds
+  maxCount: 3,
+});
 
-export default function AcceleratorPage({ params }: { params: { id: string } }) {
-  const [comments, setComments] = useState(initialComments);
+export default function AcceleratorPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = use(params);
+  const { data: session } = useSession();
+
+  const [accelerator, setAccelerator] = useState<any>({});
+  const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [newName, setNewName] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleAddComment = () => {
-    if (newName.trim() && newComment.trim()) {
-      setComments([...comments, { name: newName, comment: newComment }]);
-      setNewComment("");
+  const [editingIdx, setEditingIdx] = useState<number | null>(null);
+  const [editText, setEditText] = useState("");
+
+  // Add comment via API
+  const handleAddComment = async () => {
+    if (!newComment.trim()) return;
+    setLoading(true);
+    try {
+      const res = await fetch(apiUrl(`/api/comments`), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: session?.user?.name,
+          comment: newComment,
+          createdAt: new Date(),
+          accelerator: id,
+        }),
+      });
+      const data = await res.json();
+      setComments(data.comments); // assuming API returns updated comments
       setNewName("");
+      setNewComment("");
+      message.success("Comment added successfully!");
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
+
+  // Edit comment handler
+  const handleEditComment = async (commentId: string) => {
+    // Call your API to update the comment
+    try {
+      const res = await fetch(apiUrl(`/api/comments?id=${commentId}`), {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ comment: editText }),
+      });
+      if (res.ok) {
+        // Refresh comments
+        const data = await res.json();
+        setComments(data.comments);
+        setEditingIdx(null);
+        setEditText("");
+        message.success("Comment updated successfully!");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Delete comment handler
+  const handleDeleteComment = async (commentId: string) => {
+    try {
+      Modal.confirm({
+        title: "Delete Comment",
+        content: "Are you sure you want to delete?",
+        okText: "Delete",
+        okType: "danger",
+        cancelText: "Cancel",
+        onOk: async () => {
+          try {
+            const res = await fetch(apiUrl(`/api/comments?id=${commentId}`), {
+              method: "DELETE",
+            });
+            if (res.ok) {
+              const data = await res.json();
+              setComments(data.comments);
+              message.success("Comment deleted successfully!");
+            }
+          } catch (err) {
+            console.error(err);
+          }
+        },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Fetch accelerator after params are resolved
+  useEffect(() => {
+    async function fetchAccelerator() {
+      try {
+        const res = await fetch(apiUrl(`/api/accelerator/${id}`));
+        const data = await res.json();
+        setAccelerator(data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchAccelerator();
+  }, [id]);
+
+  // Fetch comments
+  useEffect(() => {
+    async function fetchComments() {
+      try {
+        const res = await fetch(apiUrl(`/api/comments?accelerator=${id}`));
+        const data = await res.json();
+        setComments(data.comments || []);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchComments();
+  }, [id]);
 
   return (
     <div className="min-h-screen  p-0 md:p-8">
       {/* Banner */}
       <div className="w-full h-48 md:h-64 relative mb-8">
-        <Image src={acceleratorData.banner} alt="Accelerator Banner" fill className="object-cover rounded-xl shadow-lg" />
-        <div className="absolute inset-0 bg-black/30 rounded-xl" />
-        <div className="absolute left-8 bottom-8 text-white text-2xl md:text-4xl font-bold drop-shadow-lg">Accelerator: {params.id}</div>
+        <Image
+          src={accelerator?.imageUrl || acceleratorData?.banner}
+          alt="Accelerator Banner"
+          fill
+          className="object-cover rounded-xl shadow-lg"
+        />
+        {accelerator?.iconUrl && (
+          <Image
+            src={accelerator?.iconUrl}
+            alt="Icon"
+            height={75}
+            width={300}
+            className="absolute top-10 left-8 z-2"
+          />
+        )}
+        <div className="absolute inset-0 bg-[#020925] rounded-xl" />
+        <div className="absolute left-8 bottom-20 text-white text-2xl md:text-4xl font-bold drop-shadow-lg">
+          {accelerator?.name ?? ""}
+        </div>
+        <div className="absolute left-8 bottom-10 text-white text-medium md:text-large font-semibold drop-shadow-lg">
+          {accelerator?.description ?? "This is Description"}
+        </div>
       </div>
       {/* Tabs */}
       <div className="rounded-xl shadow-lg p-6">
-        <Tabs defaultActiveKey="overview" items={[
-          {
-            key: "overview",
-            label: "Overview",
-            children: (
-              <div className="flex flex-col md:flex-row gap-8 items-center justify-between">
-                <div className="md:w-1/2 text-white text-lg mb-6 md:mb-0">{acceleratorData.overview.text}</div>
-                <div className="md:w-1/2 flex justify-center">
-                  <iframe
-                    width="100%"
-                    height="315"
-                    src={acceleratorData.overview.video}
-                    title="Accelerator Overview Video"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="rounded-lg shadow-lg w-full h-[200px] md:h-[315px]"
-                  ></iframe>
+        <Tabs
+          defaultActiveKey="overview"
+          items={[
+            {
+              key: "overview",
+              label: "Overview",
+              children: (
+                <div className="flex flex-col md:flex-row gap-8 items-center justify-between">
+                  <div className="md:w-1/2 text-lg mb-6 md:mb-0">
+                    <div className="editor-flex quill-readonly no-border">
+                      <ReactQuill
+                        theme="snow"
+                        value={accelerator?.summary || ""}
+                        readOnly={true}
+                      />
+                    </div>
+                  </div>
+                  <div className="md:w-1/2 flex justify-center">
+                    <iframe
+                      width="100%"
+                      height="315"
+                      src={acceleratorData.overview.video}
+                      title="Accelerator Overview Video"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="rounded-lg shadow-lg w-full h-[200px] md:h-[315px]"
+                    ></iframe>
+                  </div>
                 </div>
-              </div>
-            ),
-          },
-          {
-            key: "tech",
-            label: "Technical Info",
-            children: (
-              <div className="text-white text-lg">{acceleratorData.technicalInfo}</div>
-            ),
-          },
-          {
-            key: "comments",
-            label: "Comments",
-            children: (
-              <div className="flex flex-col gap-6">
-                <div className="mb-4">
-                  {comments.length === 0 ? (
-                    <p className="text-gray-300">No comments yet.</p>
-                  ) : (
-                    <ul className="space-y-4">
-                      {comments.map((c, idx) => (
-                        <li key={idx} className="bg-slate-700/60 rounded-lg p-4">
-                          <span className="font-bold text-[#f15840]">{c.name}</span>
-                          <span className="text-white ml-2">{c.comment}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+              ),
+            },
+            {
+              key: "tech",
+              label: "Technical Info",
+              children: (
+                <div className="text-lg">{acceleratorData.technicalInfo}</div>
+              ),
+            },
+            {
+              key: "comments",
+              label: "Comments",
+              children: (
+                <div className="flex flex-col gap-6">
+                  <div className="mb-4">
+                    {comments.length === 0 ? (
+                      <p className="text-gray-300">No comments yet.</p>
+                    ) : (
+                      <ul className="space-y-4">
+                        {comments.map((c: any, idx) => (
+                          <li
+                            key={idx}
+                            className="bg-gray-100 rounded-lg p-4 flex flex-1 justify-between"
+                          >
+                            <div className="flex flex-1 items-start">
+                              <span className="font-bold text-[#f15840]">
+                                {c?.name}&nbsp;
+                              </span>
+                              <span className="flex flex-1 text-[#020925] ml-2 font-semibold">
+                                {editingIdx === idx ? (
+                                  <div className="flex flex-col flex-1 mr-5">
+                                    <textarea
+                                      placeholder="Edit comment"
+                                      value={editText}
+                                      onChange={(e) =>
+                                        setEditText(e.target.value)
+                                      }
+                                      className="w-full px-4 py-2 rounded bg-gray-50 text-[#020925] mb-2 w-full border border-gray-300"
+                                      rows={3}
+                                    />
+                                    <div className="flex justify-start">
+                                      <button
+                                        className="ml-2 text-blue-600 border border-blue-600 rounded px-2 py-1"
+                                        onClick={() => handleEditComment(c._id)}
+                                      >
+                                        Save
+                                      </button>
+                                      <button
+                                        className="ml-2 text-gray-600 border border-gray-600 rounded px-2 py-1"
+                                        onClick={() => {
+                                          setEditingIdx(null);
+                                          setEditText(c.comment);
+                                        }}
+                                      >
+                                        Cancel
+                                      </button>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  c?.comment
+                                )}
+                                &nbsp;
+                              </span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <span>
+                                {new Date(c.createdAt).toLocaleString()}
+                              </span>
+                              {session?.user?.name === c?.name && (
+                                <>
+                                  <EditOutlined
+                                    className="ml-2 cursor-pointer text-md text-blue-600 border border-blue-600 rounded"
+                                    style={{
+                                      color: "#155dfc",
+                                      fontSize: "1.25rem",
+                                    }}
+                                    onClick={() => {
+                                      setEditingIdx(idx);
+                                      setEditText(c.comment);
+                                    }}
+                                  />
+                                  <DeleteOutlined
+                                    className="ml-2 cursor-pointer text-lg text-red-600"
+                                    onClick={() => handleDeleteComment(c._id)}
+                                    style={{
+                                      color: "#e7000b",
+                                      fontSize: "1.25rem",
+                                    }}
+                                  />
+                                </>
+                              )}
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                  <div className="mt-4">
+                    <h4 className="text-white font-semibold mb-2">
+                      Add a comment
+                    </h4>
+                    <textarea
+                      placeholder="Your comment"
+                      value={newComment}
+                      onChange={(e) => setNewComment(e.target.value)}
+                      className="px-4 py-2 rounded bg-gray-50 text-[#020925] mb-2 w-full border border-gray-300"
+                      rows={3}
+                    />
+                    <button
+                      className="px-3 py-2 rounded bg-[#f15840] text-white font-semibold shadow hover:bg-[#d94c2f] transition cursor-pointer"
+                      onClick={handleAddComment}
+                    >
+                      <PlusOutlined className="mr-2" />
+                      Add Comment
+                    </button>
+                  </div>
                 </div>
-                <div className="mt-4">
-                  <h4 className="text-white font-semibold mb-2">Add a comment</h4>
-                  <input
-                    type="text"
-                    placeholder="Your name"
-                    value={newName}
-                    onChange={e => setNewName(e.target.value)}
-                    className="px-4 py-2 rounded bg-slate-900 text-white mb-2 w-full"
-                  />
-                  <textarea
-                    placeholder="Your comment"
-                    value={newComment}
-                    onChange={e => setNewComment(e.target.value)}
-                    className="px-4 py-2 rounded bg-slate-900 text-white mb-2 w-full"
-                    rows={3}
-                  />
-                  <button
-                    className="px-6 py-2 rounded bg-[#f15840] text-white font-semibold shadow hover:bg-[#d94c2f] transition"
-                    onClick={handleAddComment}
-                  >
-                    Add Comment
-                  </button>
-                </div>
-              </div>
-            ),
-          },
-        ]} />
+              ),
+            },
+          ]}
+        />
       </div>
     </div>
   );

@@ -106,8 +106,9 @@ export default function NewAccelerator({
           form.setFieldsValue({
             name: item.name,
             summary: item.summary,
-            dataOffering: item.dataOffering || undefined,
-            dockerProjectName: item.dockerProjectName || "",
+            description: item?.description,
+            dataOffering: item?.dataOffering || undefined,
+            dockerProjectName: item?.dockerProjectName || "",
           });
           if (item.iconUrl)
             setIconFileList([
@@ -300,14 +301,15 @@ export default function NewAccelerator({
           </Form.Item>
 
           <Form.Item label="Description" name="description">
-            <Input placeholder="Enter a short description for cards" disabled={loadingItem} />
+            <Input.TextArea
+              placeholder="Add a short summary or description"
+              autoSize={{ minRows: 3 }}
+              disabled={loadingItem}
+            />
           </Form.Item>
 
           <Form.Item label="Summary" name="summary" rules={rules.summary}>
-            {/* <Input.TextArea
-              placeholder="Add a short summary or description"
-              autoSize={{ minRows: 3 }}
-            /> */}
+            {/*  */}
             <div className="editor-flex">
               <ReactQuill
                 theme="snow"
@@ -330,7 +332,10 @@ export default function NewAccelerator({
             />
           </Form.Item>
           <Form.Item label="Docker Project Name" name="dockerProjectName">
-            <Input placeholder="Enter Docker project name" disabled={loadingItem} />
+            <Input
+              placeholder="Enter Docker project name"
+              disabled={loadingItem}
+            />
           </Form.Item>
 
           <Form.Item label="Icon">
@@ -383,21 +388,34 @@ export default function NewAccelerator({
           {loadingItem && <p>Loading accelerator...</p>}
 
           <Form.Item>
-            <Space>
-              <Button type="primary" htmlType="submit" loading={submitting}>
-                Save
-              </Button>
+            <div className="flex flex-1 justify-between">
+              <Space>
+                <Button type="primary" htmlType="submit" loading={submitting}>
+                  Save
+                </Button>
+                <Button
+                  onClick={() => {
+                    form.resetFields();
+                    setIconFileList([]);
+                    setBannerFileList([]);
+                    setVideoFileList([]);
+                  }}
+                >
+                  Reset
+                </Button>
+              </Space>
               <Button
                 onClick={() => {
                   form.resetFields();
                   setIconFileList([]);
                   setBannerFileList([]);
                   setVideoFileList([]);
+                  router.push("/accelerators/list");
                 }}
               >
-                Reset
+                Cancel
               </Button>
-            </Space>
+            </div>
           </Form.Item>
         </Form>
       </Card>

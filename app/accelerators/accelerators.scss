@@ -24,6 +24,11 @@
     border-top: #ccc solid 1px !important;
     border-radius: 3px !important;
   }
+  &.no-border {
+    .ql-container {
+      border: none !important;
+    }
+  }
 }
 
 /* Editor container fills remaining space */
