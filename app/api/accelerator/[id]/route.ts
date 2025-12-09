@@ -2,7 +2,11 @@
 import { NextResponse } from "next/server";
 import { connectToDB } from "@/app/lib/mongodb";
 import Accelerator from "@/app/models/accelerator";
+import { getServerSession } from "next-auth";
 import { uploadBufferToBlob } from "@/app/lib/azure";
+import User from "@/app/models/user";
+import Activity from "@/app/models/activity";
+import { authOptions } from "../../auth/[...nextauth]/route";
 
 export const runtime = "nodejs";
 
@@ -44,6 +48,9 @@ export async function PUT(
     await connectToDB();
     const { id } = await context.params;
     const existing = await Accelerator.findById(id);
+    const session = await getServerSession(authOptions);
+    const userEmail = session?.user?.email || "";
+
     if (!existing)
       return NextResponse.json({ error: "Not found" }, { status: 404 });
 
@@ -112,6 +119,17 @@ export async function PUT(
     existing.updatedBy = userId;
     await existing.save();
 
+    // Find the user document
+    const user = await User.findOne({ email: userEmail });
+    // Log activity for accelerator update
+    await Activity.create({
+      userId: user?._id,
+      email: userEmail,
+      type: "update-accelerator",
+      meta: { acceleratorId: existing._id, acceleratorName: existing.name },
+      createdAt: new Date(),
+    });
+
     return NextResponse.json(existing, { status: 200 });
   } catch (err: any) {
     console.error(err);
@@ -130,9 +148,24 @@ export async function DELETE(
     await connectToDB();
     const { id } = await context.params;
     const existing = await Accelerator.findById(id);
+    const session = await getServerSession(authOptions);
+    const userEmail = session?.user?.email || "";
+
     if (!existing)
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     await existing.deleteOne();
+
+    // Find the user document
+    const user = await User.findOne({ email: userEmail });
+    // Log activity for accelerator update
+    await Activity.create({
+      userId: user?._id,
+      email: userEmail,
+      type: "delete-accelerator",
+      meta: { acceleratorId: existing._id, acceleratorName: existing.name },
+      createdAt: new Date(),
+    });
+
     return NextResponse.json(
       { message: "Deleted successfully" },
       { status: 200 }
