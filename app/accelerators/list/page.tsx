@@ -48,26 +48,25 @@ export default function ItemsList() {
           integration, analytics, and automation for your enterprise.
         </p>
       </div> */}
-       <div style={{ display: "flex", gap: 12, margin: "24px 0" }}>
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="page-title m-0">Our Accelerators</h1>
         <Button type="primary" onClick={() => router.push("/accelerators/new")}>Add new Accelerator</Button>
-</div>
+      </div>
       {/* Cards Grid */}
       <ToolkitCards
         items={items}
         basePath={basePath}
-        title="Our Accelerators"
+        title={undefined}
         isAdmin={true}
         hideTryOut={true}
         onEdit={id => {
           window.location.href = `${basePath}/accelerators/new?id=${id}`;
         }}
         onDelete={id => {
-          // Implement delete logic here, e.g. show confirmation and call API
           if (window.confirm("Are you sure you want to delete this accelerator?")) {
             fetch(`${basePath}/api/accelerator/${id}`, { method: "DELETE" })
               .then(res => {
                 if (!res.ok) throw new Error("Delete failed");
-                // Optionally refresh list
                 setItems(items.filter(item => item._id !== id));
               })
               .catch(err => alert(err.message));
