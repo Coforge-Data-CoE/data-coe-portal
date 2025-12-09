@@ -3,6 +3,7 @@ import { use, useState, useEffect } from "react";
 import { Tabs } from "antd";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { useSession } from "next-auth/react";
 import { apiUrl } from "@/app/lib/constants";
 
 import "react-quill-new/dist/quill.snow.css";
@@ -33,22 +34,13 @@ export default function AcceleratorPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
-  const [resolvedParams, setResolvedParams] = useState<{ id: string } | null>(
-    null
-  );
-  const [accelerator, setAccelerator] = useState<any>({});
+  const { data: session } = useSession();
 
-  const [comments, setComments] = useState(initialComments);
+  const [accelerator, setAccelerator] = useState<any>({});
+  const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [newName, setNewName] = useState("");
-
-  const handleAddComment = () => {
-    if (newName.trim() && newComment.trim()) {
-      setComments([...comments, { name: newName, comment: newComment }]);
-      setNewComment("");
-      setNewName("");
-    }
-  };
+  const [loading, setLoading] = useState(false);
 
   // Fetch accelerator after params are resolved
   useEffect(() => {
@@ -63,6 +55,46 @@ export default function AcceleratorPage({
     }
     fetchAccelerator();
   }, [id]);
+
+  // Fetch comments
+  useEffect(() => {
+    async function fetchComments() {
+      try {
+        const res = await fetch(apiUrl(`/api/comments?accelerator=${id}`));
+        const data = await res.json();
+        setComments(data.comments || []);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchComments();
+  }, [id]);
+
+  // Add comment via API
+  const handleAddComment = async () => {
+    if (!newComment.trim()) return;
+    setLoading(true);
+    try {
+      const res = await fetch(apiUrl(`/api/comments`), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: session?.user?.name,
+          comment: newComment,
+          createdAt: new Date(),
+          accelerator: id,
+        }),
+      });
+      const data = await res.json();
+      setComments(data.comments); // assuming API returns updated comments
+      setNewName("");
+      setNewComment("");
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen  p-0 md:p-8">
@@ -142,15 +174,22 @@ export default function AcceleratorPage({
                       <p className="text-gray-300">No comments yet.</p>
                     ) : (
                       <ul className="space-y-4">
-                        {comments.map((c, idx) => (
+                        {comments.map((c: any, idx) => (
                           <li
                             key={idx}
-                            className="bg-slate-700/60 rounded-lg p-4"
+                            className="bg-gray-100 rounded-lg p-4 flex flex-1 justify-between"
                           >
-                            <span className="font-bold text-[#f15840]">
-                              {c.name}
-                            </span>
-                            <span className="text-white ml-2">{c.comment}</span>
+                            <div>
+                              <span className="font-bold text-[#f15840]">
+                                {c?.name}
+                              </span>
+                              <span className="text-[#020925] ml-2 font-semibold">
+                                "&nbsp;{c?.comment}&nbsp;"
+                              </span>
+                            </div>
+                            <div>
+                              {new Date(c.createdAt).toLocaleDateString()}
+                            </div>
                           </li>
                         ))}
                       </ul>
@@ -160,18 +199,11 @@ export default function AcceleratorPage({
                     <h4 className="text-white font-semibold mb-2">
                       Add a comment
                     </h4>
-                    <input
-                      type="text"
-                      placeholder="Your name"
-                      value={newName}
-                      onChange={(e) => setNewName(e.target.value)}
-                      className="px-4 py-2 rounded bg-slate-900 text-white mb-2 w-full"
-                    />
                     <textarea
                       placeholder="Your comment"
                       value={newComment}
                       onChange={(e) => setNewComment(e.target.value)}
-                      className="px-4 py-2 rounded bg-slate-900 text-white mb-2 w-full"
+                      className="px-4 py-2 rounded bg-gray-50 text-[#020925] mb-2 w-full border border-gray-300"
                       rows={3}
                     />
                     <button
