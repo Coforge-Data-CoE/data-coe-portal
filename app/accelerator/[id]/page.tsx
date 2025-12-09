@@ -32,7 +32,7 @@ export default function AcceleratorPage({ params }: { params: { id: string } }) 
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-0 md:p-8">
+    <div className="min-h-screen  p-0 md:p-8">
       {/* Banner */}
       <div className="w-full h-48 md:h-64 relative mb-8">
         <Image src={acceleratorData.banner} alt="Accelerator Banner" fill className="object-cover rounded-xl shadow-lg" />
@@ -40,7 +40,7 @@ export default function AcceleratorPage({ params }: { params: { id: string } }) 
         <div className="absolute left-8 bottom-8 text-white text-2xl md:text-4xl font-bold drop-shadow-lg">Accelerator: {params.id}</div>
       </div>
       {/* Tabs */}
-      <div className="bg-slate-800/60 rounded-xl shadow-lg p-6">
+      <div className="rounded-xl shadow-lg p-6">
         <Tabs defaultActiveKey="overview" items={[
           {
             key: "overview",

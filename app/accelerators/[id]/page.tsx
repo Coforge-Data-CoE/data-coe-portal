@@ -61,7 +61,7 @@ export default function AcceleratorDetailsPage() {
         title={item.name}
         extra={
           <div className="flex gap-2">
-            <Button onClick={() => router.push("/accelerators")}>
+            <Button onClick={() => router.push("/accelerators/list")}>
               &larr; Back
             </Button>
             <Button

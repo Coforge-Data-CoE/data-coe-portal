@@ -5,7 +5,7 @@ import { Modal, Button, Progress, Spin, message } from "antd";
 // Default session time in minutes
 const DEFAULT_SESSION_MINUTES = 60;
 
-export default function TryOutButton({ toolkitId, toolkitName }: { toolkitId: string, toolkitName: string }) {
+export default function TryOutButton({ toolkitDockerProjectId, toolkitName }: { toolkitDockerProjectId: string, toolkitName: string }) {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<"unknown"|"running"|"stopped"|"building">("unknown");
   const [loading, setLoading] = useState(false);
@@ -20,8 +20,8 @@ export default function TryOutButton({ toolkitId, toolkitName }: { toolkitId: st
   const fetchStatus = async () => {
     setLoading(true);
     try {
-      const testToolKit = "autoconvert-universal-rag";
-      const res = await fetch(`${basePath}/api/toolkit/status?name=${encodeURIComponent(testToolKit)}`);
+      // const testToolKit = "autoconvert-universal-rag";
+      const res = await fetch(`${basePath}/api/toolkit/status?name=${encodeURIComponent(toolkitDockerProjectId)}`);
       const data = await res.json();
       if (data.running) {
         setStatus("running");
@@ -45,24 +45,51 @@ export default function TryOutButton({ toolkitId, toolkitName }: { toolkitId: st
     setLoading(false);
   };
 
-  // Simulate build process
+  // Build & Start process: call backend API to start project
   const handleBuild = async () => {
     setStatus("building");
     setBuildProgress(0);
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress += Math.floor(Math.random() * 20) + 10;
-      if (progress >= 100) {
-        progress = 100;
-        clearInterval(interval);
-        setStatus("running");
-        setExploreUrl(`http://localhost:8080/${toolkitId}`);
-        setSessionMinutes(DEFAULT_SESSION_MINUTES);
-        setRemainingSeconds(DEFAULT_SESSION_MINUTES * 60);
-        message.success("Toolkit is now running!");
-      }
-      setBuildProgress(progress);
-    }, 700);
+    try {
+      const res = await fetch(`${basePath}/api/toolkit/start`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ project: toolkitDockerProjectId })
+      });
+      if (!res.ok) throw new Error("Failed to start toolkit");
+      // Simulate progress bar while backend starts the project
+      let progress = 0;
+      const interval = setInterval(async () => {
+        progress += Math.floor(Math.random() * 20) + 10;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(interval);
+          // After build, fetch status to get port and update exploreUrl
+          setStatus("running");
+          try {
+            const statusRes = await fetch(`${basePath}/api/toolkit/status?name=${encodeURIComponent(toolkitDockerProjectId)}`);
+            const data = await statusRes.json();
+            if (data.running) {
+              let portMatch = data.ports && data.ports.match(/:(\d+)->/);
+              let port = portMatch ? portMatch[1] : "8080";
+              const host = "coforge-data-governance.eastus2.cloudapp.azure.com";
+              setExploreUrl(`http://${host}:${port}`);
+            } else {
+              setExploreUrl(null);
+            }
+          } catch {
+            setExploreUrl(null);
+          }
+          setSessionMinutes(DEFAULT_SESSION_MINUTES);
+          setRemainingSeconds(DEFAULT_SESSION_MINUTES * 60);
+          message.success("Toolkit is now running!");
+        }
+        setBuildProgress(progress);
+      }, 700);
+    } catch (e: any) {
+      setStatus("stopped");
+      setBuildProgress(0);
+      message.error(e.message || "Failed to start toolkit");
+    }
   };
 
   // Timer countdown effect

@@ -107,6 +107,7 @@ export default function NewAccelerator({
             name: item.name,
             summary: item.summary,
             dataOffering: item.dataOffering || undefined,
+            dockerProjectName: item.dockerProjectName || "",
           });
           if (item.iconUrl)
             setIconFileList([
@@ -204,8 +205,10 @@ export default function NewAccelerator({
 
       const formData = new FormData();
       formData.append("name", values.name);
+      formData.append("description", values.description || "");
       formData.append("summary", detailedDiscussion || "");
       formData.append("dataOffering", values.dataOffering || "");
+      formData.append("dockerProjectName", values.dockerProjectName || "");
 
       const icon_image = iconFileList[0]?.originFileObj;
       const banner_image = bannerFileList[0]?.originFileObj;
@@ -255,7 +258,7 @@ export default function NewAccelerator({
 
       // Optional: redirect or show link
       setTimeout(() => {
-        router.push("/accelerators");
+        router.push("/accelerators/list");
       }, 3000);
     } catch (e: any) {
       console.error(e);
@@ -296,6 +299,10 @@ export default function NewAccelerator({
             />
           </Form.Item>
 
+          <Form.Item label="Description" name="description">
+            <Input placeholder="Enter a short description for cards" disabled={loadingItem} />
+          </Form.Item>
+
           <Form.Item label="Summary" name="summary" rules={rules.summary}>
             {/* <Input.TextArea
               placeholder="Add a short summary or description"
@@ -321,6 +328,9 @@ export default function NewAccelerator({
               onChange={handleDataOfferingChange}
               disabled={loadingItem}
             />
+          </Form.Item>
+          <Form.Item label="Docker Project Name" name="dockerProjectName">
+            <Input placeholder="Enter Docker project name" disabled={loadingItem} />
           </Form.Item>
 
           <Form.Item label="Icon">
