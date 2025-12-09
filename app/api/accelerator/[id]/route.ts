@@ -37,8 +37,10 @@ export async function PUT(req: Request, context: { params: Promise<{ id: string 
 
     const form = await req.formData();
     const name = (form.get("name") as string)?.trim() || existing.name;
+    const description = (form.get("description") as string)?.trim() || existing.description;
     const summary = (form.get("summary") as string)?.trim() || existing.summary;
     const dataOffering = (form.get("dataOffering") as string)?.trim() || existing.dataOffering;
+    const dockerProjectName = (form.get("dockerProjectName") as string)?.trim() || existing.dockerProjectName;
     const userId = req.headers.get("user_id") || existing.updatedBy || "";
 
     const bannerFile = form.get("image") as File | null;
@@ -69,8 +71,10 @@ export async function PUT(req: Request, context: { params: Promise<{ id: string 
     }
 
     existing.name = name;
+    existing.description = description;
     existing.summary = summary;
     existing.dataOffering = dataOffering;
+    existing.dockerProjectName = dockerProjectName;
     existing.iconUrl = iconUrl;
     existing.imageUrl = imageUrl;
     existing.videoUrl = videoUrl;

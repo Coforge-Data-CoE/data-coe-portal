@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, Spin } from "antd";
-import Link from "next/link";
+import { Spin } from "antd";
+import ToolkitCards from "../components/ToolkitCards";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "/datacosmos";
 
@@ -27,32 +27,29 @@ export default function ToolkitsPage() {
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-black p-8">
-      <h1 className="page-title">Data Cosmos Toolkit</h1>
-      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5">
-        {items.map((it: any) => (
-          <Card
-            key={it._id}
-            bordered={false}
-            className="rounded-xl shadow-lg border border-[#dedede] flex flex-col justify-between"
-            style={{ minHeight: 220, padding: 0 }}
-            bodyStyle={{ padding: 0 }}
-          >
-            {it.imageUrl ? (
-              <img src={it.imageUrl} alt={it.name} className="w-full h-44 object-cover rounded-t-xl" />
-            ) : (
-              <div className="w-full h-44 bg-gray-200 rounded-t-xl" />
-            )}
-            <div className="p-4 flex flex-col gap-2">
-              <strong className="block text-lg font-semibold mb-2 text-gray-900">{it.name}</strong>
-              <div className="text-gray-700 mb-2">{it.description}</div>
-              <div className="flex gap-2 mt-2">
-                <Link href={`/accelerators/list/${it._id}`} className="px-3 py-1 rounded bg-blue-500 text-white text-xs font-semibold hover:bg-blue-600 transition">View</Link>
-                <Link href={`/accelerators/list/${it._id}/try`} className="px-3 py-1 rounded bg-green-600 text-white text-xs font-semibold hover:bg-green-700 transition">Try Out</Link>
-              </div>
-            </div>
-          </Card>
-        ))}
+      {/* Banner Pane */}
+      <div
+        className="w-full rounded-xl mb-10 flex flex-col items-center justify-center text-center p-8"
+        style={{
+          background: "linear-gradient(90deg, #0b0e2c 0%, #1e3c72 100%)",
+          color: "white",
+          minHeight: "420px",
+          // backgroundImage: "url(/banner-01.png)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <h1 className="text-3xl font-bold mb-4">
+          Welcome to Data Accelerators
+        </h1>
+        <p className="text-lg max-w-2xl mx-auto">
+          Accelerate your data-driven initiatives with our suite of powerful
+          tools and solutions. Explore accelerators designed to streamline data
+          integration, analytics, and automation for your enterprise.
+        </p>
       </div>
+      {/* Cards Grid */}
+      <ToolkitCards items={items} basePath={basePath} />
     </div>
   );
 }

@@ -81,6 +81,7 @@ export async function POST(req: Request) {
 
     const form = await req.formData();
     const name = (form.get("name") as string)?.trim();
+    const description = (form.get("description") as string)?.trim() || "";
     const summary = (form.get("summary") as string)?.trim() || "";
 
     if (!name) {
@@ -91,6 +92,7 @@ export async function POST(req: Request) {
     const iconFile = form.get("icon") as File | null;
     const videoFile = form.get("video") as File | null;
     const dataOffering = (form.get("dataOffering") as string) || "";
+    const dockerProjectName = (form.get("dockerProjectName") as string) || "";
 
     let iconUrl = "";
     let imageUrl = "";
@@ -155,11 +157,13 @@ export async function POST(req: Request) {
 
     const doc = await Accelerator.create({
       name,
+      description,
       summary,
       iconUrl,
       imageUrl,
       videoUrl,
       dataOffering,
+      dockerProjectName,
       createdBy: userEmail,
       updatedBy: userEmail,
     });
