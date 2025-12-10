@@ -242,7 +242,6 @@ export default function NewAccelerator({
       setProgress(100);
 
       const data = await res.json();
-      message.success("Accelerator saved successfully!");
       form.resetFields();
       setIconFileList([]);
       setBannerFileList([]);

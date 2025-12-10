@@ -43,6 +43,10 @@
 .editor-flex .ql-editor {
   flex: 1 1 auto;
   overflow-y: auto;
+  p,
+  li {
+    font-size: 14px;
+  }
 }
 
 .view-details {

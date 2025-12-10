@@ -5,6 +5,8 @@ import Accelerator from "@/app/models/accelerator";
 import { uploadBufferToBlob } from "@/app/lib/azure";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import Activity from "@/app/models/activity";
+import User from "@/app/models/user";
 
 export const runtime = "nodejs";
 
@@ -33,7 +35,10 @@ export async function GET(req: Request) {
     const dataOffering = searchParams.get("dataOffering")?.trim() || "";
     const q = searchParams.get("q")?.trim() || "";
     const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10));
-    const pageSize = Math.min(100, Math.max(1, parseInt(searchParams.get("pageSize") || "20", 10)));
+    const pageSize = Math.min(
+      100,
+      Math.max(1, parseInt(searchParams.get("pageSize") || "20", 10))
+    );
 
     const filter: any = {};
     if (dataOffering) filter.dataOffering = dataOffering;
@@ -47,7 +52,10 @@ export async function GET(req: Request) {
     const skip = (page - 1) * pageSize;
 
     const [items, total] = await Promise.all([
-      Accelerator.find(filter).sort({ createdAt: -1 }).skip(skip).limit(pageSize),
+      Accelerator.find(filter)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(pageSize),
       Accelerator.countDocuments(filter),
     ]);
 
@@ -166,6 +174,16 @@ export async function POST(req: Request) {
       dockerProjectName,
       createdBy: userEmail,
       updatedBy: userEmail,
+    });
+    // Find the user document
+    const user = await User.findOne({ email: userEmail });
+    // Log activity for accelerator creation
+    await Activity.create({
+      userId: user?._id,
+      email: userEmail,
+      type: "create-accelerator",
+      meta: { acceleratorId: doc._id, acceleratorName: doc.name },
+      createdAt: new Date(),
     });
     return NextResponse.json(doc, { status: 201 });
   } catch (err: any) {
