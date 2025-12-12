@@ -6,15 +6,15 @@ const menuData = [
     href: "/datacosmos",
     icon: "ri-home-2-line",
   },
-  {
-    label: "Admin",
-    icon: "ri-shield-user-line",
-    submenu: [
-      { label: "Dashboard", href: "/dashboard", icon: "ri-dashboard-line" },
-      { label: "Users", href: "/users", icon: "ri-user-settings-line" },
-      { label: "Accelerators", href: "/accelerators/list", icon: "ri-rocket-2-line" },
-    ],
-  },
+  // {
+  //   label: "Admin",
+  //   icon: "ri-shield-user-line",
+  //   submenu: [
+  //     { label: "Dashboard", href: "/dashboard", icon: "ri-dashboard-line" },
+  //     { label: "Users", href: "/users", icon: "ri-user-settings-line" },
+  //     { label: "Accelerators", href: "/accelerators/list", icon: "ri-rocket-2-line" },
+  //   ],
+  // },
   {
     label: "Technology Offerings",
     icon: "ri-menu-2-line",
@@ -313,6 +313,11 @@ export default function Header() {
         </div>
         <nav className="flex gap-6 items-center">
           <MenuList menu={menuData} />
+          <Link href="http://coforge-data-cosmos-apps.eastus2.cloudapp.azure.com:4019/" target="_blank" rel="noopener noreferrer">
+            <button className="ml-2 px-4 py-2 rounded bg-[#f15840] text-white font-semibold hover:bg-[#d94c2f] transition text-sm xl:text-base">
+              Training Ground
+            </button>
+          </Link>
           {status === "loading" ? null : session && session.user ? (
             <div className="flex items-center gap-3 ml-6 relative">
               <div
