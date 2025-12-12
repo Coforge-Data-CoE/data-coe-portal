@@ -107,13 +107,13 @@ body {
 }
 
 /* Custom cursor for offering cards */
-.comet-cursor {
+/* .comet-cursor {
   cursor: url('/datacosmos/cursor-yellow-glitter.png') 2 2, pointer;
-}
+} */
 
-.cursor-pointer {
+/* .cursor-pointer {
   cursor: url('/datacosmos/cursor-yellow-glitter-pointer.png') 2 2, pointer;
-}
+} */
 
 .ant-card.ant-card-bordered{
   border: 1px solid #355361 !important

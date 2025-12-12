@@ -256,7 +256,7 @@ export default function DataCosmosPage() {
 
   return (
     <>
-      <Script src="/sparkle-cursor-cosmos.js" strategy="afterInteractive" />
+      {/* <Script src="/sparkle-cursor-cosmos.js" strategy="afterInteractive" /> */}
       <div className="min-h-screen  relative overflow-hidden">
         {/* Animated background dots (optional, for effect) */}
         <div className="absolute inset-0 pointer-events-none">
@@ -340,7 +340,7 @@ export default function DataCosmosPage() {
           <h1 className="text-xl lg:text-2xl xl:text-4xl font-bold text-center text-white my-8">
             Coforge Data Cosmos in one glance
           </h1>
-          <div className="flex justify-center mb-8">
+          {/* <div className="flex justify-center mb-8">
             <button
               className="bg-[#f15840] hover:bg-[#d94c2f] text-white font-semibold py-3 px-6 rounded-lg shadow transition-all duration-200 text-lg"
               type="button"
@@ -348,7 +348,7 @@ export default function DataCosmosPage() {
             >
               Try out Coforge Data Cosmos
             </button>
-          </div>
+          </div> */}
           <div className=" mx-auto mt-12">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
               {/* Left menu ...existing code... */}
@@ -464,14 +464,14 @@ export default function DataCosmosPage() {
                       <i className="ri-tools-line mr-2"></i>Cosmos Data Toolkit
                     </h3>
                     {/* <i className="ri-arrow-right-line text-white text-xl"></i> */}
-                    <button
+                    {/* <button
                       className="bg-[#f15840] hover:bg-[#d94c2f] text-white font-semibold py-1 px-3 rounded-lg shadow transition-all duration-200 text-sm"
                       type="button"
                       onClick={() => router.push("/raise-request")}
                     >
                       <i className="ri-question-line mr-2"></i>
                       Raise Request
-                    </button>
+                    </button> */}
                   </div>
                   {/* <p className="text-gray-200  mt-2">ETL Script Converter, Intelligent Scriptless Ingestion, Agentic DQ Resolver, Data Objects Analyzer, Data Migration Tool, Data Governance Nexus, Report Rationalizer & Converter, Agentic Production Support</p> */}
 
