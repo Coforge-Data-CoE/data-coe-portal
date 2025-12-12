@@ -161,7 +161,7 @@ export default function AcceleratorPage({
           src={accelerator?.imageUrl || acceleratorData?.banner}
           alt="Accelerator Banner"
           fill
-          className="object-cover rounded-xl shadow-lg"
+          className="object-cover rounded-xl shadow-lg z-1"
         />
 
         <div className="absolute inset-0 bg-[#020925] rounded-xl" />
@@ -172,13 +172,13 @@ export default function AcceleratorPage({
               alt="Icon"
               height={75}
               width={300}
-              className="mt-2"
+              className="mt-5 mb-5 z-2"
             />
           )}
-          <div className="text-white text-2xl md:text-4xl font-bold drop-shadow-lg mt-2">
+          <div className="text-white text-2xl md:text-4xl font-bold drop-shadow-lg mt-2 z-2">
             {accelerator?.name ?? ""}
           </div>
-          <div className="text-white text-medium md:text-large font-semibold drop-shadow-lg mt-2 mb-2">
+          <div className="z-2 text-white text-medium md:text-large font-semibold drop-shadow-lg mt-2 mb-2">
             {accelerator?.description ?? "This is Description"}
           </div>
         </div>

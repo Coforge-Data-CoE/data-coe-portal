@@ -33,10 +33,11 @@ export default function ToolkitCards({
             bodyStyle={{ padding: 0, display: 'flex', flexDirection: 'column', flex: 1 }}
           >
             {/* Card Body */}
-            <div className="flex-1 flex flex-col">
+            <div className="flex-1 flex flex-col relative">
               {it.iconUrl ? (
-                <div className="flex justify-center items-center p-4 h-42 bg-white">
-                  <img src={it.iconUrl} alt={it.name} className="w-full h-44 object-contain rounded-t-xl w-[100px] h-[100px]" />
+                <div className="relative flex justify-center items-center p-4 h-42 bg-white">
+                  <img src={it.iconUrl} alt={it.name} className="z-2 w-full h-44 object-contain rounded-t-xl w-[100px] h-[100px]" />
+                  <img src={it.imageUrl} alt={it.name} className="absolute w-full h-44 fill rounded-t-xl w-[100px] h-[150px]" />
                 </div>
               ) : (
                 <div className="w-full h-44 bg-gray-200 rounded-t-xl" />
