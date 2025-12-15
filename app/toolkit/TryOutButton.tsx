@@ -162,16 +162,16 @@ export default function TryOutButton({ toolkitDockerProjectId, toolkitName, clas
         ) : status === "running" ? (
           <div className="flex flex-col items-center gap-4 py-4">
             <div className="text-green-600 font-semibold">Toolkit is running!</div>
-            <div className="text-gray-700 text-sm mb-2">Session time left: <span className="font-mono text-base">{formatTime(remainingSeconds)}</span></div>
+            {/* <div className="text-gray-700 text-sm mb-2">Session time left: <span className="font-mono text-base">{formatTime(remainingSeconds)}</span></div> */}
             <div className="flex gap-2">
               <Button type="primary" href={exploreUrl || "#"} target="_blank" className="bg-blue-600 hover:bg-blue-700">Explore</Button>
-              <Button onClick={handleExtend} className="bg-[#f15840] hover:bg-[#d94c2f] text-white">Extend 60 min</Button>
+              {/* <Button onClick={handleExtend} className="bg-[#f15840] hover:bg-[#d94c2f] text-white">Extend 60 min</Button> */}
             </div>
           </div>
         ) : status === "stopped" ? (
           <div className="flex flex-col items-center gap-4 py-4">
             <div className="text-orange-600 font-semibold">Toolkit is not running.</div>
-            <Button type="primary" onClick={handleBuild} className="bg-[#f15840] hover:bg-[#d94c2f]">Build & Start</Button>
+            <Button type="primary" onClick={handleBuild} className="bg-[#f15840] hover:bg-[#d94c2f]">Start & Explore</Button>
           </div>
         ) : status === "building" ? (
           <div className="flex flex-col items-center gap-4 py-4 w-full">
