@@ -340,7 +340,7 @@ export default function DataCosmosPage() {
           <h1 className="text-xl lg:text-2xl xl:text-4xl font-bold text-center text-white my-8">
             Coforge Data Cosmos in one glance
           </h1>
-          {/* <div className="flex justify-center mb-8">
+          <div className="flex justify-center mb-8">
             <button
               className="bg-[#f15840] hover:bg-[#d94c2f] text-white font-semibold py-3 px-6 rounded-lg shadow transition-all duration-200 text-lg"
               type="button"
@@ -348,7 +348,7 @@ export default function DataCosmosPage() {
             >
               Try out Coforge Data Cosmos
             </button>
-          </div> */}
+          </div>
           <div className=" mx-auto mt-12">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
               {/* Left menu ...existing code... */}
