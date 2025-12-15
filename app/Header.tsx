@@ -376,6 +376,94 @@ export default function Header() {
           ) : null}
         </nav>
       </header>
+
+      {/* Mobile Header (visible on < md) */}
+      <header className="sticky top-0 z-50 w-full bg-[#0A0F2C] shadow-md md:hidden">
+        <div className="h-14 px-4 flex items-center justify-between">
+          <Link href="/datacosmos" className="flex items-center">
+            <Image
+              src={`${basePath}/logos/galaxies/coforge-cosmos_white.svg`}
+              loading="eager"
+              alt="Coforge Logo"
+              width={140}
+              height={28}
+              className="w-[120px]"
+              style={{ height: "auto" }}
+            />
+          </Link>
+          <button
+            aria-label="Toggle menu"
+            className="text-white text-2xl"
+            onClick={() => setMenuOpen((p) => !p)}
+          >
+            <i className={menuOpen ? "ri-close-line" : "ri-menu-line"}></i>
+          </button>
+        </div>
+
+        {menuOpen && (
+          <div className="fixed md:hidden top-14 left-0 right-0 bottom-0 bg-[#0A0F2C]/95 backdrop-blur-sm z-50 overflow-y-auto">
+            <div className="p-5 flex flex-col gap-6">
+              <MenuList menu={menuData} isMobile onClose={() => setMenuOpen(false)} />
+
+              <Link
+                href="http://coforge-data-cosmos-apps.eastus2.cloudapp.azure.com:4019/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full"
+                onClick={() => setMenuOpen(false)}
+              >
+                <button className="w-full px-4 py-3 rounded bg-[#f15840] text-white font-semibold hover:bg-[#d94c2f] transition text-base">
+                  Training Ground
+                </button>
+              </Link>
+
+              {status !== "loading" && session?.user && (
+                <div className="mt-2 flex flex-col gap-3">
+                  <div className="flex items-center gap-3">
+                    <Avatar
+                      src={
+                        typeof session.user.image === "string" && session.user.image
+                          ? session.user.image
+                          : undefined
+                      }
+                      alt={session.user.name || session.user.email || "User"}
+                      size={36}
+                      style={{ border: "1px solid #f15840", background: "#140436ff" }}
+                    >
+                      {session.user.name
+                        ? session.user.name[0]
+                        : session.user.email
+                        ? session.user.email[0]
+                        : "U"}
+                    </Avatar>
+                    <span className="text-white text-sm font-semibold truncate">
+                      {session.user.name || session.user.email}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Link
+                      href="/activities"
+                      className="px-3 py-2 text-center rounded text-[#f15840] font-semibold border border-[#f15840] hover:bg-[#d94c2f] hover:text-white transition"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      My Activity
+                    </Link>
+                    <button
+                      className="px-3 py-2 rounded text-[#f15840] font-semibold border border-[#f15840] hover:bg-[#d94c2f] hover:text-white transition"
+                      onClick={() => {
+                        setMenuOpen(false);
+                        signOut({ callbackUrl: `${basePath}/signin` });
+                      }}
+                    >
+                      Signout
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </header>
     </>
   );
 }
