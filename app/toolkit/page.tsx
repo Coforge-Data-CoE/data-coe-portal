@@ -9,6 +9,13 @@ export default function ToolkitsPage() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Scroll to top on mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }
+  }, []);
+
   useEffect(() => {
     fetch(`${basePath}/api/accelerators`, {
       method: "GET",
