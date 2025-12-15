@@ -127,10 +127,10 @@ export default function RaiseRequestPage({
     }
   };
 
-  const rules = {
-    name: [{ required: true, message: "Please enter a name" }],
-    query: [{ max: 2000, message: "Too long (max 2000 chars)" }],
-  };
+  // const rules = {
+  //   name: [{ required: true, message: "Please enter a name" }],
+  //   query: [{ max: 5000, message: "Too long (max 5000 chars)" }],
+  // };
 
   return (
     <div style={{ maxWidth: 900, margin: "24px auto", padding: "0 16px" }}>
@@ -145,7 +145,7 @@ export default function RaiseRequestPage({
           style={{ marginTop: 24 }}
           onFinish={onFinish}
         >
-          <Form.Item label="Name" name="name" rules={rules.name}>
+          <Form.Item label="Name" name="name"> {/* rules={rules.name}  */}
             <Input
               placeholder={accelId ? "Edit name" : "Enter name"}
               disabled={loadingItem}
@@ -164,7 +164,7 @@ export default function RaiseRequestPage({
             />
           </Form.Item>
 
-          <Form.Item label="Query" name="query" rules={rules.query}>
+          <Form.Item label="Query" name="query"> {/* rules={rules.query} */}
             <Input.TextArea
               placeholder="Add a Query / Request details"
               autoSize={{ minRows: 3 }}
