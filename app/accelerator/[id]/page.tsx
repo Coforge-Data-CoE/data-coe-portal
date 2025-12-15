@@ -155,49 +155,47 @@ export default function AcceleratorPage({
   }, [id]);
 
   return (
-    <div className="min-h-screen  p-0 md:p-8">
+    <div className="min-h-screen p-4 md:p-8">
       {/* Banner */}
-      <div className="w-full h-48 md:h-84 relative mb-8">
+      <div className="w-full xs:h-auto sm:h-64 md:h-80 relative mb-6 md:mb-8">
         <Image
           src={accelerator?.imageUrl || acceleratorData?.banner}
           alt="Accelerator Banner"
           fill
           className="object-cover rounded-xl shadow-lg z-1"
         />
-
-        <div className="absolute inset-0 bg-[#020925] rounded-xl" />
-        <div className="absolute flex flex-row left-5 right-5">
+        <div className="absolute inset-0 bg-[#020925]/90 rounded-xl" />
+        <div className="inset-0 px-4 sm:px-6 md:px-8 py-4 flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-6">
           {accelerator?.iconUrl && (
             <Image
               src={accelerator?.iconUrl}
               alt="Icon"
               height={75}
               width={300}
-              className="mt-5 mb-5 z-2"
+              className="z-2 w-auto xs:h-10"
             />
           )}
-          <div className="flex flex-col ml-5 mt-10">
-            <div className="text-white text-2xl md:text-4xl font-bold drop-shadow-lg mt-2 z-2">
+          <div className="flex flex-col md:ml-2 lg:ml-4 mt-1 md:mt-0 max-w-full">
+            <div className="text-white text-xl sm:text-2xl md:text-4xl font-bold drop-shadow-lg z-2 leading-snug">
               {accelerator?.name ?? ""}
             </div>
-            <div className="z-2 text-white text-medium md:text-large font-semibold drop-shadow-lg mt-2 mb-2 w-3/5">
+            <div className="z-2 text-white text-sm sm:text-base md:text-lg font-medium drop-shadow-lg mt-2 mb-2 w-full md:w-3/5 break-words">
               {accelerator?.description ?? "Please wait..."}
-               {accelerator.dockerProjectName && accelerator.dockerProjectName.trim() !== "" && (
-              <div className="flex items-center mt-4">
+            </div>
+            {accelerator.dockerProjectName && accelerator.dockerProjectName.trim() !== "" && (
+              <div className="flex items-center mt-2 md:mt-3">
                 <TryOutButton
                   toolkitDockerProjectId={accelerator.dockerProjectName}
                   toolkitName={accelerator.name}
-                  className="px-6 rounded bg-[#f15840] hover:bg-[#d94c2f] text-white text-base font-semibold transition h-10 flex items-center"
+                  className="px-4 md:px-6 rounded bg-[#f15840] hover:bg-[#d94c2f] text-white text-sm md:text-base font-semibold transition h-9 md:h-10 flex items-center"
                 />
               </div>
             )}
-            </div>
-           
           </div>
         </div>
       </div>
       {/* Tabs */}
-      <div className="rounded-xl shadow-lg p-6">
+      <div className="rounded-xl shadow-lg p-4 sm:p-6">
         <Tabs
           defaultActiveKey="overview"
           items={[
@@ -205,9 +203,9 @@ export default function AcceleratorPage({
               key: "overview",
               label: "Overview",
               children: (
-                <div className="flex flex-col md:flex-row gap-8 items-center justify-between">
-                  <div className="md:w-3/5 text-lg mb-6 md:mb-0">
-                    <div className="editor-flex quill-readonly no-border">
+                <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start md:items-center justify-between">
+                  <div className="w-full md:w-3/5 text-base md:text-lg mb-4 md:mb-0">
+                    <div className="editor-flex quill-readonly no-border w-full">
                       <ReactQuill
                         theme="snow"
                         value={accelerator?.summary || ""}
@@ -215,7 +213,7 @@ export default function AcceleratorPage({
                       />
                     </div>
                   </div>
-                  <div className="md:w-2/5 flex justify-center">
+                  <div className="w-full md:w-2/5 flex justify-center">
                     {/* <iframe
                       width="100%"
                       height="315"
@@ -243,36 +241,36 @@ export default function AcceleratorPage({
               key: "comments",
               label: "Comments",
               children: (
-                <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-4 sm:gap-6">
                   <div className="mb-4">
                     {comments.length === 0 ? (
                       <p className="text-gray-300">No comments yet.</p>
                     ) : (
-                      <ul className="space-y-4">
+                      <ul className="space-y-3 sm:space-y-4">
                         {comments.map((c: any, idx) => (
                           <li
                             key={idx}
-                            className="bg-gray-100 rounded-lg p-4 flex flex-1 justify-between"
+                            className="bg-gray-100 rounded-lg p-4 flex flex-col md:flex-row gap-3 md:gap-4 justify-between break-words"
                           >
-                            <div className="flex flex-1 items-start">
-                              <span className="font-bold text-[#f15840]">
+                            <div className="flex flex-col sm:flex-row flex-1 items-start">
+                              <span className="font-bold text-[#f15840] whitespace-pre-wrap break-words">
                                 {c?.name}&nbsp;
                               </span>
-                              <span className="flex flex-1 text-[#020925] ml-2 font-semibold">
+                              <span className="flex flex-1 text-[#020925] sm:ml-2 font-semibold whitespace-pre-wrap break-words">
                                 {editingIdx === idx ? (
-                                  <div className="flex flex-col flex-1 mr-5">
+                                  <div className="flex flex-col flex-1 md:mr-5 w-full">
                                     <textarea
                                       placeholder="Edit comment"
                                       value={editText}
                                       onChange={(e) =>
                                         setEditText(e.target.value)
                                       }
-                                      className="w-full px-4 py-2 rounded bg-gray-50 text-[#020925] mb-2 w-full border border-gray-300"
+                                      className="w-full px-3 py-2 rounded bg-gray-50 text-[#020925] mb-2 border border-gray-300"
                                       rows={3}
                                     />
                                     <div className="flex justify-start">
                                       <button
-                                        className="ml-2 text-blue-600 border border-blue-600 rounded px-2 py-1"
+                                        className="ml-0 md:ml-2 text-blue-600 border border-blue-600 rounded px-2 py-1"
                                         onClick={() => handleEditComment(c._id)}
                                       >
                                         Save
@@ -294,8 +292,8 @@ export default function AcceleratorPage({
                                 &nbsp;
                               </span>
                             </div>
-                            <div className="flex items-start gap-2">
-                              <span>
+                            <div className="flex items-start gap-2 md:gap-3">
+                              <span className="text-xs sm:text-sm text-gray-600">
                                 {new Date(c.createdAt).toLocaleString()}
                               </span>
                               {session?.user?.name === c?.name && (
@@ -327,7 +325,7 @@ export default function AcceleratorPage({
                       </ul>
                     )}
                   </div>
-                  <div className="mt-4">
+                  <div className="mt-2 sm:mt-4">
                     <h4 className="text-white font-semibold mb-2">
                       Add a comment
                     </h4>
@@ -335,7 +333,7 @@ export default function AcceleratorPage({
                       placeholder="Your comment"
                       value={newComment}
                       onChange={(e) => setNewComment(e.target.value)}
-                      className="px-4 py-2 rounded bg-gray-50 text-[#020925] mb-2 w-full border border-gray-300"
+                      className="px-3 py-2 rounded bg-gray-50 text-[#020925] mb-2 w-full border border-gray-300"
                       rows={3}
                     />
                     <button
