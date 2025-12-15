@@ -1,11 +1,18 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { Modal, Button, Progress, Spin, message } from "antd";
+import axios from "axios";
 
 // Default session time in minutes
 const DEFAULT_SESSION_MINUTES = 60;
 
-export default function TryOutButton({ toolkitDockerProjectId, toolkitName }: { toolkitDockerProjectId: string, toolkitName: string }) {
+interface TryOutButtonProps {
+  toolkitDockerProjectId: string;
+  toolkitName: string;
+  className?: string;
+}
+
+export default function TryOutButton({ toolkitDockerProjectId, toolkitName, className }: TryOutButtonProps) {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<"unknown"|"running"|"stopped"|"building">("unknown");
   const [loading, setLoading] = useState(false);
@@ -142,7 +149,7 @@ export default function TryOutButton({ toolkitDockerProjectId, toolkitName }: { 
 
   return (
     <>
-      <button className="px-3 py-1 rounded bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold transition flex items-center" onClick={handleOpen}>Try Out</button>
+      <button className={className ? className : "px-3 py-1 rounded bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold transition flex items-center"} onClick={handleOpen}>Try Out</button>
       <Modal
         open={open}
         onCancel={handleClose}
@@ -151,7 +158,7 @@ export default function TryOutButton({ toolkitDockerProjectId, toolkitName }: { 
         centered
       >
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-8"><Spin size="large" /></div>
+          <div className="flex flex-col items-center justify-center py-4"><Spin size="large" /></div>
         ) : status === "running" ? (
           <div className="flex flex-col items-center gap-4 py-4">
             <div className="text-green-600 font-semibold">Toolkit is running!</div>
