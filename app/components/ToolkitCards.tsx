@@ -35,12 +35,12 @@ export default function ToolkitCards({
             {/* Card Body */}
             <div className="flex-1 flex flex-col relative">
               {it.iconUrl ? (
-                <div className="relative flex justify-center items-center p-4 h-42 bg-white">
-                  <img src={it.iconUrl} alt={it.name} className="z-2 w-full h-44 object-contain rounded-t-xl w-[100px] h-[100px]" />
-                  <img src={it.imageUrl} alt={it.name} className="absolute w-full h-44 fill rounded-t-xl w-[100px] h-[150px]" />
+                <div className="relative flex justify-center items-center p-4 h-44 bg-white">
+                  <img src={it.iconUrl} alt={it.name} className="z-2 w-full h-44 object-contain w-[100px] h-[100px]" />
+                  {/* <img src={it.imageUrl} alt={it.name} className="absolute w-full h-44 fill w-[100px]" /> */}
                 </div>
               ) : (
-                <div className="w-full h-44 bg-gray-200 rounded-t-xl" />
+                <div className="w-full h-44 bg-gray-200" />
               )}
               <div className="p-4 flex flex-col gap-2 flex-1">
                 <strong className="block text-lg font-semibold mb-2 text-gray-900">{it.name}</strong>

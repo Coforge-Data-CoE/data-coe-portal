@@ -269,10 +269,10 @@ export default function NewAccelerator({
     }
   };
 
-  const rules = {
-    name: [{ required: true, message: "Please enter a name" }],
-    summary: [{ max: 2000, message: "Too long (max 2000 chars)" }],
-  };
+  // const rules = {
+  //   name: [{ required: true, message: "Please enter a name" }],
+  //   summary: [{ max: 2000, message: "Too long (max 2000 chars)" }],
+  // };
 
   return (
     <div style={{ maxWidth: 900, margin: "24px auto", padding: "0 16px" }}>
@@ -290,7 +290,7 @@ export default function NewAccelerator({
           onFinish={onFinish}
           // requiredMark="optional"
         >
-          <Form.Item label="Name" name="name" rules={rules.name}>
+           <Form.Item label="Name" name="name"> {/*rules={rules.name}  */}
             <Input
               placeholder={
                 accelId ? "Edit accelerator name" : "Enter item name"
@@ -307,7 +307,7 @@ export default function NewAccelerator({
             />
           </Form.Item>
 
-          <Form.Item label="Summary" name="summary" rules={rules.summary}>
+          <Form.Item label="Summary" name="summary" /*rules={rules.summary}*/>
             {/*  */}
             <div className="editor-flex">
               <ReactQuill
