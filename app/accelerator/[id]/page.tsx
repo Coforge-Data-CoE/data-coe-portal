@@ -11,6 +11,7 @@ import { apiUrl } from "@/app/lib/constants";
 import "react-quill-new/dist/quill.snow.css";
 
 import "../../accelerators/accelerators.scss";
+import TryOutButton from "@/app/toolkit/TryOutButton";
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
@@ -156,7 +157,7 @@ export default function AcceleratorPage({
   return (
     <div className="min-h-screen  p-0 md:p-8">
       {/* Banner */}
-      <div className="w-full h-48 md:h-64 relative mb-8">
+      <div className="w-full h-48 md:h-84 relative mb-8">
         <Image
           src={accelerator?.imageUrl || acceleratorData?.banner}
           alt="Accelerator Banner"
@@ -165,7 +166,7 @@ export default function AcceleratorPage({
         />
 
         <div className="absolute inset-0 bg-[#020925] rounded-xl" />
-        <div className="absolute flex flex-col pl-5 left-10">
+        <div className="absolute flex flex-row left-5 right-5">
           {accelerator?.iconUrl && (
             <Image
               src={accelerator?.iconUrl}
@@ -175,11 +176,23 @@ export default function AcceleratorPage({
               className="mt-5 mb-5 z-2"
             />
           )}
-          <div className="text-white text-2xl md:text-4xl font-bold drop-shadow-lg mt-2 z-2">
-            {accelerator?.name ?? ""}
-          </div>
-          <div className="z-2 text-white text-medium md:text-large font-semibold drop-shadow-lg mt-2 mb-2">
-            {accelerator?.description ?? "This is Description"}
+          <div className="flex flex-col ml-5 mt-10">
+            <div className="text-white text-2xl md:text-4xl font-bold drop-shadow-lg mt-2 z-2">
+              {accelerator?.name ?? ""}
+            </div>
+            <div className="z-2 text-white text-medium md:text-large font-semibold drop-shadow-lg mt-2 mb-2 w-3/5">
+              {accelerator?.description ?? "Please wait..."}
+               {accelerator.dockerProjectName && accelerator.dockerProjectName.trim() !== "" && (
+              <div className="flex items-center mt-4">
+                <TryOutButton
+                  toolkitDockerProjectId={accelerator.dockerProjectName}
+                  toolkitName={accelerator.name}
+                  className="px-6 rounded bg-[#f15840] hover:bg-[#d94c2f] text-white text-base font-semibold transition h-10 flex items-center"
+                />
+              </div>
+            )}
+            </div>
+           
           </div>
         </div>
       </div>
@@ -193,7 +206,7 @@ export default function AcceleratorPage({
               label: "Overview",
               children: (
                 <div className="flex flex-col md:flex-row gap-8 items-center justify-between">
-                  <div className="md:w-1/2 text-lg mb-6 md:mb-0">
+                  <div className="md:w-3/5 text-lg mb-6 md:mb-0">
                     <div className="editor-flex quill-readonly no-border">
                       <ReactQuill
                         theme="snow"
@@ -202,8 +215,8 @@ export default function AcceleratorPage({
                       />
                     </div>
                   </div>
-                  <div className="md:w-1/2 flex justify-center">
-                    <iframe
+                  <div className="md:w-2/5 flex justify-center">
+                    {/* <iframe
                       width="100%"
                       height="315"
                       src={
@@ -214,18 +227,18 @@ export default function AcceleratorPage({
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                       className="rounded-lg shadow-lg w-full h-[200px] md:h-[315px]"
-                    ></iframe>
+                    ></iframe> */}
                   </div>
                 </div>
               ),
             },
-            {
-              key: "tech",
-              label: "Technical Info",
-              children: (
-                <div className="text-lg">{acceleratorData.technicalInfo}</div>
-              ),
-            },
+            // {
+            //   key: "tech",
+            //   label: "Technical Info",
+            //   children: (
+            //     <div className="text-lg">{acceleratorData.technicalInfo}</div>
+            //   ),
+            // },
             {
               key: "comments",
               label: "Comments",
