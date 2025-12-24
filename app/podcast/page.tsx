@@ -1,8 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { PodcastCard, Podcast as UIPodcast } from "../components/PodcastCard";
+import React, { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { apiUrl } from "../lib/constants";
+import { Podcast as UIPodcast } from "../components/PodcastCard";
+import { PodcastTile } from "../components/PodcastTile";
+import { AudioPlayer } from "../components/AudioPlayer";
 
 type DbPodcast = {
   _id: string;
@@ -14,12 +17,11 @@ type DbPodcast = {
   cover_image?: string;
 };
 
-const DEFAULT_COVER =
-  "https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop";
+const DEFAULT_COVER = "";
 
 const PodcastPage = () => {
   const [podcasts, setPodcasts] = useState<UIPodcast[]>([]);
-  const [currentPodcast, setCurrentPodcast] = useState<UIPodcast | null>(null);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [durations, setDurations] = useState<Record<string, number>>({});
@@ -44,10 +46,11 @@ const PodcastPage = () => {
           description: p.description || "",
           date: p.createdAt || new Date().toISOString(),
           transcript: [],
+          views: (p as any).views ?? 0,
         }));
         if (mounted) {
           setPodcasts(mapped);
-          setCurrentPodcast(mapped[0] || null);
+          setCurrentIndex(0);
         }
       } catch (e: any) {
         if (mounted) setError(e?.message || "Error loading podcasts");
@@ -73,7 +76,10 @@ const PodcastPage = () => {
         audio.src = p.audioUrl;
         const onLoaded = () => {
           if (!cancelled && isFinite(audio.duration) && audio.duration > 0) {
-            setDurations((prev) => ({ ...prev, [p.id]: Math.round(audio.duration) }));
+            setDurations((prev) => ({
+              ...prev,
+              [p.id]: Math.round(audio.duration),
+            }));
           }
           cleanup();
         };
@@ -98,6 +104,11 @@ const PodcastPage = () => {
     const secs = Math.floor(time % 60);
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
+
+  const currentPodcast = useMemo(
+    () => podcasts[currentIndex] || null,
+    [podcasts, currentIndex]
+  );
 
   if (loading) {
     return (
@@ -136,72 +147,40 @@ const PodcastPage = () => {
   }
 
   return (
-    <div className="flex flex-row h-screen bg-gray-100">
-      {/* Page Title */}
-      {/* <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Podcast</h1> */}
-      {/* Main Podcast Player */}
-      <div className="flex-1 flex items-center justify-center relative">
-        <div className="absolute top-4 right-6 z-20 flex gap-2">
-          <Link
-            href="/podcast/new"
-            className="px-3 py-2 text-sm rounded-md bg-blue-600 text-white hover:bg-blue-700"
-          >
-            Add Podcast
-          </Link>
-          {currentPodcast && (
-            <Link
-              href={`/podcast/new?id=${currentPodcast.id}`}
-              className="px-3 py-2 text-sm rounded-md bg-amber-600 text-white hover:bg-amber-700"
-            >
-              Edit
-            </Link>
-          )}
-        </div>
-        <div className="w-3/5 bg-white p-8 rounded-lg shadow-lg">
-          {/* <img
-            src={currentPodcast.coverImage}
-            alt={currentPodcast.title}
-            className="w-full h-64 object-cover rounded-t-lg mb-4"
-          /> */}
-          <div className="">
-            <PodcastCard podcast={currentPodcast} />
-          </div>
-        </div>
-      </div>
-
-      {/* Other Podcasts Panel */}
-      <div className="w-1/4 bg-gray-200 p-4 overflow-y-auto">
-        <h2 className="text-gray-800 text-lg font-semibold mb-4">
-          Other Podcasts
-        </h2>
-        <div className="space-y-4">
-          {podcasts.map((podcast) => (
-            <div
-              key={podcast.id}
-              onClick={() => setCurrentPodcast(podcast)}
-              className={`bg-white p-4 rounded-lg flex items-center gap-4 hover:bg-gray-100 transition cursor-pointer ${
-                podcast.id === currentPodcast.id
-                  ? "border-2 border-blue-500"
-                  : ""
-              }`}
-            >
-              <img
-                src={podcast.coverImage}
-                alt={podcast.title}
-                className="w-16 h-16 object-cover rounded-full"
-              />
-              <div>
-                <h3 className="text-gray-800 font-medium">{podcast.title}</h3>
-                <div className="mt-1 flex items-center gap-2 text-gray-600 text-sm">
-                  {podcast.authorAvatar ? (
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+      <div className="mx-auto max-w-7xl px-4 pb-4 pt-4 sm:pt-5">
+        {/* Top section: details (left) + player (right) */}
+        <div className="mb-4 grid grid-cols-1 gap-5 lg:grid-cols-6">
+          <div className="rounded-2xl border border-white/10 bg-slate-900/70 p-6 backdrop-blur-xl lg:col-span-4">
+            <div className="flex items-start gap-6">
+              <div className="relative aspect-square w-full max-w-40 sm:max-w-56 md:max-w-64 lg:max-w-72 flex-none">
+                <Image
+                  src={currentPodcast.coverImage}
+                  alt={currentPodcast.title}
+                  fill
+                  sizes="(min-width: 1024px) 18rem, (min-width: 768px) 16rem, (min-width: 640px) 14rem, 10rem"
+                  className="rounded-2xl object-cover border border-white/10"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <h2 className="line-clamp-2 text-xl sm:text-2xl font-semibold text-white">
+                  {currentPodcast.title}
+                </h2>
+                <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-slate-300">
+                  {durations[currentPodcast.id] != null && (
+                    <span className="inline-flex items-center rounded-full bg-white/10 px-2 py-0.5 text-xs text-slate-200">
+                      {formatTime(durations[currentPodcast.id])}
+                    </span>
+                  )}
+                  {currentPodcast.authorAvatar ? (
                     <img
-                      src={podcast.authorAvatar}
-                      alt={podcast.author}
-                      className="w-5 h-5 rounded-full object-cover"
+                      src={currentPodcast.authorAvatar}
+                      alt={currentPodcast.author}
+                      className="h-5 w-5 rounded-full object-cover border border-white/10"
                     />
                   ) : (
-                    <span className="w-5 h-5 rounded-full bg-gray-300 text-gray-700 flex items-center justify-center text-[10px] font-semibold">
-                      {(podcast.author || "?")
+                    <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-indigo-600 text-[10px] font-semibold text-white">
+                      {(currentPodcast.author || "?")
                         .split(" ")
                         .filter(Boolean)
                         .slice(0, 2)
@@ -209,22 +188,64 @@ const PodcastPage = () => {
                         .join("") || "?"}
                     </span>
                   )}
-                  <span>{podcast.author}</span>
-                  {durations[podcast.id] != null && (
-                    <span className="ml-2 text-gray-500">· {formatTime(durations[podcast.id])}</span>
-                  )}
+                  <span>by {currentPodcast.author}</span>
                 </div>
-                
-                {podcast.description && (
-                  <p className="text-gray-500 text-xs mt-1">
-                    {podcast.description.length > 100
-                      ? podcast.description.slice(0, 100) + "…"
-                      : podcast.description}
-                  </p>
+                {currentPodcast.description && (
+                  <div className="mt-3 max-h-64 md:max-h-72 overflow-y-auto pr-2">
+                    <p className="whitespace-pre-line text-[15px] leading-relaxed text-slate-300">
+                      {currentPodcast.description}
+                    </p>
+                  </div>
                 )}
               </div>
             </div>
-          ))}
+          </div>
+          <div className="lg:col-span-2">
+            <div className="flex fixed z-2">
+              {podcasts.length > 0 && (
+                <AudioPlayer
+                  playlist={podcasts}
+                  currentIndex={currentIndex}
+                  onChangeIndex={setCurrentIndex}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-3 flex items-center justify-between">
+          <h1 className="text-xl font-semibold text-white">Podcasts</h1>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/podcast/new"
+              className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-500"
+            >
+              Add Podcast
+            </Link>
+            {currentPodcast && (
+              <Link
+                href={`/podcast/new?id=${currentPodcast.id}`}
+                className="rounded-md bg-amber-600 px-3 py-2 text-sm font-medium text-white hover:bg-amber-500"
+              >
+                Edit Current
+              </Link>
+            )}
+          </div>
+        </div>
+
+        {/* Scrollable grid of episode cards */}
+        <div className="max-h-[calc(100vh-80px)] md:max-h-[calc(100vh-140px)] overflow-y-auto pr-1">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+            {podcasts.map((p, idx) => (
+              <PodcastTile
+                key={p.id}
+                podcast={p}
+                isActive={idx === currentIndex}
+                durationSec={durations[p.id]}
+                onSelect={() => setCurrentIndex(idx)}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>

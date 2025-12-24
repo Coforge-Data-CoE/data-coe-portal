@@ -16,6 +16,7 @@ export interface Podcast {
   coverImage: string;
   audioUrl: string;
   transcript: TranscriptSegment[];
+  views?: number;
 }
 
 export enum ViewMode {
