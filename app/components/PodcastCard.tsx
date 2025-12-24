@@ -10,11 +10,11 @@ export interface Podcast {
   id: string;
   title: string;
   author: string;
+  authorAvatar?: string;
   description: string;
   date: string;
   coverImage: string;
   audioUrl: string;
-  duration: number; // Changed from string to number
   transcript: TranscriptSegment[];
 }
 
@@ -91,7 +91,25 @@ export const PodcastCard: React.FC<PodcastCardProps> = ({ podcast }) => {
           <div>
             <span className="text-indigo-400 font-semibold text-xs uppercase tracking-wider mb-1 block">Now Playing</span>
             <h2 className="text-3xl font-bold text-white leading-tight">{podcast.title}</h2>
-            <p className="text-slate-300 font-medium">by {podcast.author}</p>
+            <div className="mt-2 flex items-center gap-3">
+              {podcast.authorAvatar ? (
+                <img
+                  src={podcast.authorAvatar}
+                  alt={podcast.author}
+                  className="w-7 h-7 rounded-full object-cover border border-white/20"
+                />
+              ) : (
+                <div className="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-semibold">
+                  {podcast.author
+                    .split(" ")
+                    .filter(Boolean)
+                    .slice(0, 2)
+                    .map((s) => s[0]?.toUpperCase())
+                    .join("") || "?"}
+                </div>
+              )}
+              <p className="text-slate-300 font-medium">by {podcast.author}</p>
+            </div>
           </div>
         </div>
       </div>
