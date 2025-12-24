@@ -66,6 +66,16 @@ const menuData = [
       },
     ],
   },
+  {
+    label: "Blogs",
+    href: "/blogs",
+    icon: "ri-article-line",
+  },
+  {
+    label: "Podcasts",
+    href: "/podcast",
+    icon: "ri-mic-line",
+  },
 ];
 
 type ActivityItem = {
