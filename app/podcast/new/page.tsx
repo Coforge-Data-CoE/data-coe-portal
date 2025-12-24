@@ -153,7 +153,7 @@ const NewPodcastPage = () => {
       authorAvatar: undefined,
       description,
       date: new Date().toISOString(),
-      coverImage: coverUrl || ""
+      coverImage: coverUrl || "",
       audioUrl,
       transcript: [],
     };
