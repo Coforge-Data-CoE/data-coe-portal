@@ -42,21 +42,8 @@ const blogData: Record<string, Blog> = {
   },
 };
 
-const BlogPage = () => {
-  const router = useRouter();
-  const [id, setId] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (router.isReady) {
-      setId(router.query.id as string);
-    }
-  }, [router.isReady, router.query.id]);
-
-  if (!id) {
-    return <div className="p-8 text-center">Loading...</div>;
-  }
-
-  const blog = blogData[id];
+const BlogPage = ({ params }: { params: { id: string } }) => {
+  const blog = blogData[params.id];
 
   if (!blog) {
     return <div className="p-8 text-center">Blog not found.</div>;
