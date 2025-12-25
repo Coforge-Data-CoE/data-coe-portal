@@ -16,7 +16,12 @@ const formatTime = (time: number) => {
   return `${mins}:${secs.toString().padStart(2, "0")}`;
 };
 
-export const PodcastTile: React.FC<PodcastTileProps> = ({ podcast, isActive, durationSec, onSelect }) => {
+export const PodcastTile: React.FC<PodcastTileProps> = ({
+  podcast,
+  isActive,
+  durationSec,
+  onSelect,
+}) => {
   const formatRelative = (iso: string) => {
     const d = new Date(iso);
     const now = new Date();
@@ -39,7 +44,9 @@ export const PodcastTile: React.FC<PodcastTileProps> = ({ podcast, isActive, dur
       type="button"
       onClick={onSelect}
       className={`group relative overflow-hidden rounded-2xl text-left shadow-lg transition-all h-[200px] flex flex-col ${
-        isActive ? "ring-2 ring-indigo-400 ring-offset-2 ring-offset-slate-900" : "hover:-translate-y-0.5 hover:shadow-xl"
+        isActive
+          ? "ring-2 ring-indigo-400 ring-offset-2 ring-offset-slate-900"
+          : "hover:-translate-y-0.5 hover:shadow-xl"
       }`}
       style={{ background: "linear-gradient(180deg, #0f172a, #0b1220)" }}
     >
@@ -59,12 +66,15 @@ export const PodcastTile: React.FC<PodcastTileProps> = ({ podcast, isActive, dur
         ) : (
           <span>Episode</span>
         )}
-       
       </div>
       <div className="p-3 flex-1 min-h-0 flex flex-col justify-between">
         <div className="mb-2 flex items-center gap-2">
           {podcast.authorAvatar ? (
-            <img src={podcast.authorAvatar} alt={podcast.author} className="h-6 w-6 rounded-full object-cover border border-white/20" />
+            <img
+              src={podcast.authorAvatar}
+              alt={podcast.author}
+              className="h-6 w-6 rounded-full object-cover border border-white/20"
+            />
           ) : (
             <div className="h-6 w-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px] font-semibold">
               {(podcast.author || "?")
@@ -75,10 +85,18 @@ export const PodcastTile: React.FC<PodcastTileProps> = ({ podcast, isActive, dur
                 .join("") || "?"}
             </div>
           )}
-          <span className="text-xs text-slate-300">{podcast.author || "Unknown"}</span>
+          <span className="text-xs text-slate-300">
+            {podcast.author || "Unknown"}
+          </span>
         </div>
         <div>
-          <h3 className={`line-clamp-1 text-sm font-semibold ${isActive ? "text-white" : "text-slate-100"}`}>{podcast.title}</h3>
+          <h3
+            className={`line-clamp-1 text-sm font-semibold ${
+              isActive ? "text-white" : "text-slate-100"
+            }`}
+          >
+            {podcast.title}
+          </h3>
           {podcast.description && (
             <p className="mt-1 line-clamp-1 text-[11px] leading-snug text-slate-400">
               {podcast.description}
@@ -107,12 +125,20 @@ export const PodcastTile: React.FC<PodcastTileProps> = ({ podcast, isActive, dur
             <span>{formatRelative(podcast.date)}</span>
           </span>
           {podcast?.views && podcast?.views > 0 && (
-          <span className="inline-flex items-center gap-1" title="Views">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-3 w-3"><path d="M12 5c-7.633 0-10 7-10 7s2.367 7 10 7 10-7 10-7-2.367-7-10-7zm0 12a5 5 0 110-10 5 5 0 010 10z"/></svg>
-            {/* <span>{formatViews(podcast.views)}</span> */}
-            <span>{podcast.views}</span>
-          </span>
-        )}
+            <span className="inline-flex items-center gap-1" title="Views">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="h-3 w-3"
+                aria-hidden="true"
+              >
+                <path d="M12 3a9 9 0 00-9 9v4a3 3 0 003 3h1a1 1 0 001-1v-4a1 1 0 00-1-1H6v-1a6 6 0 1112 0v1h-1a1 1 0 00-1 1v4a1 1 0 001 1h1a3 3 0 003-3v-4a9 9 0 00-9-9zm-7 9a7 7 0 1114 0v1h-2v-1a5 5 0 00-10 0v1H5v-1z" />
+              </svg>
+              {/* <span>{formatViews(podcast.views)}</span> */}
+              <span>{podcast.views}</span>
+            </span>
+          )}
         </div>
       </div>
       <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100">

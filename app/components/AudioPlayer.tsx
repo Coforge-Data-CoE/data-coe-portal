@@ -33,6 +33,24 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
   const [volume, setVolume] = useState(1);
   const [muted, setMuted] = useState(false);
   const [lastVolume, setLastVolume] = useState(1);
+  const [viewedTrackId, setViewedTrackId] = useState<string | null>(null);
+
+  const incrementViews = (trackId: string) => {
+    if (!trackId || viewedTrackId === trackId) return;
+    setViewedTrackId(trackId);
+    fetch(`/api/podcasts/${trackId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ incrementViews: true })
+    })
+      .then((res) => res.ok ? res.json() : null)
+      .then((data) => {
+        if (data && typeof onViewsIncrement === "function") {
+          onViewsIncrement(trackId);
+        }
+      })
+      .catch(() => {});
+  };
 
   const track = playlist[currentIndex];
 
@@ -63,6 +81,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
     setCurrentTime(0);
     setDuration(0);
     setIsPlaying(false);
+    setViewedTrackId(null);
     if (audioRef.current) {
       audioRef.current.pause();
       // Force re-load by resetting src
@@ -109,21 +128,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
       try {
         await audioRef.current.play();
         setIsPlaying(true);
-        // Increment views in DB
-        if (track?.id) {
-          fetch(`/api/podcasts/${track.id}`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ incrementViews: true })
-          })
-            .then((res) => res.ok ? res.json() : null)
-            .then((data) => {
-              if (data && typeof onViewsIncrement === "function") {
-                onViewsIncrement(track.id);
-              }
-            })
-            .catch(() => {});
-        }
+        // Views are incremented via onPlay
       } catch {}
     }
   };
@@ -339,6 +344,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
           ref={audioRef}
           src={track?.audioUrl || ""}
           preload="metadata"
+          onPlay={() => { if (track?.id) incrementViews(track.id); }}
           onTimeUpdate={() =>
             setCurrentTime(audioRef.current?.currentTime || 0)
           }
