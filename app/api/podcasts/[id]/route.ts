@@ -132,6 +132,20 @@ export async function PATCH(
       }
     } else {
       const body = await request.json();
+      if (body.incrementViews === true) {
+        // Only increment views
+        const updated = await Podcast.findByIdAndUpdate(
+          id,
+          { $inc: { views: 1 } },
+          { new: true }
+        );
+        if (!updated)
+          return NextResponse.json(
+            { error: "Podcast not found", id },
+            { status: 404 }
+          );
+        return NextResponse.json(updated);
+      }
       if (
         typeof body.episode_name === "string" &&
         body.episode_name.trim() !== ""

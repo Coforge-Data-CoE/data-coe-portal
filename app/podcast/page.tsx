@@ -220,6 +220,11 @@ const PodcastPage = () => {
                         {formatTime(durations[currentPodcast.id])}
                       </span>
                     )}
+                    {typeof currentPodcast.views === "number" && (
+                      <span className="inline-flex items-center rounded-full bg-white/10 px-2 py-0.5 text-xs text-slate-200" title="Views">
+                        <svg className="w-3 h-3 mr-1 text-slate-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M1.5 12s4.5-7.5 10.5-7.5S22.5 12 22.5 12s-4.5 7.5-10.5 7.5S1.5 12 1.5 12z"/><circle cx="12" cy="12" r="3"/></svg>{currentPodcast.views}
+                      </span>
+                    )}
                     {currentPodcast.authorAvatar ? (
                       <img
                         src={currentPodcast.authorAvatar}
@@ -283,6 +288,13 @@ const PodcastPage = () => {
                     currentIndex={currentIndex}
                     onChangeIndex={setCurrentIndex}
                     compact={effectiveCompact}
+                    onViewsIncrement={(id) => {
+                      setPodcasts((prev) => prev.map((p, idx) =>
+                        p.id === id && idx === currentIndex
+                          ? { ...p, views: (p.views ?? 0) + 1 }
+                          : p
+                      ));
+                    }}
                   />
                 )}
               </div>

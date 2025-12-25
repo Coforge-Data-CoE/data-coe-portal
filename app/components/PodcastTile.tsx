@@ -53,12 +53,13 @@ export const PodcastTile: React.FC<PodcastTileProps> = ({ podcast, isActive, dur
         />
       </div>
       <div className="absolute inset-x-0 top-0 h-[80px] bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
-      <div className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full bg-black/50 px-2 py-1 text-[10px] font-medium text-white backdrop-blur">
+      <div className="absolute top-3 right-3 inline-flex items-center gap-2 rounded-full bg-black/50 px-2 py-1 text-[10px] font-medium text-white backdrop-blur">
         {typeof durationSec === "number" ? (
           <span>{formatTime(durationSec)}</span>
         ) : (
           <span>Episode</span>
         )}
+       
       </div>
       <div className="p-3 flex-1 min-h-0 flex flex-col justify-between">
         <div className="mb-2 flex items-center gap-2">
@@ -84,7 +85,7 @@ export const PodcastTile: React.FC<PodcastTileProps> = ({ podcast, isActive, dur
             </p>
           )}
         </div>
-        <div className="mt-2 flex items-center gap-2 text-[11px] text-slate-400">
+        <div className="mt-2 flex items-center justify-between text-[11px] text-slate-400">
           <span
             role="status"
             title="Release date"
@@ -105,12 +106,13 @@ export const PodcastTile: React.FC<PodcastTileProps> = ({ podcast, isActive, dur
             </svg>
             <span>{formatRelative(podcast.date)}</span>
           </span>
-          {typeof podcast.views === "number" && podcast.views > 0 && (
-            <span className="inline-flex items-center gap-1">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5"><path d="M12 5c-7.633 0-10 7-10 7s2.367 7 10 7 10-7 10-7-2.367-7-10-7zm0 12a5 5 0 110-10 5 5 0 010 10z"/></svg>
-              <span>{formatViews(podcast.views) || "0"} views</span>
-            </span>
-          )}
+          {podcast?.views && podcast?.views > 0 && (
+          <span className="inline-flex items-center gap-1" title="Views">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-3 w-3"><path d="M12 5c-7.633 0-10 7-10 7s2.367 7 10 7 10-7 10-7-2.367-7-10-7zm0 12a5 5 0 110-10 5 5 0 010 10z"/></svg>
+            {/* <span>{formatViews(podcast.views)}</span> */}
+            <span>{podcast.views}</span>
+          </span>
+        )}
         </div>
       </div>
       <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100">

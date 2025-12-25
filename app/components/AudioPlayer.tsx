@@ -7,6 +7,7 @@ export interface AudioPlayerProps {
   currentIndex: number;
   onChangeIndex: (nextIndex: number) => void;
   compact?: boolean;
+  onViewsIncrement?: (podcastId: string) => void;
 }
 
 const formatTime = (time: number) => {
@@ -21,6 +22,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
   currentIndex,
   onChangeIndex,
   compact = false,
+  onViewsIncrement,
 }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -107,6 +109,21 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
       try {
         await audioRef.current.play();
         setIsPlaying(true);
+        // Increment views in DB
+        if (track?.id) {
+          fetch(`/api/podcasts/${track.id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ incrementViews: true })
+          })
+            .then((res) => res.ok ? res.json() : null)
+            .then((data) => {
+              if (data && typeof onViewsIncrement === "function") {
+                onViewsIncrement(track.id);
+              }
+            })
+            .catch(() => {});
+        }
       } catch {}
     }
   };
