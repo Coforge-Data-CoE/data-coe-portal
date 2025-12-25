@@ -6,6 +6,7 @@ export interface AudioPlayerProps {
   playlist: Podcast[];
   currentIndex: number;
   onChangeIndex: (nextIndex: number) => void;
+  compact?: boolean;
 }
 
 const formatTime = (time: number) => {
@@ -19,6 +20,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
   playlist,
   currentIndex,
   onChangeIndex,
+  compact = false,
 }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -130,7 +132,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
             : "bg-slate-900/80 shadow-2xl"
         }`}
       >
-        <div className={`flex gap-4 p-3 sm:p-4 flex-col`}>
+        <div className={`flex ${compact ? "gap-3 p-2 sm:p-3" : "gap-4 p-3 sm:p-4"} flex-col`}>
           {/* Cover */}
           {/* {!collapsed && (
             <div className="h-16 w-16 sm:h-24 sm:w-24 overflow-hidden rounded-xl border border-white/10">
@@ -143,7 +145,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
           {/* Meta + scrubber */}
           <div className="min-w-0 w-full">
             <div className="flex items-center gap-2">
-              <h3 className="text-base font-semibold text-white sm:text-lg">
+              <h3 className={compact ? "text-sm font-semibold text-white sm:text-base" : "text-base font-semibold text-white sm:text-lg"}>
                 {track?.title || "No Selection"}
               </h3>
               {track?.author && (
@@ -174,24 +176,24 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
           </div>
 
           {/* Controls */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className={`flex items-center ${compact ? "gap-2" : "gap-2 sm:gap-3"}`}>
             <button
               onClick={onPrev}
-              className="rounded-full p-2 text-slate-300 hover:bg-white/10 hover:text-white"
+              className={compact ? "rounded-full p-1 text-slate-300 hover:bg-white/10 hover:text-white" : "rounded-full p-2 text-slate-300 hover:bg-white/10 hover:text-white"}
               aria-label="Previous"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="h-6 w-6"
+                className={compact ? "h-4 w-4" : "h-6 w-6"}
               >
                 <path d="M6 5h2v14H6zM20 6v12l-8-6z" />
               </svg>
             </button>
             <button
               onClick={togglePlay}
-              className="rounded-full bg-white p-3 text-slate-950 shadow-md transition hover:scale-105 active:scale-95"
+              className={compact ? "rounded-full bg-white p-1.5 text-slate-950 shadow-md" : "rounded-full bg-white p-3 text-slate-950 shadow-md transition hover:scale-105 active:scale-95"}
               aria-label={isPlaying ? "Pause" : "Play"}
             >
               {isPlaying ? (
@@ -199,7 +201,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  className="h-7 w-7"
+                  className={compact ? "h-5 w-5" : "h-7 w-7"}
                 >
                   <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
                 </svg>
@@ -208,7 +210,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  className="h-7 w-7"
+                  className={compact ? "h-5 w-5" : "h-7 w-7"}
                 >
                   <path d="M8 5v14l11-7z" />
                 </svg>
@@ -216,14 +218,14 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
             </button>
             <button
               onClick={onNext}
-              className="rounded-full p-2 text-slate-300 hover:bg-white/10 hover:text-white"
+              className={compact ? "rounded-full p-1 text-slate-300 hover:bg-white/10 hover:text-white" : "rounded-full p-2 text-slate-300 hover:bg-white/10 hover:text-white"}
               aria-label="Next"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="h-6 w-6"
+                className={compact ? "h-4 w-4" : "h-6 w-6"}
               >
                 <path d="M18 19h-2V5h2zM4 6v12l8-6z" />
               </svg>
@@ -263,7 +265,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
                 value={volume}
                 onChange={(e) => setVolume(parseFloat(e.target.value))}
                 aria-label="Volume"
-                className="w-20 sm:w-24 accent-indigo-500"
+                className={compact ? "w-16 sm:w-20 accent-indigo-500" : "w-20 sm:w-24 accent-indigo-500"}
               />
             </div>
             {/* <button
@@ -293,8 +295,8 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
             />
           </div>
         </div> */}
-        <div className="px-4 pb-2">
-          <div className="mt-2 flex items-center gap-3">
+        <div className={compact ? "px-3 pb-1" : "px-4 pb-2"}>
+          <div className={compact ? "mt-1 flex items-center gap-2" : "mt-2 flex items-center gap-3"}>
             <span className="text-xs tabular-nums text-slate-400">
               {formatTime(currentTime)}
             </span>

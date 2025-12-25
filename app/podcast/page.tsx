@@ -25,6 +25,7 @@ const PodcastPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [durations, setDurations] = useState<Record<string, number>>({});
+  const [descExpanded, setDescExpanded] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -63,6 +64,10 @@ const PodcastPage = () => {
       mounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    setDescExpanded(false);
+  }, [currentIndex]);
 
   // Lazily load durations from audio metadata for list items
   useEffect(() => {
@@ -110,6 +115,24 @@ const PodcastPage = () => {
     [podcasts, currentIndex]
   );
 
+  const isLongDesc = useMemo(
+    () => (currentPodcast?.description?.length || 0) > 240,
+    [currentPodcast]
+  );
+
+  // Compact mode is now only when description is not expanded
+  const effectiveCompact = useMemo(
+    () => !descExpanded,
+    [descExpanded]
+  );
+
+  const expandedHeader = useMemo(
+    () => descExpanded,
+    [descExpanded]
+  );
+
+
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-[70vh] text-gray-600">
@@ -148,73 +171,126 @@ const PodcastPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
-      <div className="mx-auto max-w-7xl px-4 pb-4 pt-4 sm:pt-5">
+      <div className="relative mx-auto max-w-7xl px-4 pb-4 pt-5">
         {/* Top section: details (left) + player (right) */}
-        <div className="mb-4 grid grid-cols-1 gap-5 lg:grid-cols-6">
-          <div className="rounded-2xl border border-white/10 bg-slate-900/70 p-6 backdrop-blur-xl lg:col-span-4">
-            <div className="flex items-start gap-6">
-              <div className="relative aspect-square w-full max-w-40 sm:max-w-56 md:max-w-64 lg:max-w-72 flex-none">
-                <Image
-                  src={currentPodcast.coverImage}
-                  alt={currentPodcast.title}
-                  fill
-                  sizes="(min-width: 1024px) 18rem, (min-width: 768px) 16rem, (min-width: 640px) 14rem, 10rem"
-                  className="rounded-2xl object-cover border border-white/10"
-                />
-              </div>
-              <div className="min-w-0 flex-1">
-                <h2 className="line-clamp-2 text-xl sm:text-2xl font-semibold text-white">
-                  {currentPodcast.title}
-                </h2>
-                <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-slate-300">
-                  {durations[currentPodcast.id] != null && (
-                    <span className="inline-flex items-center rounded-full bg-white/10 px-2 py-0.5 text-xs text-slate-200">
-                      {formatTime(durations[currentPodcast.id])}
-                    </span>
-                  )}
-                  {currentPodcast.authorAvatar ? (
-                    <img
-                      src={currentPodcast.authorAvatar}
-                      alt={currentPodcast.author}
-                      className="h-5 w-5 rounded-full object-cover border border-white/10"
-                    />
-                  ) : (
-                    <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-indigo-600 text-[10px] font-semibold text-white">
-                      {(currentPodcast.author || "?")
-                        .split(" ")
-                        .filter(Boolean)
-                        .slice(0, 2)
-                        .map((s) => s[0]?.toUpperCase())
-                        .join("") || "?"}
-                    </span>
-                  )}
-                  <span>by {currentPodcast.author}</span>
+        <div className="sticky top-20 z-10">
+          <div
+            className={
+              effectiveCompact
+                ? "mb-4 grid grid-cols-1 gap-5 lg:grid-cols-6 items-stretch h-20 md:h-30"
+                : expandedHeader
+                ? "mb-4 grid grid-cols-1 gap-5 lg:grid-cols-6 items-stretch h-60 md:h-70"
+                : "mb-4 grid grid-cols-1 gap-5 lg:grid-cols-6 items-stretch h-72 md:h-80"
+            }
+          >
+            <div
+              className={
+                effectiveCompact
+                  ? "h-full rounded-2xl border border-white/10 bg-slate-900/70 p-2 backdrop-blur-xl lg:col-span-4"
+                  : expandedHeader
+                  ? "h-full rounded-2xl border border-white/10 bg-slate-900/70 p-4 backdrop-blur-xl lg:col-span-4"
+                  : "h-full rounded-2xl border border-white/10 bg-slate-900/70 p-6 backdrop-blur-xl lg:col-span-4"
+              }
+            >
+              <div className={effectiveCompact ? "flex items-start gap-3" : expandedHeader ? "flex items-start gap-4" : "flex items-start gap-6"}>
+                <div
+                  className={
+                    effectiveCompact
+                      ? "relative aspect-square w-20 md:w-30 flex-none"
+                      : expandedHeader
+                      ? "relative aspect-square w-28 md:w-40 flex-none"
+                      : "relative aspect-square w-full max-w-35 sm:max-w-50 md:max-w-60 lg:max-w-60 flex-none"
+                  }
+                >
+                  <Image
+                    src={currentPodcast.coverImage}
+                    alt={currentPodcast.title}
+                    fill
+                    sizes="(min-width: 1024px) 18rem, (min-width: 768px) 16rem, (min-width: 640px) 14rem, 10rem"
+                    className="rounded-2xl object-cover border border-white/10"
+                  />
                 </div>
-                {currentPodcast.description && (
-                  <div className="mt-3 max-h-64 md:max-h-72 overflow-y-auto pr-2">
-                    <p className="whitespace-pre-line text-[15px] leading-relaxed text-slate-300">
-                      {currentPodcast.description}
-                    </p>
+                <div className="min-w-0 flex-1">
+                  <h2 className="line-clamp-2 text-xl sm:text-2xl font-semibold text-white">
+                    {currentPodcast.title}
+                  </h2>
+                  <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-slate-300">
+                    {durations[currentPodcast.id] != null && (
+                      <span className="inline-flex items-center rounded-full bg-white/10 px-2 py-0.5 text-xs text-slate-200">
+                        {formatTime(durations[currentPodcast.id])}
+                      </span>
+                    )}
+                    {currentPodcast.authorAvatar ? (
+                      <img
+                        src={currentPodcast.authorAvatar}
+                        alt={currentPodcast.author}
+                        className="h-5 w-5 rounded-full object-cover border border-white/10"
+                      />
+                    ) : (
+                      <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-indigo-600 text-[10px] font-semibold text-white">
+                        {(currentPodcast.author || "?")
+                          .split(" ")
+                          .filter(Boolean)
+                          .slice(0, 2)
+                          .map((s) => s[0]?.toUpperCase())
+                          .join("") || "?"}
+                      </span>
+                    )}
+                    <span>by {currentPodcast.author}</span>
                   </div>
+                  {effectiveCompact && currentPodcast.description && (
+                    <div className="mt-2 text-xs text-slate-400 line-clamp-1 select-none" title={currentPodcast.description}>
+                      {currentPodcast.description.slice(0, 60)}{currentPodcast.description.length > 60 ? '…' : ''}
+                    </div>
+                  )}
+                  {!effectiveCompact && currentPodcast.description && (
+                    <div
+                      id={`podcast-desc-${currentPodcast.id}`}
+                      className={
+                        descExpanded
+                          ? "mt-3 relative max-h-32 md:max-h-38 overflow-y-auto pr-2"
+                          : "mt-3 relative max-h-30 md:max-h-35 overflow-hidden pr-2"
+                      }
+                    >
+                      <p className="whitespace-pre-line text-[15px] leading-relaxed text-slate-300">
+                        {currentPodcast.description}
+                      </p>
+                      {!descExpanded && isLongDesc && (
+                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 md:h-10 bg-gradient-to-t from-slate-900/70 via-slate-900/30 to-transparent" />
+                      )}
+                    </div>
+                  )}
+                  {currentPodcast.description && isLongDesc && (
+                    <button
+                      onClick={() => setDescExpanded((v) => !v)}
+                      aria-expanded={descExpanded}
+                      aria-controls={`podcast-desc-${currentPodcast.id}`}
+                      className="mt-2 text-sm font-medium text-indigo-400 hover:text-indigo-300"
+                    >
+                      {descExpanded ? "Show less" : "Show more"}
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="lg:col-span-2 h-full">
+              <div
+                className="h-full flex"
+              >
+                {podcasts.length > 0 && (
+                  <AudioPlayer
+                    playlist={podcasts}
+                    currentIndex={currentIndex}
+                    onChangeIndex={setCurrentIndex}
+                    compact={effectiveCompact}
+                  />
                 )}
               </div>
             </div>
           </div>
-          <div className="lg:col-span-2">
-            <div className="flex fixed z-2">
-              {podcasts.length > 0 && (
-                <AudioPlayer
-                  playlist={podcasts}
-                  currentIndex={currentIndex}
-                  onChangeIndex={setCurrentIndex}
-                />
-              )}
-            </div>
-          </div>
         </div>
-
         <div className="mb-3 flex items-center justify-between">
-          <h1 className="text-xl font-semibold text-white">Podcasts</h1>
+          <h1 className="text-xl font-semibold text-white pt-2">Podcasts</h1>
           <div className="flex items-center gap-2">
             <Link
               href="/podcast/new"
@@ -233,19 +309,17 @@ const PodcastPage = () => {
           </div>
         </div>
 
-        {/* Scrollable grid of episode cards */}
-        <div className="max-h-[calc(100vh-80px)] md:max-h-[calc(100vh-140px)] overflow-y-auto pr-1">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-            {podcasts.map((p, idx) => (
-              <PodcastTile
-                key={p.id}
-                podcast={p}
-                isActive={idx === currentIndex}
-                durationSec={durations[p.id]}
-                onSelect={() => setCurrentIndex(idx)}
-              />
-            ))}
-          </div>
+        {/* Episodes grid (page-level scroll only) */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+          {podcasts.map((p, idx) => (
+            <PodcastTile
+              key={p.id}
+              podcast={p}
+              isActive={idx === currentIndex}
+              durationSec={durations[p.id]}
+              onSelect={() => setCurrentIndex(idx)}
+            />
+          ))}
         </div>
       </div>
     </div>
